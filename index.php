@@ -28,7 +28,7 @@
 					</div>
 					<div id="content_div">
 						<?php
-							$includefile = strtolower("content/{$current_subject["menu_name"]}.php");
+							$includefile = strtolower("content/{$current_subject["menu_name"]}/main.php");
 							include($includefile);
 							
 						?>
