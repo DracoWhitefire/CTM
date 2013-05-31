@@ -1,0 +1,221 @@
+* {
+	margin: 0;
+	padding: 0;
+	background: #0A2C7A;
+	color: white;
+	font-family: tahoma;
+}
+
+#siteTitle_div {
+	height: 60px;
+	background: #0A2C7A;
+}
+
+#site_div {
+	width: 1280px;
+	margin: auto;
+	background: white;
+}
+
+#pageTitle_div {
+	text-align: center;
+}
+
+#nav_div {
+	width: 160px;
+	float: left;
+}
+
+#nav_div li {
+	list-style: none;
+}
+
+#nav_div li.selected {
+	font-weight: bold;
+}
+
+#nav_div a {
+	display: block;
+	text-decoration: none;
+	border: solid 1px white;
+}
+
+#nav_div a:hover {
+	background: #103A96;
+}
+
+#main_div {
+	margin-left: 190px;
+	padding: 10px;
+	background: white;
+}
+
+#content_div {
+	padding: 10px;
+	min-height: 230px;
+}
+
+#copyright_div {
+	text-align: center;
+	clear: both;
+	width: 100%;
+}
+
+#agentlist_div td.error input[type=text] {
+	//background: red;
+	border-left: 2px solid #a60000;
+	border-top: 2px solid #a60000;
+	border-right: 2px solid red;
+	border-bottom: 2px solid red;
+}
+
+#calendar_div {
+	float: left;
+	border: solid 1px white;
+	margin: 10px;
+	padding: 9px;
+}
+
+#calendar_div td {
+	min-width: 30px;
+	text-align: center;
+	border: solid 1px white;
+}
+
+#calendar_div a {
+	display: block;
+	text-decoration: none;
+}
+
+#calendar_div a:hover {
+	background: #103A96;
+}
+
+#calendar_div td.prevMonth a, td.nextMonth a {
+	color: #274077;
+}
+
+#calendar_div td.selectedDay a {
+	color: red;
+}
+
+#calendar_div td.weekDay {
+	font-weight: bold;
+}
+
+#calPrev_div {
+	text-align: center;
+	width: 40px;
+	float: left;
+}
+
+#calNext_div {
+	text-align: center;
+	width: 40px;
+	float: right;
+}
+
+#calCur_div {
+	text-align: center;
+}
+
+#scheduleSelected_div {
+	float: right;
+	border: solid 1px white;
+	margin: 10px;
+	padding: 9px;
+}
+
+#scheduleSelected_div td {
+	width: 130px;
+	height: 22px;
+}
+
+#scheduleSelected_div td.time {
+	text-align: center;
+}
+
+#scheduleSelected_div td.time input[type=text] {
+	width: 126px;
+}
+
+#agentlist_div {
+	float: left;
+	border: solid 1px white;
+	margin: 10px;
+	padding: 9px;
+}
+
+#agentlist_div td.check {
+	width: 20px;
+	height: 22px;
+}
+
+#agentlist_div td.name, td.rank {
+	width: 160px;
+	height: 22px;
+}
+
+#agentlist_div td.name input[type=text] {
+	width: 156px;
+}
+
+#newAgent_div label, input[type=text] {	
+	
+	width: 20%;
+	display: block;
+	float: left;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}
+
+#newAgent_div select {
+	width: 20%;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}
+
+#newAgent_div input[type=checkbox] {
+	float: left;
+}
+
+#newAgentSchedule_div {
+	clear: both;
+}
+
+#newAgentSchedule_div input {
+	width: 100%;
+}
+
+#debug_div {
+	clear: both;
+}
+
+#login_div label {
+	width: 50%;
+	float: left;
+	text-align: right;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}
+
+#login_div input[type=text], #login_div input[type=password] {
+/*	width: 50%;*/
+	float: left;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}
+
+#login_div #loginbuttons_div {
+	width: 30%;
+	margin: auto;
+}
+
+#loginButtons_div input[type=submit]{
+	width: 30%;
+	margin: 1em 10%;
+}
