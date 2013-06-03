@@ -22,12 +22,15 @@
 		settype($endTime, "float");
 		$startTime = strtotime($schedule["start_time"]);
 		settype($startTime, "float");
+		
 		settype($workingHours, "float");
 		if(($endTime - $startTime) <= (4*60*60)) {
-			$workingHours = gmstrftime("%R", ($endTime - $startTime));
+			$workingHours = gmstrftime("%H:%M", ($endTime - $startTime));
 		} else {
-			$workingHours = gmstrftime("%R", ($endTime - $startTime - (30*60)));
+			$workingHours = gmstrftime("%H:%M", ($endTime - $startTime - (30*60)));
+			//$workingHours = $endTime - $startTime - (30*60);
 		}
+		
 		if($editing == TRUE) {
 			$output .= "<input type=\"text\" name=\"starttime_" . $agent_row["id"] . "\" value=\"";
 		}		

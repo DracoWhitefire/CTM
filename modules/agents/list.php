@@ -92,7 +92,7 @@
 			$agentList .= htmlentities($_POST["forum_name_{$id}"]);
 		} else {
 			$agentList .= htmlentities($agent_row["forum_name"]);
-		}		
+		}
 		if($editRow == TRUE) {
 			$agentList .= "\" />";
 		}

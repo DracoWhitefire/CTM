@@ -120,8 +120,7 @@
 		print_r($errors);
 		
 	}
-	
-	// If validation fails:
+	// If validation fails:	
 	if(isset($_POST["submitList"])) {
 		$errorId_array = array();
 		foreach($errors as $errorField => $errorName) {
@@ -130,14 +129,11 @@
 				$errorId_array[$errorId] = TRUE;
 		}
 	}
-	
 	//print_r($errorId_array);
 	//print_r($errors);
 	
 	
 	$agent_set = get_agents("all");
-
-	
 
 	if($addAgent == FALSE) {
 		include("list.php");
