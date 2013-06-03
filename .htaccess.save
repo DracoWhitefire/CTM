@@ -1,4 +1,0 @@
-Options +FollowSymLinks
-RewriteEngine On
-
-RewriteRule  home.php $ index.php?id=1
