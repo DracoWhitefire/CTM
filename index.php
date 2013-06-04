@@ -33,9 +33,20 @@
 							
 						?>
 						<div id="debug_div">
-							<?php
-								print_r($_POST);							
-							?>
+							<span>
+								Post:
+								<?php
+									print_r($_POST);						
+								?>
+							</span>
+							<span>
+								Errors:
+								<?php
+									if(isset($errors)) {
+										print_r($errors);
+									}
+								?>
+							</span>
 						</div>
 					</div>
 				</div>
