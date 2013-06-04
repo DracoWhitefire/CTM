@@ -256,20 +256,33 @@
 	}
 	function form_val_unique($val_uniq_array) {
 		global $connection;
-		$userName_query  = "SELECT `user_name`";
-		$userName_query .= "FROM `agents` ";
-		$userName_set = mysql_query($userName_query);
-		if(!$userName_set) {
+		global $errors;
+		
+		$user_query  = "SELECT `user_name`, `id` ";
+		$user_query .= "FROM `agents` ";
+		$user_set = mysql_query($user_query);
+		if(!$user_set) {
 			die("Query failed: " . mysql_error());
 		}
-		$userName_array = mysql_fetch_array($userName_set);
+		while($user_row = mysql_fetch_array($user_set,1)) {
+			$id = $user_row["id"];
+			$user_array[$id] = $user_row["user_name"];
+		}
 		foreach($val_uniq_array as $fieldName) {
-			foreach($userName_array as $userName) {
-				if($userName == $_POST[$fieldName]) {
-					$errors[$fieldName] = "error_unique";
+			echo $fieldName . " ";
+			$fieldName_array = explode("_", $fieldName);
+			foreach($user_array as $id => $name) {
+				//echo $id . ": " . $name . "<br />";
+				if($name == $_POST[$fieldName]) {
+					
+					if($fieldName_array[2] != $id) {
+						$errors[$fieldName] = "error_unique";
+					}
+					break 2;
 				}
 			}
 		}
+		//print_r($user_array);
 	}
 	function convert_rank($rank) {
 		$convRank = "";

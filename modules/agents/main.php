@@ -26,12 +26,16 @@
 		$checkReq_array = array();
 		$checkLen_array = array();
 		$checkNum_array = array();
+		$checkUniq_array = array();
 		foreach($_POST as $valField => $val) {			
 			$valFieldString_array = explode("_", $valField);
 			if(count($valFieldString_array) > 1){
 				if($valFieldString_array[1] == "name") {
 					$checkLen_array[$valField] = "1-32";
 					$checkReq_array[] = $valField;
+					if($valFieldString_array[0] == "user") {
+						$checkUniq_array[] = $valField;
+					}
 				}
 				if(($valFieldString_array[0] == "rank")) {
 					$checkNum_array[] = $valField;
@@ -39,6 +43,7 @@
 				}
 			}
 		}
+		form_val_unique($checkUniq_array);
 		form_val_required($checkReq_array);
 		form_val_length($checkLen_array);
 		form_val_num($checkNum_array);
@@ -117,7 +122,6 @@
 			$checkReq_array[] = $valField;
 		}
 		form_val_required($checkReq_array);
-		print_r($errors);
 		
 	}
 	// If validation fails:	
