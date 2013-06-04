@@ -13,7 +13,7 @@
 			if($_POST["$fieldname"] == "on") {
 				$editRow = TRUE;
 			}
-		} elseif(isset($errorId_array[$id])) {
+		} elseif((!empty($errors)) && ((isset($errorId_array[$id])) || isset($_POST["user_name_{$id}"]))) {
 			$editRow = TRUE;
 		}
 		$agentList .= "<tr><td class=\"check\" >";
