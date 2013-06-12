@@ -13,17 +13,18 @@
 			$addAgent = FALSE;
 			$editAgent = FALSE;
 		}
-	} else {
+	} elseif(isset($_POST["addList"])) {
+		$addAgent = TRUE;
+		$editAgent = FALSE;
 		$editList = FALSE;
-		if(isset($_POST["addList"])) {
-			$addAgent = TRUE;
-		} else {
-			$addAgent = FALSE;
-			$editAgent = FALSE;
-		}
-	}
-	if(isset($_POST["singleEditList"])) {
+	} elseif(isset($_POST["singleEditList"])) {
 		$editAgent = TRUE;
+		$addAgent = FALSE;
+		$editList = FALSE;
+	} else {
+		$addAgent = FALSE;
+		$editAgent = FALSE;
+		$editList = FALSE;
 	}
 	if(isset($_POST["submitList"])) {
 		//Form Validation		
