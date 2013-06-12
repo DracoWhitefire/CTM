@@ -257,32 +257,27 @@
 	function form_val_unique($val_uniq_array) {
 		global $connection;
 		global $errors;
-		
 		$user_query  = "SELECT `user_name`, `id` ";
 		$user_query .= "FROM `agents` ";
 		$user_set = mysql_query($user_query);
 		if(!$user_set) {
 			die("Query failed: " . mysql_error());
 		}
-		while($user_row = mysql_fetch_array($user_set,1)) {
+		while($user_row = mysql_fetch_array($user_set, 1)) {
 			$id = $user_row["id"];
 			$user_array[$id] = $user_row["user_name"];
 		}
 		foreach($val_uniq_array as $fieldName) {
-			echo $fieldName . " ";
 			$fieldName_array = explode("_", $fieldName);
 			foreach($user_array as $id => $name) {
-				//echo $id . ": " . $name . "<br />";
 				if($name == $_POST[$fieldName]) {
-					
 					if($fieldName_array[2] != $id) {
 						$errors[$fieldName] = "error_unique";
 					}
-					break 2;
+					break 1;
 				}
 			}
 		}
-		//print_r($user_array);
 	}
 	function convert_rank($rank) {
 		$convRank = "";
