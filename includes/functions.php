@@ -93,7 +93,9 @@
 								`rank`, 
 								`active` ";
 		$agent_query .= "FROM `agents` ";
-		if($selection == "active") {
+		if(is_numeric($selection)) {
+			$agent_query .= "WHERE `id` = '{$selection}' ";
+		} elseif($selection == "active") {
 			$agent_query .= "WHERE `active` = '1' ";
 		} elseif ($selection == "inactive") {
 			$agent_query .= "WHERE `active` = '0' ";
