@@ -75,7 +75,7 @@
 		$day = mysql_prep($day);
 		$sch_query  = "SELECT `start_time`, `end_time` ";
 		$sch_query .= "FROM `sch_{$selected_agent}` ";
-		$sch_query .= "WHERE `weekday` = {$day} ";
+		$sch_query .= "WHERE `weekday` = '{$day}' ";
 		$sch_set = mysql_query($sch_query, $connection);
 		if(!$sch_set) {
 			die("Query failed: " . mysql_error());
