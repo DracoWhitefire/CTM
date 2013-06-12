@@ -16,7 +16,7 @@
 		} elseif((!empty($errors)) && ((isset($errorId_array[$id])) || isset($_POST["user_name_{$id}"]))) {
 			$editRow = TRUE;
 		}
-		$agentList .= "<form id=\"row_{$id}\" ><tr><td class=\"check\" >";
+		$agentList .= "<tr><td class=\"check\" >";
 		if($editList == FALSE) {
 			$agentList .= "<input type=\"checkbox\" name=\"edit_{$id}\" />";
 		}
@@ -135,9 +135,9 @@
 		$agentList .= "</td>";
 		$agentList .= "<td>";
 		if($editRow == FALSE) {
-			$agentList .= "<input type=\"hidden\" value=\"{$id}\" name=\"agent_id\" ><input type=\"submit\" value=\"Edit\" name=\"singleEditList\" formmethod=\"post\" form=\"row_{$id}\"  />";
+			$agentList .= "<form id=\"row_{$id}\" ><input type=\"hidden\" value=\"{$id}\" name=\"agent_id\" ><input type=\"submit\" value=\"Edit\" name=\"singleEditList\" formmethod=\"post\" form=\"row_{$id}\"  /></form>";
 		}
-		$agentList .= "</td></tr></form>";
+		$agentList .= "</td></tr>";
 	}
 
 	$agentList .= "</tbody>";
