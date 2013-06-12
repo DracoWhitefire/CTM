@@ -1,7 +1,7 @@
 <?php
 // New Agent Form
 	if($editAgent == TRUE) {
-		$agent_set = get_agents($_POST["agent_id"]);
+		$agent_set = get_agents($_POST["singleEditList"]);
 		$agent = mysql_fetch_array($agent_set);
 	}
 	$agentForm = "Agent Form";

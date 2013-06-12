@@ -135,7 +135,7 @@
 		$agentList .= "</td>";
 		$agentList .= "<td>";
 		if($editList == FALSE) {
-			$agentList .= "<form id=\"row_{$id}\" ><input type=\"hidden\" value=\"{$id}\" name=\"agent_id\" ><input type=\"submit\" value=\"Edit\" name=\"singleEditList\" formmethod=\"post\" form=\"row_{$id}\"  /></form>";
+			$agentList .= "<button type=\"submit\" name=\"singleEditList\" formmethod=\"post\" value=\"{$id}\"  >Edit</button>";
 		}
 		$agentList .= "</td></tr>";
 	}
