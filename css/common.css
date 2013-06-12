@@ -160,7 +160,7 @@
 	width: 156px;
 }
 
-#newAgent_div label, input[type=text] {	
+#agentForm_div label, input[type=text] {	
 	
 	width: 20%;
 	display: block;
@@ -170,22 +170,22 @@
 	-webkit-box-sizing: border-box;
 }
 
-#newAgent_div select {
+#agentForm_div select {
 	width: 20%;
 	box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 }
 
-#newAgent_div input[type=checkbox] {
+#agentForm_div input[type=checkbox] {
 	float: left;
 }
 
-#newAgentSchedule_div {
+#agentFormSchedule_div {
 	clear: both;
 }
 
-#newAgentSchedule_div input {
+#agentFormSchedule_div input {
 	width: 100%;
 }
 
