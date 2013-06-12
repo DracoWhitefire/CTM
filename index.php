@@ -38,7 +38,7 @@
 								<?php
 									print_r($_POST);						
 								?>
-							</span>
+							</span><br />
 							<span>
 								Errors:
 								<?php
