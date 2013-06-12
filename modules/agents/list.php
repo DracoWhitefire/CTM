@@ -2,7 +2,7 @@
 	$agentList = "<div id=\"agentlist_div\"><form id=\"agentlist_form\"  action=\"index.php" . htmlspecialchars("?id={$current_id}") . "\" method=\"POST\" >";
 	$agentList .= "<table id=\"agentlist_table\">";
 	$agentList .= "<thead>";
-	$agentList .= "<tr><th></th><th>CTM Username</th><th>First Name</th><th>Last Name</th><th>Forum Name</th><th>CTM Rank</th><th>Active</th></tr>";
+	$agentList .= "<tr><th></th><th>CTM Username</th><th>First Name</th><th>Last Name</th><th>Forum Name</th><th>CTM Rank</th><th>Active</th><th></th></tr>";
 	$agentList .= "</thead>";
 	$agentList .= "<tbody>";
 	while($agent_row = mysql_fetch_array($agent_set)) {
@@ -16,7 +16,7 @@
 		} elseif((!empty($errors)) && ((isset($errorId_array[$id])) || isset($_POST["user_name_{$id}"]))) {
 			$editRow = TRUE;
 		}
-		$agentList .= "<tr><td class=\"check\" >";
+		$agentList .= "<form id=\"row_{$id}\" ><tr><td class=\"check\" >";
 		if($editList == FALSE) {
 			$agentList .= "<input type=\"checkbox\" name=\"edit_{$id}\" />";
 		}
@@ -132,7 +132,12 @@
 			$agentList .= "checked=\"checked\" ";
 		}
 		$agentList .= "/>";
-		$agentList .= "</td></tr>";
+		$agentList .= "</td>";
+		$agentList .= "<td>";
+		if($editRow == FALSE) {
+			$agentList .= "<input type=\"hidden\" value=\"{$id}\" name=\"agent_id\" ><input type=\"submit\" value=\"Edit\" name=\"singleEditList\" formmethod=\"post\" form=\"row_{$id}\"  />";
+		}
+		$agentList .= "</td></tr></form>";
 	}
 
 	$agentList .= "</tbody>";

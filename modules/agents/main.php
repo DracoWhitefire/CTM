@@ -7,9 +7,11 @@
 		if(count($_POST) > 1) {
 			$editList = TRUE;
 			$addAgent = FALSE;
+			$editAgent = FALSE;
 		} else {
 			$editList = FALSE;
 			$addAgent = FALSE;
+			$editAgent = FALSE;
 		}
 	} else {
 		$editList = FALSE;
@@ -17,7 +19,11 @@
 			$addAgent = TRUE;
 		} else {
 			$addAgent = FALSE;
+			$editAgent = FALSE;
 		}
+	}
+	if(isset($_POST["singleEditList"])) {
+		$editAgent = TRUE;
 	}
 	if(isset($_POST["submitList"])) {
 		//Form Validation		
@@ -125,12 +131,12 @@
 		}
 	}
 	$agent_set = get_agents("all");
-	if($addAgent == FALSE) {
-		include("list.php");
-		$output = $agentList;
-	} else {
+	if(($addAgent == TRUE) || ($editAgent == TRUE)) {
 		include("form.php");
 		$output = $agentForm;
+	} else {
+		include("list.php");
+		$output = $agentList;
 	}
 	echo $output;
 ?>
