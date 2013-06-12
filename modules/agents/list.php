@@ -146,7 +146,7 @@
 		$agentList .= "<input type=\"submit\" value=\"Submit\" name=\"submitList\" />";
 		$agentList .= "<input type=\"submit\" value=\"Cancel\" name=\"cancelEditList\" />";
 	} else {
-		$agentList .= "<input type=\"submit\" value=\"Edit\" name=\"editList\" />";
+		$agentList .= "<input type=\"submit\" value=\"Bulk Edit\" name=\"editList\" />";
 		$agentList .= "<input type=\"submit\" value=\"Add\" name=\"addList\" />";
 	}
 	$agentList .= "</form></div>";
