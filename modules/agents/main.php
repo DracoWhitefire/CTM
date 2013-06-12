@@ -20,9 +20,7 @@
 		}
 	}
 	if(isset($_POST["submitList"])) {
-		
-		//Form Validation
-		
+		//Form Validation		
 		$checkReq_array = array();
 		$checkLen_array = array();
 		$checkNum_array = array();
@@ -47,7 +45,6 @@
 		form_val_required($checkReq_array);
 		form_val_length($checkLen_array);
 		form_val_num($checkNum_array);
-		
 		// This sorts all POST-vars by agent id
 		foreach($_POST as $varName => $postValue) {
 			$string_array = explode("_", $varName);
@@ -61,9 +58,7 @@
 				$query_array_{$string_id}[$field] = $postValue;
 				$query_array[$string_id] = $query_array_{$string_id};
 			}
-		}		
-		//print_r($query_array);
-		
+		}
 		// This combines every field in an id (row) into one query and runs the query
 		foreach($query_array as $array_id => $agent_array) {
 			$i = 1;
@@ -98,8 +93,6 @@
 			$query .= "WHERE `id` = '{$array_id}' ";
 			$query .= "LIMIT 1 ";
 			$query .= "; ";
-			//echo $query;
-			
 			if(empty($errors)) {
 				$result = mysql_query($query);
 				
@@ -111,9 +104,7 @@
 			}
 		}
 	}
-	
-	if(isset($_POST["submitForm"])) {
-		
+	if(isset($_POST["submitForm"])) {		
 		//Form Validation
 		$checkReq_array = array();
 		$checkLen_array = array();
@@ -133,12 +124,7 @@
 				$errorId_array[$errorId] = TRUE;
 		}
 	}
-	//print_r($errorId_array);
-	//print_r($errors);
-	
-	
 	$agent_set = get_agents("all");
-
 	if($addAgent == FALSE) {
 		include("list.php");
 		$output = $agentList;
