@@ -58,13 +58,23 @@
 		}
 	}
 	$agentForm .= "/><br />";
+	$weekdays_array = array("Monday", "Tuesday", "Wednesday", "Thursday", "Friday");
 	$agentForm .= "<div id=\"agentFormSchedule_div\"><table id=\"agentFormSchedule_table\">";
-	$agentForm .= "<thead><tr><th>Weekday</th><th>Begin Shift</th><th>End Shift</th></tr></thead>";
-	$agentForm .= "<tbody><tr><td>Monday</td><td><input type=\"text\" name=\"mondayBegin_input\" /></td><td><input type=\"text\" name=\"mondayEnd_input\" /></td></tr>";
-	$agentForm .= "<tr><td>Tuesday</td><td><input type=\"text\" name=\"tuesdayBegin_input\" /></td><td><input type=\"text\" name=\"mondayEnd_input\" /></td></tr>";
-	$agentForm .= "<tr><td>Wednesday</td><td><input type=\"text\" name=\"wednesdayBegin_input\" /></td><td><input type=\"text\" name=\"mondayEnd_input\" /></td></tr>";
-	$agentForm .= "<tr><td>Thursday</td><td><input type=\"text\" name=\"thursdayBegin_input\" /></td><td><input type=\"text\" name=\"mondayEnd_input\" /></td></tr>";
-	$agentForm .= "<tr><td>Friday</td><td><input type=\"text\" name=\"fridayBegin_input\" /></td><td><input type=\"text\" name=\"mondayEnd_input\" /></td></tr>";
+	$agentForm .= "<thead><tr><th>Weekday</th><th>Begin Shift</th><th>End Shift</th></tr></thead><tbody>";
+	foreach($weekdays_array as $weekday) {
+		if($editAgent == TRUE) {
+			$agentSched_array = get_sch_for_agent($agent_array["id"], strtolower($weekday));
+		}
+		$agentForm .= "<tr><td>{$weekday}</td><td><input type=\"text\" name=\"{$weekday}Begin_input\" ";
+		if($editAgent == TRUE) {
+			$agentForm .= "value=\"{$agentSched_array['start_time']}\" ";
+		}
+		$agentForm .= "/></td><td><input type=\"text\" name=\"{$weekday}End_input\" ";
+		if($editAgent == TRUE) {
+			$agentForm .= "value=\"{$agentSched_array['end_time']}\" ";
+		}
+		$agentForm .= "/></td></tr>";
+	}
 	$agentForm .= "</tbody></table></div>";
 	if($addAgent == TRUE) {
 		$agentForm .= "<input type=\"submit\" value=\"Add User\" name=\"submitForm\" />";
