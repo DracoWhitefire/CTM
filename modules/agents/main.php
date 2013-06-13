@@ -52,6 +52,8 @@
 		form_val_required($checkReq_array);
 		form_val_length($checkLen_array);
 		form_val_num($checkNum_array);
+	}
+	if(isset($_POST["submitList"])) {
 		// This sorts all POST-vars by agent id
 		foreach($_POST as $varName => $postValue) {
 			$string_array = explode("_", $varName);
@@ -106,7 +108,6 @@
 			$query .= "; ";
 			if(empty($errors)) {
 				$result = mysql_query($query);
-				
 				if(!$result) {
 					echo "MySQL Query Failed: " . mysql_error();
 				}
@@ -115,17 +116,6 @@
 			}
 		}
 	}
-	/*if(isset($_POST["submitForm"])) {		
-		//Form Validation
-		$checkReq_array = array();
-		$checkLen_array = array();
-		$checkNum_array = array();
-		foreach($_POST as $valField => $val) {
-			$checkReq_array[] = $valField;
-		}
-		form_val_required($checkReq_array);
-		
-	}*/
 	// If validation fails:	
 	if(isset($_POST["submitList"])) {
 		$errorId_array = array();
