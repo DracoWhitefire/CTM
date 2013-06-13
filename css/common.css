@@ -179,6 +179,7 @@
 
 #agentForm_div input[type=checkbox] {
 	float: left;
+	margin-top: 6px;
 }
 
 #agentFormSchedule_div {
@@ -187,6 +188,11 @@
 
 #agentFormSchedule_div input {
 	width: 100%;
+}
+
+#agentForm_div input[type=submit], #agentForm_div input[type=reset] {
+	float: left;
+	margin: 6px;
 }
 
 #debug_div {
