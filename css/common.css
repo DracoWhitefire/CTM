@@ -61,14 +61,6 @@
 	width: 100%;
 }
 
-#agentlist_div td.error input[type=text] {
-	//background: red;
-	border-left: 2px solid #a60000;
-	border-top: 2px solid #a60000;
-	border-right: 2px solid red;
-	border-bottom: 2px solid red;
-}
-
 #calendar_div {
 	float: left;
 	border: solid 1px white;
@@ -158,6 +150,22 @@
 
 #agentlist_div td.name input[type=text] {
 	width: 156px;
+}
+
+#agentlist_div td.error input[type=text] {
+	//background: red;
+	border-left: 2px solid #a60000;
+	border-top: 2px solid #a60000;
+	border-right: 2px solid red;
+	border-bottom: 2px solid red;
+}
+
+#agentForm_div  input[type=text].error, input[type=password].error {
+	//background: red;
+	border-left: 2px solid #a60000;
+	border-top: 2px solid #a60000;
+	border-right: 2px solid red;
+	border-bottom: 2px solid red;
 }
 
 #agentForm_div label, input[type=text], input[type=password] {	

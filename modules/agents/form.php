@@ -15,21 +15,33 @@
 		$agentForm .= "<input type=\"hidden\" name=\"agentId_input\" value=\"{$agent_array['id']}\" />";
 	}
 	$agentForm .= "<label for=\"userName_input\">CTM Username</label><input type=\"text\" id=\"userName_input\" name=\"userName_input\" ";
+	if(isset($errors["userName_input"])) {
+		$agentForm .= "class=\"error\" ";
+	}
 	if($editAgent == TRUE) {
 		$agentForm .=  "value=\"{$agent_array['user_name']}\" ";
 	}
 	$agentForm .= "/><br />";
 	$agentForm .= "<label for=\"forumName_input\">Forum Name</label><input type=\"text\" id=\"forumName_input\" name=\"forumName_input\" ";
+	if(isset($errors["forumName_input"])) {
+		$agentForm .= "class=\"error\" ";
+	}
 	if($editAgent == TRUE) {
 		$agentForm .=  "value=\"{$agent_array['forum_name']}\" ";
 	}
 	$agentForm .= "/><br />";
 	$agentForm .= "<label for=\"firstName_input\">First Name</label><input type=\"text\" id=\"firstName_input\" name=\"firstName_input\" ";
+	if(isset($errors["firstName_input"])) {
+		$agentForm .= "class=\"error\" ";
+	}
 	if($editAgent == TRUE) {
 		$agentForm .=  "value=\"{$agent_array['first_name']}\" ";
 	}
 	$agentForm .= "/><br />";
 	$agentForm .= "<label for=\"lastName_input\">Last Name</label><input type=\"text\" id=\"lastName_input\" name=\"lastName_input\" ";
+	if(isset($errors["lastName_input"])) {
+		$agentForm .= "class=\"error\" ";
+	}
 	if($editAgent == TRUE) {
 		$agentForm .=  "value=\"{$agent_array['last_name']}\" ";
 	}
@@ -71,8 +83,16 @@
 		}
 	}
 	$agentForm .= "/><br />";
-	$agentForm .= "<label for=\"password_input\">Password</label><input type=\"password\" id=\"password_input\" name=\"password_input\" /><br />";
-	$agentForm .= "<label for=\"confPassword_input\">Confirm Password</label><input type=\"password\" id=\"confPassword_input\" name=\"confPassword_input\" /><br />";
+	$agentForm .= "<label for=\"password_input\">Password</label><input type=\"password\" id=\"password_input\" name=\"password_input\" ";
+	if(isset($errors["password_input"])) {
+		$agentForm .= "class=\"error\" ";
+	}
+	$agentForm .= "/><br />";
+	$agentForm .= "<label for=\"confPassword_input\">Confirm Password</label><input type=\"password\" id=\"confPassword_input\" name=\"confPassword_input\"  ";
+	if(isset($errors["confPassword_input"])) {
+		$agentForm .= "class=\"error\" ";
+	}
+	$agentForm .= "/><br />";
 	$agentForm .= "<label for=\"changePw_input\">Change password on next login</label><input type=\"checkbox\" id=\"changePw_input\" name=\"changePw_input\" />";
 	$weekdays_array = array("Monday", "Tuesday", "Wednesday", "Thursday", "Friday");
 	$agentForm .= "<div id=\"agentFormSchedule_div\"><table id=\"agentFormSchedule_table\">";
