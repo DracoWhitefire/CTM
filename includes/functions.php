@@ -270,15 +270,13 @@
 			$user_array[$id] = $user_row["user_name"];
 		}
 		foreach($val_uniq_array as $fieldName) {
-			$fieldName_array = explode("_", $fieldName);
+			$fieldName_array = preg_split("/([A-Z][a-z]+)|_/", $fieldName, -1, PREG_SPLIT_DELIM_CAPTURE|PREG_SPLIT_NO_EMPTY);
 			foreach($user_array as $id => $name) {
 				if($name == $_POST[$fieldName]) {
-					if(count($fieldName_array) > 2) {
-						if($fieldName_array[2] != $id) {
-							$errors[$fieldName] = "error_unique";
-						}
-						break 1;
+					if($fieldName_array[2] != $id) {
+						$errors[$fieldName] = "error_unique";
 					}
+					break 1;
 				}
 			}
 		}
