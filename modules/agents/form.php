@@ -19,7 +19,13 @@
 		$agentForm .= "class=\"error\" ";
 	}
 	if($editAgent == TRUE) {
-		$agentForm .=  "value=\"{$agent_array['user_name']}\" ";
+		$agentForm .= "value=\"";
+		if(isset($_POST["userName_input"])) {
+			$agentForm .= $_POST["userName_input"];
+		} else {
+			$agentForm .=  $agent_array['user_name'];	
+		}
+		$agentForm .= "\" ";
 	}
 	$agentForm .= "/><br />";
 	$agentForm .= "<label for=\"forumName_input\">Forum Name</label><input type=\"text\" id=\"forumName_input\" name=\"forumName_input\" ";
@@ -27,7 +33,13 @@
 		$agentForm .= "class=\"error\" ";
 	}
 	if($editAgent == TRUE) {
-		$agentForm .=  "value=\"{$agent_array['forum_name']}\" ";
+		$agentForm .= "value=\"";
+		if(isset($_POST["forumName_input"])) {
+			$agentForm .= $_POST["forumName_input"];
+		} else {
+			$agentForm .=  $agent_array['forum_name'];	
+		}
+		$agentForm .= "\" ";
 	}
 	$agentForm .= "/><br />";
 	$agentForm .= "<label for=\"firstName_input\">First Name</label><input type=\"text\" id=\"firstName_input\" name=\"firstName_input\" ";
@@ -35,7 +47,13 @@
 		$agentForm .= "class=\"error\" ";
 	}
 	if($editAgent == TRUE) {
-		$agentForm .=  "value=\"{$agent_array['first_name']}\" ";
+		$agentForm .= "value=\"";
+		if(isset($_POST["firstName_input"])) {
+			$agentForm .= $_POST["firstName_input"];
+		} else {
+			$agentForm .=  $agent_array['first_name'];	
+		}
+		$agentForm .= "\" ";
 	}
 	$agentForm .= "/><br />";
 	$agentForm .= "<label for=\"lastName_input\">Last Name</label><input type=\"text\" id=\"lastName_input\" name=\"lastName_input\" ";
@@ -43,7 +61,13 @@
 		$agentForm .= "class=\"error\" ";
 	}
 	if($editAgent == TRUE) {
-		$agentForm .=  "value=\"{$agent_array['last_name']}\" ";
+		$agentForm .= "value=\"";
+		if(isset($_POST["lastName_input"])) {
+			$agentForm .= $_POST["lastName_input"];
+		} else {
+			$agentForm .=  $agent_array['last_name'];	
+		}
+		$agentForm .= "\" ";
 	}
 	$agentForm .= "/><br />";
 	$agentForm .= "<label for=\"rank_select\">Rank</label><select id=\"rank_select\" name=\"rank_select\">";
