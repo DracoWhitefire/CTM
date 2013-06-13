@@ -13,7 +13,7 @@
 <?php
 	$output = "<div id=\"scheduleSelected_div\"><form id=\"scheduleSelected_form\" action=\"index.php" . htmlspecialchars("?id={$current_id}") . "\" method=\"POST\" ><table id = \"scheduleSelected_table\"><thead><tr><th>Forum Name</th><th>Start Time</th><th>End Time</th><th>Working Hours</th></tr></thead><tbody>";
 	$agent_set = get_agents("active");
-	$selectedDay = "'" . date("l", strtotime($date["d"] . "-" . $date["m"] . "-" . $date["y"])) . "'";
+	$selectedDay = date("l", strtotime($date["d"] . "-" . $date["m"] . "-" . $date["y"]));
 	while($agent_row = mysql_fetch_array($agent_set, MYSQL_ASSOC)) {
 		$output .= "<tr>";
 		$output .= "<td>" . $agent_row["forum_name"] . "</td><td class=\"time\" >";
