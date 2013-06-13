@@ -273,10 +273,12 @@
 			$fieldName_array = explode("_", $fieldName);
 			foreach($user_array as $id => $name) {
 				if($name == $_POST[$fieldName]) {
-					if($fieldName_array[2] != $id) {
-						$errors[$fieldName] = "error_unique";
+					if(count($fieldName_array) > 2) {
+						if($fieldName_array[2] != $id) {
+							$errors[$fieldName] = "error_unique";
+						}
+						break 1;
 					}
-					break 1;
 				}
 			}
 		}

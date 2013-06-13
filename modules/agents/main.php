@@ -26,7 +26,7 @@
 		$editAgent = FALSE;
 		$editList = FALSE;
 	}
-	if(isset($_POST["submitList"])) {
+	if((isset($_POST["submitList"])) || (isset($_POST["submitForm"]))) {
 		//Form Validation		
 		$checkReq_array = array();
 		$checkLen_array = array();
@@ -56,7 +56,11 @@
 		foreach($_POST as $varName => $postValue) {
 			$string_array = explode("_", $varName);
 			if(count($string_array) > 1){
-				$string_id = $string_array[2];
+				if(count($string_array) > 2) {
+					$string_id = $string_array[2];
+				} else {
+					$string_id = $_POST["agentId_input"];
+				}				
 				if(!isset($query_array_{$string_id})) {
 					$query_array_{$string_id} = array();
 				}
@@ -111,7 +115,7 @@
 			}
 		}
 	}
-	if(isset($_POST["submitForm"])) {		
+	/*if(isset($_POST["submitForm"])) {		
 		//Form Validation
 		$checkReq_array = array();
 		$checkLen_array = array();
@@ -121,7 +125,7 @@
 		}
 		form_val_required($checkReq_array);
 		
-	}
+	}*/
 	// If validation fails:	
 	if(isset($_POST["submitList"])) {
 		$errorId_array = array();

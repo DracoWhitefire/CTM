@@ -4,8 +4,12 @@
 		$agent_set = get_agents($_POST["singleEditList"]);
 		$agent_array = mysql_fetch_array($agent_set);
 	}
+	
 	$agentForm = "Agent Form";
 	$agentForm .= "<div id=\"agentForm_div\"><form id=\"agentForm_form\" method=\"POST\" action=\"index.php" . htmlspecialchars("?id={$current_id}") . "\">";
+	if($editAgent == TRUE) {
+		$agentForm .= "<input type=\"hidden\" name=\"agentId_input\" value=\"{$agent_array['id']}\" />";
+	}
 	$agentForm .= "<label for=\"userName_input\">CTM Username</label><input type=\"text\" id=\"userName_input\" name=\"userName_input\" ";
 	if($editAgent == TRUE) {
 		$agentForm .=  "value=\"{$agent_array['user_name']}\" ";
