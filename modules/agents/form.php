@@ -6,6 +6,11 @@
 	}
 	$agentForm = "Agent Form";
 	$agentForm .= "<div id=\"agentForm_div\"><form id=\"agentForm_form\" method=\"POST\" action=\"index.php" . htmlspecialchars("?id={$current_id}") . "\">";
+	$agentForm .= "<label for=\"userName_input\">CTM Username</label><input type=\"text\" id=\"userName_input\" name=\"userName_input\" ";
+	if($editAgent == TRUE) {
+		$agentForm .=  "value=\"{$agent_array['user_name']}\" ";
+	}
+	$agentForm .= "/><br />";
 	$agentForm .= "<label for=\"forumName_input\">Forum Name</label><input type=\"text\" id=\"forumName_input\" name=\"forumName_input\" ";
 	if($editAgent == TRUE) {
 		$agentForm .=  "value=\"{$agent_array['forum_name']}\" ";
@@ -58,6 +63,9 @@
 		}
 	}
 	$agentForm .= "/><br />";
+	$agentForm .= "<label for=\"password_input\">Password</label><input type=\"password\" id=\"password_input\" name=\"password_input\" /><br />";
+	$agentForm .= "<label for=\"confPassword_input\">Confirm Password</label><input type=\"password\" id=\"confPassword_input\" name=\"confPassword_input\" /><br />";
+	$agentForm .= "<label for=\"changePw_input\">Change password on next login</label><input type=\"checkbox\" id=\"changePw_input\" name=\"changePw_input\" />";
 	$weekdays_array = array("Monday", "Tuesday", "Wednesday", "Thursday", "Friday");
 	$agentForm .= "<div id=\"agentFormSchedule_div\"><table id=\"agentFormSchedule_table\">";
 	$agentForm .= "<thead><tr><th>Weekday</th><th>Begin Shift</th><th>End Shift</th></tr></thead><tbody>";
