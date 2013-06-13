@@ -273,10 +273,18 @@
 			$fieldName_array = preg_split("/([A-Z][a-z]+)|_/", $fieldName, -1, PREG_SPLIT_DELIM_CAPTURE|PREG_SPLIT_NO_EMPTY);
 			foreach($user_array as $id => $name) {
 				if($name == $_POST[$fieldName]) {
-					if($fieldName_array[2] != $id) {
-						$errors[$fieldName] = "error_unique";
+					if(is_numeric($fieldName_array[2])) {
+						if($fieldName_array[2] != $id) {
+							$errors[$fieldName] = "error_unique";
+							break 1;
+						}
+					} elseif($fieldName_array[2] == "input") {
+						if($_POST["agentId_input"] != $id) {
+							$errors[$fieldName] = "error_unique";
+							break 1;
+						}
 					}
-					break 1;
+					
 				}
 			}
 		}
