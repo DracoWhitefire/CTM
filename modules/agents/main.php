@@ -33,9 +33,9 @@
 		$checkNum_array = array();
 		$checkUniq_array = array();
 		foreach($_POST as $valField => $val) {			
-			$valFieldString_array = explode("_", $valField);
+			$valFieldString_array = preg_split("/([A-Z][a-z]+)|_/", $valField, -1, PREG_SPLIT_DELIM_CAPTURE|PREG_SPLIT_NO_EMPTY);
 			if(count($valFieldString_array) > 1){
-				if($valFieldString_array[1] == "name") {
+				if(strtolower($valFieldString_array[1]) == "name") {					
 					$checkLen_array[$valField] = "1-32";
 					$checkReq_array[] = $valField;
 					if($valFieldString_array[0] == "user") {
