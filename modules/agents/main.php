@@ -116,6 +116,13 @@
 			}
 		}
 	}
+	if(isset($_POST["submitForm"])) {
+		if(empty($errors)) {
+			
+		} else {
+			$editAgent = TRUE;
+		}
+	}
 	// If validation fails:	
 	if(isset($_POST["submitList"])) {
 		$errorId_array = array();
