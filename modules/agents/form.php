@@ -120,10 +120,16 @@
 		}
 		$agentForm .= "<tr><td>{$weekday}</td><td><input type=\"text\" name=\"{$weekday}Begin_input\" ";
 		if($editAgent == TRUE) {
+			if(isset($_POST["{$weekday}Begin_input"])) {
+				$agentForm .= "value=\"" . $_POST["{$weekday}Begin_input"] . "\" ";
+			}
 			$agentForm .= "value=\"{$agentSched_array['start_time']}\" ";
 		}
 		$agentForm .= "/></td><td><input type=\"text\" name=\"{$weekday}End_input\" ";
 		if($editAgent == TRUE) {
+			if(isset($_POST["{$weekday}End_input"])) {
+				$agentForm .= "value=\"" . $_POST["{$weekday}End_input"] . "\" ";
+			}
 			$agentForm .= "value=\"{$agentSched_array['end_time']}\" ";
 		}
 		$agentForm .= "/></td></tr>";
