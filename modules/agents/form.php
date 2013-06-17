@@ -70,38 +70,31 @@
 		$agentForm .= "\" ";
 	}
 	$agentForm .= "/><br />";
+	$rank_array = array("Guest" => 1, "Agent" => 10, "Admin" => 50, "Superadmin" => 100);
 	$agentForm .= "<label for=\"rank_select\">Rank</label><select id=\"rank_select\" name=\"rank_select\">";
-	$agentForm .= "<option value=\"1\" ";
-	if($editAgent == TRUE) {
-		if($agent_array["rank"] == 1) {
-			$agentForm .= "selected=\"selected\" ";
+	foreach($rank_array as $rankName => $rankValue) {
+		$agentForm .= "<option value=\"{$rankValue}\" ";
+		if($editAgent == TRUE) {
+			if(isset($_POST["rank_select"])) {
+				if($_POST["rank_select"] == $rankValue) {
+					$agentForm .= "selected=\"selected\" ";
+				}
+			} else {
+				if($agent_array["rank"] == $rankValue) {
+					$agentForm .= "selected=\"selected\" ";
+				}
+			}
 		}
+		$agentForm .= ">$rankName</option>";
 	}
-	$agentForm .= ">Guest</option>";
-	$agentForm .= "<option value=\"10\" ";
-	if($editAgent == TRUE) {
-		if($agent_array["rank"] == 10) {
-			$agentForm .= "selected=\"selected\" ";
-		}
-	}
-	$agentForm .= ">Agent</option>";
-	$agentForm .= "<option value=\"50\" ";
-	if($editAgent == TRUE) {
-		if($agent_array["rank"] == 50) {
-			$agentForm .= "selected=\"selected\" ";
-		}
-	}
-	$agentForm .= ">Admin</option>";
-	$agentForm .= "<option value=\"100\" ";
-	if($editAgent == TRUE) {
-		if($agent_array["rank"] == 100) {
-			$agentForm .= "selected=\"selected\" ";
-		}
-	}
-	$agentForm .= ">Superadmin</option>";
 	$agentForm .= "</select><br />";
 	$agentForm .= "<label for=\"active_input\">Active</label><input type=\"checkbox\" id=\"active_input\" name=\"active_input\" ";
 	if($editAgent == TRUE) {
+		if(isset($_POST["active_input"])) {
+			if($_POST["active_input"] == TRUE) {
+				$agentForm .=  "checked=\"checked\" ";	
+			}
+		}
 		if($agent_array["active"] == TRUE) {
 			$agentForm .=  "checked=\"checked\" ";	
 		}
