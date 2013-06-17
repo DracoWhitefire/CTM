@@ -289,6 +289,14 @@
 			}
 		}
 	}
+	function form_val_time($val_time_array) {
+		global $errors;
+		foreach($val_time_array as $fieldName) {
+			if(preg_match("/[0-9]{2}:[0-9]{2}:[0-9]{2}?/", $_POST[$fieldName]) == 0) {
+				$errors[$fieldName] = "error_time";
+			}
+		}
+	}
 	function convert_rank($rank) {
 		$convRank = "";
 		if(is_numeric($rank)) {
