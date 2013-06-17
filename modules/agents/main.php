@@ -34,6 +34,7 @@
 		$checkUniq_array = array();
 		foreach($_POST as $valField => $val) {			
 			$valFieldString_array = preg_split("/([A-Z][a-z]+)|_/", $valField, -1, PREG_SPLIT_DELIM_CAPTURE|PREG_SPLIT_NO_EMPTY);
+			//print_r($valFieldString_array);
 			if(count($valFieldString_array) > 1){
 				if(strtolower($valFieldString_array[1]) == "name") {					
 					$checkLen_array[$valField] = "1-32";
@@ -44,6 +45,10 @@
 				}
 				if(($valFieldString_array[0] == "rank")) {
 					$checkNum_array[] = $valField;
+					$checkReq_array[] = $valField;
+				}
+				if((strtolower($valFieldString_array[1]) == "begin") || (strtolower($valFieldString_array[1]) == "end")) {
+					$checkLen_array[$valField] = "8-8";
 					$checkReq_array[] = $valField;
 				}
 			}
