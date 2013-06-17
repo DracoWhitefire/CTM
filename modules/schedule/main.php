@@ -18,16 +18,16 @@
 		$output .= "<tr>";
 		$output .= "<td>" . $agent_row["forum_name"] . "</td><td class=\"time\" >";
 		$schedule = get_sch_for_agent($agent_row["id"], $selectedDay);
-		$endTime = strtotime($schedule["end_time"]);
-		settype($endTime, "float");
-		$startTime = strtotime($schedule["start_time"]);
-		settype($startTime, "float");
+		(float) $endTime = strtotime($schedule["end_time"]);
+		//settype($endTime, "float");
+		(float) $startTime = strtotime($schedule["start_time"]);
+		//settype($startTime, "float");
 		
-		settype($workingHours, "float");
+		//settype($workingHours, "float");
 		if(($endTime - $startTime) <= (4*60*60)) {
-			$workingHours = gmstrftime("%H:%M", ($endTime - $startTime));
+			(float) $workingHours = gmstrftime("%H:%M", ($endTime - $startTime));
 		} else {
-			$workingHours = gmstrftime("%H:%M", ($endTime - $startTime - (30*60)));
+			(float) $workingHours = gmstrftime("%H:%M", ($endTime - $startTime - (30*60)));
 			//$workingHours = $endTime - $startTime - (30*60);
 		}
 		
