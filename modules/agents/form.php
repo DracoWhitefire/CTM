@@ -119,6 +119,9 @@
 			$agentSched_array = get_sch_for_agent($agent_array["id"], strtolower($weekday));
 		}
 		$agentForm .= "<tr><td>{$weekday}</td><td><input type=\"text\" name=\"{$weekday}Begin_input\" ";
+		if(isset($errors["{$weekday}Begin_input"])) {
+			$agentForm .= "class=\"error\" ";
+		}
 		if($editAgent == TRUE) {
 			if(isset($_POST["{$weekday}Begin_input"])) {
 				$agentForm .= "value=\"" . $_POST["{$weekday}Begin_input"] . "\" ";
@@ -126,6 +129,9 @@
 			$agentForm .= "value=\"{$agentSched_array['start_time']}\" ";
 		}
 		$agentForm .= "/></td><td><input type=\"text\" name=\"{$weekday}End_input\" ";
+		if(isset($errors["{$weekday}End_input"])) {
+			$agentForm .= "class=\"error\" ";
+		}
 		if($editAgent == TRUE) {
 			if(isset($_POST["{$weekday}End_input"])) {
 				$agentForm .= "value=\"" . $_POST["{$weekday}End_input"] . "\" ";
