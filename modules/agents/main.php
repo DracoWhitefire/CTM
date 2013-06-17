@@ -120,7 +120,12 @@
 		if(empty($errors)) {
 			
 		} else {
-			$editAgent = TRUE;
+			if($_POST["submitForm"] == "Add User") {
+				$editAgent = TRUE;
+				
+			} elseif($_POST["submitForm"] == "Submit User") {
+				$editAgent = TRUE;
+			}
 		}
 	}
 	// If validation fails:	
