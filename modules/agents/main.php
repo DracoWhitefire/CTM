@@ -47,7 +47,6 @@
 					$checkReq_array[] = $valField;
 				}
 				if((strtolower($valFieldString_array[1]) == "begin") || (strtolower($valFieldString_array[1]) == "end")) {
-					$checkLen_array[$valField] = "8-8";
 					$checkReq_array[] = $valField;
 					$checkTime_array[] = $valField;
 					
