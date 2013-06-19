@@ -16,7 +16,7 @@
 	$selectedDay = date("l", strtotime($date["d"] . "-" . $date["m"] . "-" . $date["y"]));
 	while($agent_row = mysql_fetch_array($agent_set, MYSQL_ASSOC)) {
 		$output .= "<tr>";
-		$output .= "<td>" . $agent_row["forum_name"] . "</td><td class=\"time\" >";
+		$output .= "<td>" . htmlspecialchars($agent_row["forum_name"]) . "</td><td class=\"time\" >";
 		$schedule = get_sch_for_agent($agent_row["id"], $selectedDay);
 		(float) $endTime = strtotime($schedule["end_time"]);
 		//settype($endTime, "float");
@@ -32,7 +32,7 @@
 		}
 		
 		if($editing == TRUE) {
-			$output .= "<input type=\"text\" name=\"starttime_" . $agent_row["id"] . "\" value=\"";
+			$output .= "<input type=\"text\" name=\"starttime_" . htmlspecialchars($agent_row["id"]) . "\" value=\"";
 		}		
 		$output .= $schedule["start_time"];
 		if($editing == TRUE) {
@@ -40,13 +40,13 @@
 		}
 		$output .= "</td><td class=\"time\" >";
 		if($editing == TRUE) {
-			$output .= "<input type=\"text\" name=\"endtime_" . $agent_row["id"] . "\" value=\"";
+			$output .= "<input type=\"text\" name=\"endtime_" . htmlspecialchars($agent_row["id"]) . "\" value=\"";
 		}	
 		$output .= $schedule["end_time"];
 		if($editing == TRUE) {
 			$output .= "\" />";
 		}
-		$output .= "</td><td class=\"time\" >" .  $workingHours . "</td>";
+		$output .= "</td><td class=\"time\" >" .  htmlspecialchars($workingHours) . "</td>";
 		$output .= "</tr>";
 	}
 	$output .= "</tbody></table>";
