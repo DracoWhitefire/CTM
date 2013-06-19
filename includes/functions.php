@@ -63,7 +63,7 @@
 				if($row["id"] == $current_id) {
 					$output .= " class=\"selected\"";
 				}
-				$output .= "><a href=\"index.php?id=" . urlencode($row["id"]) . "\" >" . $row["menu_name"] . "</a></li>";
+				$output .= "><a href=\"" . htmlspecialchars("index.php?id=" . urlencode($row["id"])) . "\" >" . htmlspecialchars($row["menu_name"]) . "</a></li>";
 			}
 		$output .= "</ul>";
 		return $output;
@@ -160,11 +160,11 @@
 		$remainingLastMonth = cal_days_in_month(CAL_GREGORIAN, $prevMonth, $prevYear)-$daysLastMonthFirstWeek;
 		$daysNextMonthLastWeek = cal_days_in_month(CAL_GREGORIAN, $nextMonth, $selectedYear);
 		$output = "<div id=\"calendar_div\"><div id=\"month_select\">";
-		$prevMonthNav = htmlspecialchars("?id={$_GET["id"]}&m=" . $prevMonth . "&y=" . $prevYear);
-		$navLinks = "<div id=\"calPrev_div\"><a href=\"index.php{$prevMonthNav}\">Prev</a></div>";
-		$nextMonthNav = htmlspecialchars("?id={$_GET["id"]}&m=" . $nextMonth . "&y=" . $nextYear);
-		$navLinks .= "<div id=\"calNext_div\"><a href=\"index.php{$nextMonthNav}\">Next</a></div>";
-		$navLinks .= "<div id=\"calCur_div\">" . date("F Y",strtotime($selectedDay . "-" . $selectedMonth . "-" . $selectedYear)) . "</div>";
+		$prevMonthNav = "?id=" . urlencode($_GET["id"]) . "&m=" . urlencode($prevMonth) . "&y=" . urlencode($prevYear);
+		$navLinks = "<div id=\"calPrev_div\"><a href=\"" . htmlspecialchars("index.php" . $prevMonthNav) . "\">Prev</a></div>";
+		$nextMonthNav = "?id=" . urlencode($_GET["id"]) . "&m=" . urlencode($nextMonth) . "&y=" . urlencode($nextYear);
+		$navLinks .= "<div id=\"calNext_div\"><a href=\"" . htmlspecialchars("index.php" . $nextMonthNav) . "\">Next</a></div>";
+		$navLinks .= "<div id=\"calCur_div\">" . htmlspecialchars(date("F Y",strtotime($selectedDay . "-" . $selectedMonth . "-" . $selectedYear))) . "</div>";
 		$output .= $navLinks . "</div>"; 
 		// Beginning of the Table
 		$output .= "<table id=\"calendar_table\">";
@@ -198,7 +198,7 @@
 					$tdOutput2 = ($dayNo - $prevNumberOfDays - $numberOfDays);
 				}
 				$tdOutput3 = "</a></td>";
-				$output .= $tdOutput1 . "<a href=\"index.php" . htmlspecialchars("?id={$_GET["id"]}&d={$tdOutput2}&m={$urlMonth}&y={$urlYear}") . "\" >" . $tdOutput2 . $tdOutput3;
+				$output .= $tdOutput1 . "<a href=\"" . htmlspecialchars("index.php" . "?id=" . urlencode($_GET["id"]) . "&d=" . urlencode($tdOutput2) . "&m=" . urlencode($urlMonth) . "&y=" . urlencode($urlYear)) . "\" >" . $tdOutput2 . $tdOutput3;
 				$dayNo++;
 			}
 			$output .= "</tr>";
