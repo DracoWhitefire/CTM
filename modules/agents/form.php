@@ -12,7 +12,7 @@
 	$agentForm = "Agent Form";
 	$agentForm .= "<div id=\"agentForm_div\"><form id=\"agentForm_form\" method=\"POST\" action=\"index.php" . htmlspecialchars("?id={$current_id}") . "\">";
 	if($editAgent == TRUE) {
-		$agentForm .= "<input type=\"hidden\" name=\"agentId_input\" value=\"{$agent_array['id']}\" />";
+		$agentForm .= "<input type=\"hidden\" name=\"agentId_input\" value=\"" . htmlspecialchars($agent_array['id']) . "\" />";
 	}
 	$agentForm .= "<label for=\"userName_input\">CTM Username</label><input type=\"text\" id=\"userName_input\" name=\"userName_input\" ";
 	if(isset($errors["userName_input"])) {
@@ -21,9 +21,9 @@
 	if($editAgent == TRUE) {
 		$agentForm .= "value=\"";
 		if(isset($_POST["userName_input"])) {
-			$agentForm .= $_POST["userName_input"];
+			$agentForm .= htmlspecialchars($_POST["userName_input"]);
 		} else {
-			$agentForm .=  $agent_array['user_name'];	
+			$agentForm .=  htmlspecialchars($agent_array['user_name']);	
 		}
 		$agentForm .= "\" ";
 	}
@@ -35,9 +35,9 @@
 	if($editAgent == TRUE) {
 		$agentForm .= "value=\"";
 		if(isset($_POST["forumName_input"])) {
-			$agentForm .= $_POST["forumName_input"];
+			$agentForm .= htmlspecialchars($_POST["forumName_input"]);
 		} else {
-			$agentForm .=  $agent_array['forum_name'];	
+			$agentForm .=  htmlspecialchars($agent_array['forum_name']);	
 		}
 		$agentForm .= "\" ";
 	}
@@ -49,9 +49,9 @@
 	if($editAgent == TRUE) {
 		$agentForm .= "value=\"";
 		if(isset($_POST["firstName_input"])) {
-			$agentForm .= $_POST["firstName_input"];
+			$agentForm .= htmlspecialchars($_POST["firstName_input"]);
 		} else {
-			$agentForm .=  $agent_array['first_name'];	
+			$agentForm .=  htmlspecialchars($agent_array['first_name']);	
 		}
 		$agentForm .= "\" ";
 	}
@@ -63,9 +63,9 @@
 	if($editAgent == TRUE) {
 		$agentForm .= "value=\"";
 		if(isset($_POST["lastName_input"])) {
-			$agentForm .= $_POST["lastName_input"];
+			$agentForm .= htmlspecialchars($_POST["lastName_input"]);
 		} else {
-			$agentForm .=  $agent_array['last_name'];	
+			$agentForm .=  htmlspecialchars($agent_array["last_name"]);	
 		}
 		$agentForm .= "\" ";
 	}
@@ -73,7 +73,7 @@
 	$rank_array = array("Guest" => 1, "Agent" => 10, "Admin" => 50, "Superadmin" => 100);
 	$agentForm .= "<label for=\"rank_select\">Rank</label><select id=\"rank_select\" name=\"rank_select\">";
 	foreach($rank_array as $rankName => $rankValue) {
-		$agentForm .= "<option value=\"{$rankValue}\" ";
+		$agentForm .= "<option value=\"" . htmlspecialchars($rankValue) . "\" ";
 		if($editAgent == TRUE) {
 			if(isset($_POST["rank_select"])) {
 				if($_POST["rank_select"] == $rankValue) {
@@ -85,7 +85,7 @@
 				}
 			}
 		}
-		$agentForm .= ">$rankName</option>";
+		$agentForm .= ">" . htmlspecialchars($rankName) . "</option>";
 	}
 	$agentForm .= "</select><br />";
 	$agentForm .= "<label for=\"active_input\">Active</label><input type=\"checkbox\" id=\"active_input\" name=\"active_input\" ";
@@ -124,9 +124,9 @@
 		}
 		if($editAgent == TRUE) {
 			if(isset($_POST["{$weekday}Begin_input"])) {
-				$agentForm .= "value=\"" . $_POST["{$weekday}Begin_input"] . "\" ";
+				$agentForm .= "value=\"" . htmlspecialchars($_POST["{$weekday}Begin_input"]) . "\" ";
 			}
-			$agentForm .= "value=\"{$agentSched_array['start_time']}\" ";
+			$agentForm .= "value=\"" . htmlspecialchars($agentSched_array["start_time"]) . "\" ";
 		}
 		$agentForm .= "/></td><td><input type=\"text\" name=\"{$weekday}End_input\" ";
 		if(isset($errors["{$weekday}End_input"])) {
@@ -134,9 +134,9 @@
 		}
 		if($editAgent == TRUE) {
 			if(isset($_POST["{$weekday}End_input"])) {
-				$agentForm .= "value=\"" . $_POST["{$weekday}End_input"] . "\" ";
+				$agentForm .= "value=\"" . htmlspecialchars($_POST["{$weekday}End_input"]) . "\" ";
 			}
-			$agentForm .= "value=\"{$agentSched_array['end_time']}\" ";
+			$agentForm .= "value=\"" . htmlspecialchars($agentSched_array["end_time"]) . "\" ";
 		}
 		$agentForm .= "/></td></tr>";
 	}
