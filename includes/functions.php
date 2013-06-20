@@ -235,6 +235,26 @@
 			}
 		}
 	}
+	class Session {
+		private $loggedIn;
+		public $userId;
+		function __construct() {
+			session_start();
+			$this->check_login();
+		}
+		private function check_login() {
+			if(isset($_SESSION["id"])) {
+				$this->userId = $_SESSION["id"];
+				$this->loggedIn = TRUE;
+			} else {
+				unset($this->userId);
+				$this->loggedIn = FALSE;
+			}
+		}
+		public function is_loggedIn() {
+			return $this->loggedIn;
+		}
+	}
 
 //date functions
 	function get_selected_date() {
