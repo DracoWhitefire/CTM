@@ -2,43 +2,63 @@
 	require_once("config.php");
 	
 //database functions
-	function db_connect() {
-		global $connection;
-		$connection = mysqli_connect(DB_SERVER , DB_USER, DB_PW, DB_NAME);
-		if(mysqli_connect_errno()) {
-			die("MySQL connection failed: " . mysqli_connect_error() . " (" . mysqli_connect_errno() . ") ");
+	class mySqlDatabase {
+		private $connection;
+		function __construct() {
+			$this->connect();
 		}
-	}
-	function mysqli_prep($value) {
-		$magic_quotes_active = get_magic_quotes_gpc();
-		$php_uptodate = function_exists("mysqli_real_escape_string");
-		if($php_uptodate) {
-			if($magic_quotes_active) {
-				$value = mysqli_real_escape_string($connection, stripslashes($value));
-			}
-		} else {
-			if(!$magic_quotes_active) {
-				$value = mysqli_real_escape_string($connection, $value);
+		
+		private function connect() {
+			$this->connection = mysqli_connect(DB_SERVER , DB_USER, DB_PW, DB_NAME);
+			if($this->connection->connect_errno) {
+				die("MySQL connection failed: " . $this->connection->connect_error . " (" . $this->connection->connect_errno . ") ");
 			}
 		}
-		return trim($value);
-	}
-	function mysqli_confirm($result_set) {
-		global $connection;
-		if(!$result_set) {
-			die("Database query failed: " . mysqli_error($connection));
+		
+		public function disconnect() {
+			if(isset($this->connection)) {
+				mysqli_close($this->connection);
+				unset($this->connection);
+			}
+		}
+		
+ 		public function query_prep($value) {
+			$magic_quotes_active = get_magic_quotes_gpc();
+			$php_uptodate = function_exists("mysqli_real_escape_string");
+			if($php_uptodate) {
+				if($magic_quotes_active) {
+					$value = mysqli_real_escape_string($connection, stripslashes($value));
+				}
+			} else {
+				if(!$magic_quotes_active) {
+					$value = mysqli_real_escape_string($connection, $value);
+				}
+			}
+			return trim($value);
+		}
+		
+		public function query($sql) {
+			$result = mysqli_query($this->connection, $sql);
+			$this->mysqli_confirm($result);
+			return $result;
+		}
+		
+		private function mysqli_confirm($result) {
+			global $connection;
+			if(!$result) {
+				die("Database query failed: " . mysqli_error($connection));
+			}
 		}
 	}
 	
 //navigation functions
 	function get_all_subjects() {
-		global $connection;
+		global $db;
 		$query  = "SELECT * ";
 		$query .= "FROM `subjects` ";
 		$query .= "WHERE `visible` = 1 ";
 		$query .= "ORDER BY `position` ASC ";
-		$nav_set = mysqli_query($connection, $query);
-		mysqli_confirm($nav_set);
+		$nav_set = $db->query($query);
 		return $nav_set;
 	}
 	function get_selected_id() {
@@ -50,12 +70,11 @@
 		return $current_id;
 	}
 	function get_subject_by_id($id) {
-		global $connection;
+		global $db;
 		if(isset($_SESSION["rank"])) {
 			$query  = "SELECT * ";
 			$query .= "FROM `subjects` ";
-			$set = mysqli_query($connection, $query);
-			mysqli_confirm($set);
+			$set = $db->query($query);
 			$subj_total = mysqli_num_rows($set);
 			mysqli_free_result($set);
 			if(!((1 <= $id) && ($id <= $subj_total))) {
@@ -63,10 +82,9 @@
 			}
 			$query  = "SELECT * ";
 			$query .= "FROM `subjects` ";
-			$query .= "WHERE `id` = '" . mysqli_prep($id) . "' ";
+			$query .= "WHERE `id` = '" . $db->query_prep($id) . "' ";
 			$query .= "LIMIT 1";
-			$set = mysqli_query($connection, $query);
-			mysqli_confirm($set);
+			$set = $db->query($query);
 			$result = mysqli_fetch_assoc($set);
 			mysqli_free_result($set);
 			if($result["min_rank"] <= $_SESSION["rank"]) {
@@ -77,8 +95,7 @@
 			$query .= "FROM `subjects` ";
 			$query .= "WHERE `id` = '7' ";
 			$query .= "LIMIT 1";
-			$set = mysqli_query($connection, $query);
-			mysqli_confirm($set);
+			$set = $db->query($query);
 			$result = mysqli_fetch_assoc($set);
 			mysqli_free_result($set);
 			return $result;
@@ -128,7 +145,7 @@
 			return $object;
 		}
 		public static function get($selection = "all") {
-			global $connection;
+			global $db;
 			$object_array = array();
 			$user_query  = "SELECT 	`id`, 
 									`user_name`, 
@@ -146,8 +163,7 @@
 				$user_query .= "WHERE `active` = '0' ";
 			}		
 			$user_query .= "ORDER BY `id` ASC";
-			$user_set = mysqli_query($connection, $user_query);
-			mysqli_confirm($user_set);
+			$user_set = $db->query($user_query);
 			while($row = mysqli_fetch_assoc($user_set)) {
 				$object_array[] = self::instantiate($row);
 			}
@@ -159,15 +175,14 @@
 			return array_key_exists($attribute, $vars);
 		}
 		public function get_sch($day) {
-			global $connection;
-			$selected_user = mysqli_prep($this->id);
-			$day = mysqli_prep($day);
+			global $db;
+			$selected_user = $db->query_prep($this->id);
+			$day = $db->query_prep($day);
 			$sch_query  = "SELECT `start_time`, `end_time` ";
 			$sch_query .= "FROM `schedules` ";
 			$sch_query .= "WHERE `weekday` = '{$day}' ";
 			$sch_query .= "AND `id` = '{$selected_user}' ";
-			$sch_set = mysqli_query($connection, $sch_query);
-			mysqli_confirm($sch_set);
+			$sch_set = $db->query($sch_query);
 			$result_array = mysqli_fetch_array($sch_set, MYSQL_ASSOC);
 			mysqli_free_result($sch_set);
 			return $result_array;
@@ -370,11 +385,10 @@
 			}
 		}									
 		public function unique($val_uniq_array) {
-			global $connection;
+			global $db;
 			$user_query  = "SELECT `user_name`, `id` ";
 			$user_query .= "FROM `users` ";
-			$user_set = mysqli_query($connection, $user_query);
-			mysqli_confirm($user_set);
+			$user_set = $db->query($user_query);
 			while($user_row = mysqli_fetch_assoc($user_set)) {
 				$id = (int) $user_row["id"];
 				$user_array[$id] = $user_row["user_name"];
