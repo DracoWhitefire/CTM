@@ -263,10 +263,8 @@
 //form validation functions
 	function form_val_required($val_req_array) {
 		global $errors;
-		$val_errors_req_array = array();
 		foreach($val_req_array as $fieldName) {
 			if(!isset($_POST[$fieldName]) || ((empty($_POST[$fieldName])) && !(is_numeric($_POST[$fieldName])))) {
-				//$val_errors_req_array[$fieldName] = "error_req";
 				$errors[$fieldName] = "error_req";
 			}
 		}
@@ -274,16 +272,13 @@
 	}
 	function form_val_length($val_len_array) {
 		global $errors;
-		$val_errors_len_array = array();
 		foreach($val_len_array as $fieldName => $minmax) {
 			$string_array = explode("-", $minmax);
 			$min = $string_array["0"];
 			$max = $string_array["1"];
 			if((strlen(trim($_POST[$fieldName])) < $min) || (strlen(trim($_POST[$fieldName])) > $max)) {
-				//$val_errors_len_array[] = $fieldName;
 				if(!isset($errors[$fieldName])) {
 					$errors[$fieldName] = "error_len";
-					//echo "ERROR";
 				}
 			}
 		}
@@ -291,7 +286,6 @@
 	}
 	function form_val_num($checkNum_array) {
 		global $errors;
-		$val_errors_num_array = array();
 		foreach($checkNum_array as $fieldName) {
 			if(!is_numeric($_POST[$fieldName])) {
 				$errors[$fieldName] = "error_num";
