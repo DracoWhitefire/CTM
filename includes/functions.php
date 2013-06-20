@@ -134,10 +134,40 @@
 		}
 		return $date_array;
 	}
-	function calendar($date){
-		$selectedYear = $date["y"];
-		$selectedMonth = $date["m"];
-		$selectedDay = $date["d"];
+	function date_to_url($year = "", $month = "", $day = "") {
+		$urlQueries_array = array();
+		if(!isset($_SERVER["QUERY_STRING"])) {
+			$url = $_SERVER["REQUEST_URI"];
+		} else {
+			$urlQueries = explode("&", $_SERVER["QUERY_STRING"]);
+			foreach($urlQueries as $urlQuery) {
+				$query_array = explode("=", $urlQuery);
+				$urlQueries_array[$query_array[0]] = $query_array[1];
+			}
+			$urlQueries_array["y"] = 	!empty($year) 
+										? urlencode($year) 
+										: (isset($urlQueries_array["y"]) 
+											? $urlQueries_array["y"]
+											: date("Y"));
+			$urlQueries_array["m"] = 	!empty($month) 
+										? urlencode($month) 
+										: (isset($urlQueries_array["m"]) 
+											? $urlQueries_array["m"]
+											: date("n"));
+			$urlQueries_array["d"] = 	!empty($day) 
+										? urlencode($day) 
+										: (isset($urlQueries_array["d"]) 
+											? $urlQueries_array["d"]
+											: date("j"));
+			$url = $_SERVER["PHP_SELF"] . "?" . http_build_query($urlQueries_array);
+		}
+		return $url;
+	}
+	function calendar($date = ""){
+		//requires the function date_to_url()
+		$selectedYear = isset($date["y"]) ? $date["y"] : date("Y");
+		$selectedMonth = isset($date["m"]) ? $date["m"] : date("n");
+		$selectedDay = isset($date["d"]) ? $date["d"] : date("j");
 		if($selectedMonth == 1) {
 			$prevMonth = 12;
 			$prevYear = $selectedYear - 1;
@@ -160,10 +190,14 @@
 		$remainingLastMonth = cal_days_in_month(CAL_GREGORIAN, $prevMonth, $prevYear)-$daysLastMonthFirstWeek;
 		$daysNextMonthLastWeek = cal_days_in_month(CAL_GREGORIAN, $nextMonth, $selectedYear);
 		$output = "<div id=\"calendar_div\"><div id=\"month_select\">";
-		$prevMonthNav = "?id=" . urlencode($_GET["id"]) . "&m=" . urlencode($prevMonth) . "&y=" . urlencode($prevYear);
-		$navLinks = "<div id=\"calPrev_div\"><a href=\"" . htmlspecialchars("index.php" . $prevMonthNav) . "\">Prev</a></div>";
-		$nextMonthNav = "?id=" . urlencode($_GET["id"]) . "&m=" . urlencode($nextMonth) . "&y=" . urlencode($nextYear);
-		$navLinks .= "<div id=\"calNext_div\"><a href=\"" . htmlspecialchars("index.php" . $nextMonthNav) . "\">Next</a></div>";
+		//$prevMonthNav = "index.php" . "?id=" . urlencode($_GET["id"]) . "&m=" . urlencode($prevMonth) . "&y=" . urlencode($prevYear);
+		$prevMonthNav = date_to_url($prevYear, $prevMonth);
+		$navLinks = "<div id=\"calPrev_div\"><a href=\"" . htmlspecialchars($prevMonthNav) . "\">Prev</a></div>";
+		
+		//$nextMonthNav = "index.php" . "?id=" . urlencode($_GET["id"]) . "&m=" . urlencode($nextMonth) . "&y=" . urlencode($nextYear);
+		$nextMonthNav = date_to_url($nextYear, $nextMonth);
+		$navLinks .= "<div id=\"calNext_div\"><a href=\"" . htmlspecialchars($nextMonthNav) . "\">Next</a></div>";
+		
 		$navLinks .= "<div id=\"calCur_div\">" . htmlspecialchars(date("F Y",strtotime($selectedDay . "-" . $selectedMonth . "-" . $selectedYear))) . "</div>";
 		$output .= $navLinks . "</div>"; 
 		// Beginning of the Table
@@ -198,7 +232,8 @@
 					$tdOutput2 = ($dayNo - $prevNumberOfDays - $numberOfDays);
 				}
 				$tdOutput3 = "</a></td>";
-				$output .= $tdOutput1 . "<a href=\"" . htmlspecialchars("index.php" . "?id=" . urlencode($_GET["id"]) . "&d=" . urlencode($tdOutput2) . "&m=" . urlencode($urlMonth) . "&y=" . urlencode($urlYear)) . "\" >" . $tdOutput2 . $tdOutput3;
+				$dateUrl = date_to_url($urlYear, $urlMonth, $tdOutput2);
+				$output .= $tdOutput1 . "<a href=\"" . htmlspecialchars($dateUrl) . "\" >" . $tdOutput2 . $tdOutput3;
 				$dayNo++;
 			}
 			$output .= "</tr>";
