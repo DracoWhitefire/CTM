@@ -282,7 +282,6 @@
 				}
 			}
 		}
-		return $val_errors_len_array;
 	}
 	function form_val_num($checkNum_array) {
 		global $errors;
