@@ -106,9 +106,10 @@
 		//requires the (result of the) function get_all_subjects()
 		//requires the function get_selected_id()
 		global $current_id;
+		global $db;
 		if(isset($_SESSION["id"])) {
 			$output = "<ul>";
-			While($row = mysqli_fetch_array($subject_set, MYSQL_ASSOC)) {
+			While($row = $db->fetch_assoc($subject_set)) {
 				if($row["visible"] == TRUE && $row["min_rank"] <= $_SESSION["rank"]) {
 					$output .= "<li";
 					if($row["id"] == $current_id) {
@@ -184,7 +185,7 @@
 			$sch_query .= "WHERE `weekday` = '{$day}' ";
 			$sch_query .= "AND `id` = '{$selected_user}' ";
 			$sch_set = $db->query($sch_query);
-			$result_array = mysqli_fetch_array($sch_set, MYSQL_ASSOC);
+			$result_array = $db->fetch_assoc($sch_set);
 			mysqli_free_result($sch_set);
 			return $result_array;
 		}		

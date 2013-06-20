@@ -130,9 +130,6 @@
 			$query .= "; ";
 			if(empty($validator->errors)) {
 				$result = $db->query($query);
-				if(!$result) {
-					echo "MySQL Query Failed: " . mysqli_error($connection);
-				}
 			} else {
 				$editList = TRUE;
 			}
@@ -162,7 +159,6 @@
 											$db->query_prep($active) . "') ";
 				$query .= ";";
 				$insert_success = $db->query($query);
-				mysqli_confirm($insert_success);
 				
 				//create schedule for user
 				(int) $createdId = mysqli_insert_id($connection);
@@ -183,7 +179,6 @@
 				}
 				$query .= ";";
 				$insert_success = $db->query($query);
-				mysqli_confirm($insert_success);
 			} elseif($_POST["submitForm"] == "Submit User") {
 				//Update existing user
 				if(isset($_POST["active_input"])) {
@@ -205,7 +200,6 @@
 				$query .= "LIMIT 1" ;
 				$query .= ";";
 				$update_success = $db->query($query);
-				mysqli_confirm($update_success);
 				
 				$weekdays_array = array("monday", "tuesday", "wednesday", "thursday", "friday");
 				foreach($weekdays_array as $weekday) {
@@ -218,7 +212,6 @@
 					$query .= "LIMIT 1 ";
 					$query .= ";";
 					$insert_success = $db->query($query);
-					mysqli_confirm($insert_success);
 				}
 				
 			}

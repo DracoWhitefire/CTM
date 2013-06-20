@@ -8,7 +8,7 @@
 		$validator->required($checkReq_array);
 		if(empty($validator->errors)) {
 			$query = "SELECT `id`, `user_name`, `passwordhash`, `rank`, `first_name` FROM `users`";
-			$user_set = $db->query($connection, $query);
+			$user_set = $db->query($query);
 			while($user_row = $db->fetch_assoc($user_set)) {
 				if($user_row["user_name"] == $username) {
 					if(user::pw_check($password, $user_row["passwordhash"])) {
