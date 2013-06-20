@@ -41,6 +41,12 @@
 		public function num_rows($result) {
 			return mysqli_num_rows($result);
 		}
+		public function insert_id() {
+			return mysqli_insert_id($this->connection);
+		}
+		public function affected_rows() {
+			return mysqli_affected_rows($this->connection);
+		}
 		
 		private function mysqli_confirm($result) {
 			global $connection;
@@ -213,6 +219,7 @@
 			}
 		}
 	}
+
 //date functions
 	function get_selected_date() {
 		$date_array = array();
@@ -467,6 +474,7 @@
 			}
 		}										
 	}
+
 //general functions
 	function convert_rank($rank) {
 		$convRank = "";

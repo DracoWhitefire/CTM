@@ -161,7 +161,7 @@
 				$insert_success = $db->query($query);
 				
 				//create schedule for user
-				(int) $createdId = mysqli_insert_id($connection);
+				(int) $createdId = $db->insert_id();
 				$query  = "INSERT INTO `schedules` ";
 				$query .= "(`id`, `weekday`, `start_time`, `end_time`) ";
 				$query .= "VALUES ";
