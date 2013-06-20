@@ -1,5 +1,7 @@
 <?php
 	require_once("constants.php");
+	
+//database functions
 	function db_connect() {
 		global $connection;
 		$connection = mysql_connect(DB_SERVER , DB_USER, DB_PW);
@@ -11,6 +13,22 @@
 			die("Database selection failed: " . mysql_error());
 		}
 	}
+	function mysql_prep($value) {
+		$magic_quotes_active = get_magic_quotes_gpc();
+		$php_uptodate = function_exists("mysql_real_escape_string");
+		if($php_uptodate) {
+			if($magic_quotes_active) {
+				$value = mysql_real_escape_string(stripslashes($value));
+			}
+		} else {
+			if(!$magic_quotes_active) {
+				$value = addslashes($value);
+			}
+		}
+		return $value;
+	}
+	
+//navigation functions
 	function get_all_subjects() {
 		global $connection;
 		$query  = "SELECT * ";
@@ -68,6 +86,8 @@
 		$output .= "</ul>";
 		return $output;
 	}
+	
+//agent functions
 	function get_sch_for_agent($selected_agent, $day) {
 	//function get_sch_for_agent($selected_agent, $day = "Wednesday") {
 		global $connection;
@@ -107,6 +127,8 @@
 		}
 		return $agent_set;
 	}
+	
+//date functions
 	function get_selected_date() {
 		$date_array = array();
 		if(!isset($_GET["y"])) {
@@ -237,20 +259,8 @@
 		$output .= "</tbody></table></div>";
 		return $output;	
 	}
-	function mysql_prep($value) {
-		$magic_quotes_active = get_magic_quotes_gpc();
-		$php_uptodate = function_exists("mysql_real_escape_string");
-		if($php_uptodate) {
-			if($magic_quotes_active) {
-				$value = mysql_real_escape_string(stripslashes($value));
-			}
-		} else {
-			if(!$magic_quotes_active) {
-				$value = addslashes($value);
-			}
-		}
-		return $value;
-	}
+	
+//form validation functions
 	function form_val_required($val_req_array) {
 		global $errors;
 		$val_errors_req_array = array();
@@ -329,6 +339,8 @@
 			}
 		}
 	}
+	
+//general functions
 	function convert_rank($rank) {
 		$convRank = "";
 		if(is_numeric($rank)) {
