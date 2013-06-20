@@ -69,8 +69,34 @@
 			
 			return $result;
 		}
+	}	
+	class dao {
+		private static function instantiate(array $row) {
+			$object = new static;
+			foreach($row as $attribute => $value) {
+				$converted_attribute = preg_replace("/^(\w+?)_(\w+?)$/e", "\"$1\" . ucfirst(\"$2\")", $attribute);
+				if($object->has_attribute($converted_attribute)) {
+					$object->$converted_attribute = $value;
+				}
+			}
+			return $object;
+		}
+		private function has_attribute($attribute) {
+			$vars = get_object_vars($this);
+			return array_key_exists($attribute, $vars);
+		}
+		public static function get_by_query($query) {
+			global $db;
+			$object_array = array();
+			$result_set = $db->query($query);
+			while($row = $db->fetch_assoc($result_set)) {
+				$object_array[] = static::instantiate($row);
+			}
+			mysqli_free_result($result_set);
+			return $object_array;
+		}
 	}
-	
+
 //navigation functions
 	function get_all_subjects() {
 		global $db;
@@ -145,7 +171,7 @@
 	}
 	
 //user functions
-	class user {
+	class user extends dao {
 		public $id;
 		public $userName;
 		public $forumName;
@@ -155,19 +181,7 @@
 		public $active;
 		public $password;
 		
-		private static function instantiate(array $row) {
-			$object = new self;
-			foreach($row as $attribute => $value) {
-				$converted_attribute = preg_replace("/^(\w+?)_(\w+?)$/e", "\"$1\" . ucfirst(\"$2\")", $attribute);
-				if($object->has_attribute($converted_attribute)) {
-					$object->$converted_attribute = $value;
-				}
-			}
-			return $object;
-		}
 		public static function get($selection = "all") {
-			global $db;
-			$object_array = array();
 			$user_query  = "SELECT 	`id`, 
 									`user_name`, 
 									`forum_name`, 
@@ -182,19 +196,11 @@
 				$user_query .= "WHERE `active` = '1' ";
 			} elseif ($selection == "inactive") {
 				$user_query .= "WHERE `active` = '0' ";
-			}		
-			$user_query .= "ORDER BY `id` ASC";
-			$user_set = $db->query($user_query);
-			while($row = $db->fetch_assoc($user_set)) {
-				$object_array[] = self::instantiate($row);
 			}
-			mysqli_free_result($user_set);
-			return $object_array;
+			$user_query .= "ORDER BY `id` ASC";
+			return self::get_by_query($user_query);
 		}
-		private function has_attribute($attribute) {
-			$vars = get_object_vars($this);
-			return array_key_exists($attribute, $vars);
-		}
+		
 		public function get_sch($day) {
 			global $db;
 			$selected_user = $db->query_prep($this->id);
