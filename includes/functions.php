@@ -136,31 +136,27 @@
 	}
 	function date_to_url($year = "", $month = "", $day = "") {
 		$urlQueries_array = array();
-		if(!isset($_SERVER["QUERY_STRING"])) {
-			$url = $_SERVER["REQUEST_URI"];
-		} else {
-			$urlQueries = explode("&", $_SERVER["QUERY_STRING"]);
-			foreach($urlQueries as $urlQuery) {
-				$query_array = explode("=", $urlQuery);
-				$urlQueries_array[$query_array[0]] = $query_array[1];
-			}
-			$urlQueries_array["y"] = 	!empty($year) 
-										? urlencode($year) 
-										: (isset($urlQueries_array["y"]) 
-											? $urlQueries_array["y"]
-											: date("Y"));
-			$urlQueries_array["m"] = 	!empty($month) 
-										? urlencode($month) 
-										: (isset($urlQueries_array["m"]) 
-											? $urlQueries_array["m"]
-											: date("n"));
-			$urlQueries_array["d"] = 	!empty($day) 
-										? urlencode($day) 
-										: (isset($urlQueries_array["d"]) 
-											? $urlQueries_array["d"]
-											: date("j"));
-			$url = $_SERVER["PHP_SELF"] . "?" . http_build_query($urlQueries_array);
+		$urlQueries = explode("&", $_SERVER["QUERY_STRING"]);
+		foreach($urlQueries as $urlQuery) {
+			$query_array = explode("=", $urlQuery);
+			$urlQueries_array[$query_array[0]] = $query_array[1];
 		}
+		$urlQueries_array["y"] = 	!empty($year) 
+									? urlencode($year) 
+									: (isset($urlQueries_array["y"]) 
+										? $urlQueries_array["y"]
+										: date("Y"));
+		$urlQueries_array["m"] = 	!empty($month) 
+									? urlencode($month) 
+									: (isset($urlQueries_array["m"]) 
+										? $urlQueries_array["m"]
+										: date("n"));
+		$urlQueries_array["d"] = 	!empty($day) 
+									? urlencode($day) 
+									: (isset($urlQueries_array["d"]) 
+										? $urlQueries_array["d"]
+										: date("j"));
+		$url = $_SERVER["PHP_SELF"] . "?" . http_build_query($urlQueries_array);
 		return $url;
 	}
 	function calendar($date = ""){
