@@ -89,7 +89,7 @@
 					$query_array_{$string_id} = array();
 				}
 				$field = $string_array[0] . "_" . $string_array[1];
-				$postValue = trim(mysqli_prep($postValue));
+				$postValue = trim($db->query_prep($postValue));
 				$query_array_{$string_id}[$field] = $postValue;
 				$query_array[$string_id] = $query_array_{$string_id};
 			}
@@ -103,8 +103,8 @@
 			}
 			//print_r($user_array);
 			foreach($user_array as $field => $postValue) {
-				$field = mysqli_prep($field);
-				$postValue = mysqli_prep($postValue);
+				$field = $db->query_prep($field);
+				$postValue = $db->query_prep($postValue);
 				if($field == "active_check") {
 					$field = "active";
 					if($postValue == "on") {
@@ -129,7 +129,7 @@
 			$query .= "LIMIT 1 ";
 			$query .= "; ";
 			if(empty($validator->errors)) {
-				$result = mysqli_query($connection, $query);
+				$result = $db->query($query);
 				if(!$result) {
 					echo "MySQL Query Failed: " . mysqli_error($connection);
 				}
@@ -153,15 +153,15 @@
 				}
 				$query  = "INSERT INTO `users` ";
 				$query .= "(`user_name`, `forum_name`, `first_name`, `last_name`, `rank`, `passwordhash`, `active`) ";
-				$query .= "VALUES ('" . 	mysqli_prep($_POST["userName_input"]) . "', '" . 
-											mysqli_prep($_POST["forumName_input"]) . "', '" . 
-											mysqli_prep($_POST["firstName_input"]) . "', '" . 
-											mysqli_prep($_POST["lastName_input"]) . "', '" . 
-											mysqli_prep($_POST["rank_select"]) . "', '" .
-											mysqli_prep($hashPw) . "', '" . 
-											mysqli_prep($active) . "') ";
+				$query .= "VALUES ('" . 	$db->query_prep($_POST["userName_input"]) . "', '" . 
+											$db->query_prep($_POST["forumName_input"]) . "', '" . 
+											$db->query_prep($_POST["firstName_input"]) . "', '" . 
+											$db->query_prep($_POST["lastName_input"]) . "', '" . 
+											$db->query_prep($_POST["rank_select"]) . "', '" .
+											$db->query_prep($hashPw) . "', '" . 
+											$db->query_prep($active) . "') ";
 				$query .= ";";
-				$insert_success = mysqli_query($connection, $query);
+				$insert_success = $db->query($query);
 				mysqli_confirm($insert_success);
 				
 				//create schedule for user
@@ -175,14 +175,14 @@
 					$endFieldname = ucfirst($weekday) . "End_input";
 					$query .= 	"(" .	$createdId . ", '" .
 										$weekday . "', '" .
-										mysqli_prep($_POST[$beginFieldname]) . "', '" .
-										mysqli_prep($_POST[$endFieldname]) . "')";
+										$db->query_prep($_POST[$beginFieldname]) . "', '" .
+										$db->query_prep($_POST[$endFieldname]) . "')";
 					if($weekday != "friday") {
 						$query .= ",";
 					}
 				}
 				$query .= ";";
-				$insert_success = mysqli_query($connection, $query);
+				$insert_success = $db->query($query);
 				mysqli_confirm($insert_success);
 			} elseif($_POST["submitForm"] == "Submit User") {
 				//Update existing user
@@ -192,19 +192,19 @@
 					$active = 0;
 				}
 				$query  = 	"UPDATE `users` SET ";
-				$query .= 	"`user_name`='" . 	mysqli_prep($_POST["userName_input"]) . "', " . 
-							"`forum_name`='" . 	mysqli_prep($_POST["forumName_input"]) . "', " . 
-							"`first_name`='" . 	mysqli_prep($_POST["firstName_input"]) . "', " .  
-							"`last_name`='" . 	mysqli_prep($_POST["lastName_input"]) . "', " .  
-							"`rank`='" . 		mysqli_prep($_POST["rank_select"]);
+				$query .= 	"`user_name`='" . 	$db->query_prep($_POST["userName_input"]) . "', " . 
+							"`forum_name`='" . 	$db->query_prep($_POST["forumName_input"]) . "', " . 
+							"`first_name`='" . 	$db->query_prep($_POST["firstName_input"]) . "', " .  
+							"`last_name`='" . 	$db->query_prep($_POST["lastName_input"]) . "', " .  
+							"`rank`='" . 		$db->query_prep($_POST["rank_select"]);
 				if(isset($hashPw)) {
-					$query .= "', `passwordhash`='" . mysqli_prep($hashPw);
+					$query .= "', `passwordhash`='" . $db->query_prep($hashPw);
 				}
-				$query .= "', `active`='" . mysqli_prep($active) . "' ";
-				$query .= "WHERE `id`=" . mysqli_prep($_POST["userId_input"]) . " ";
+				$query .= "', `active`='" . $db->query_prep($active) . "' ";
+				$query .= "WHERE `id`=" . $db->query_prep($_POST["userId_input"]) . " ";
 				$query .= "LIMIT 1" ;
 				$query .= ";";
-				$update_success = mysqli_query($connection, $query);
+				$update_success = $db->query($query);
 				mysqli_confirm($update_success);
 				
 				$weekdays_array = array("monday", "tuesday", "wednesday", "thursday", "friday");
@@ -212,12 +212,12 @@
 					$beginFieldname = ucfirst($weekday) . "Begin_input";
 					$endFieldname = ucfirst($weekday) . "End_input";
 					$query  = "UPDATE `schedules` SET ";
-					$query .= "`start_time`='" . mysqli_prep($_POST[$beginFieldname]) . "', `end_time`='" . mysqli_prep($_POST[$endFieldname]) . "' ";
-					$query .= "WHERE `id` = '" . mysqli_prep($_POST["userId_input"]) . "' ";
+					$query .= "`start_time`='" . $db->query_prep($_POST[$beginFieldname]) . "', `end_time`='" . $db->query_prep($_POST[$endFieldname]) . "' ";
+					$query .= "WHERE `id` = '" . $db->query_prep($_POST["userId_input"]) . "' ";
 					$query .= "AND `weekday` = '{$weekday}' ";
 					$query .= "LIMIT 1 ";
 					$query .= ";";
-					$insert_success = mysqli_query($connection, $query);
+					$insert_success = $db->query($query);
 					mysqli_confirm($insert_success);
 				}
 				

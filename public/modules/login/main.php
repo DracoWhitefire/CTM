@@ -1,15 +1,15 @@
 <?php
 	if(isset($_POST["login"])) {
 		//login attempt
-		$username = trim(mysqli_prep($_POST["username_input"]));
-		$password = trim(mysqli_prep($_POST["password_input"]));
+		$username = trim($db->query_prep($_POST["username_input"]));
+		$password = trim($db->query_prep($_POST["password_input"]));
 		$checkReq_array = array("username_input", "password_input");
 		$validator = new validator;
 		$validator->required($checkReq_array);
 		if(empty($validator->errors)) {
 			$query = "SELECT `id`, `user_name`, `passwordhash`, `rank`, `first_name` FROM `users`";
-			$user_set = mysqli_query($connection, $query);
-			while($user_row = mysqli_fetch_assoc($user_set)) {
+			$user_set = $db->query($connection, $query);
+			while($user_row = $db->fetch_assoc($user_set)) {
 				if($user_row["user_name"] == $username) {
 					if(user::pw_check($password, $user_row["passwordhash"])) {
 						$_SESSION["firstname"] = $user_row["first_name"];

@@ -14,7 +14,6 @@
 				die("MySQL connection failed: " . $this->connection->connect_error . " (" . $this->connection->connect_errno . ") ");
 			}
 		}
-		
 		public function disconnect() {
 			if(isset($this->connection)) {
 				mysqli_close($this->connection);
@@ -36,11 +35,8 @@
 			}
 			return trim($value);
 		}
-		
-		public function query($sql) {
-			$result = mysqli_query($this->connection, $sql);
-			$this->mysqli_confirm($result);
-			return $result;
+		public function fetch_assoc($result) {
+			return mysqli_fetch_assoc($result);
 		}
 		
 		private function mysqli_confirm($result) {
@@ -48,6 +44,11 @@
 			if(!$result) {
 				die("Database query failed: " . mysqli_error($connection));
 			}
+		}
+		public function query($sql) {
+			$result = mysqli_query($this->connection, $sql);
+			$this->mysqli_confirm($result);
+			return $result;
 		}
 	}
 	
@@ -85,7 +86,7 @@
 			$query .= "WHERE `id` = '" . $db->query_prep($id) . "' ";
 			$query .= "LIMIT 1";
 			$set = $db->query($query);
-			$result = mysqli_fetch_assoc($set);
+			$result = $db->fetch_assoc($set);
 			mysqli_free_result($set);
 			if($result["min_rank"] <= $_SESSION["rank"]) {
 				return $result;
@@ -96,7 +97,7 @@
 			$query .= "WHERE `id` = '7' ";
 			$query .= "LIMIT 1";
 			$set = $db->query($query);
-			$result = mysqli_fetch_assoc($set);
+			$result = $db->fetch_assoc($set);
 			mysqli_free_result($set);
 			return $result;
 		}
@@ -164,7 +165,7 @@
 			}		
 			$user_query .= "ORDER BY `id` ASC";
 			$user_set = $db->query($user_query);
-			while($row = mysqli_fetch_assoc($user_set)) {
+			while($row = $db->fetch_assoc($user_set)) {
 				$object_array[] = self::instantiate($row);
 			}
 			mysqli_free_result($user_set);
@@ -389,7 +390,7 @@
 			$user_query  = "SELECT `user_name`, `id` ";
 			$user_query .= "FROM `users` ";
 			$user_set = $db->query($user_query);
-			while($user_row = mysqli_fetch_assoc($user_set)) {
+			while($user_row = $db->fetch_assoc($user_set)) {
 				$id = (int) $user_row["id"];
 				$user_array[$id] = $user_row["user_name"];
 			}
