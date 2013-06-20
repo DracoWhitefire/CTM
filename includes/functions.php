@@ -4,8 +4,14 @@
 //database functions
 	class mySqlDatabase {
 		private $connection;
+		private $magic_quotes_active;
+		private $mysqli_real_escape_string_exists;
+		public $last_query;
+		
 		function __construct() {
 			$this->connect();
+			$this->magic_quotes_active = get_magic_quotes_gpc();
+			$this->mysqli_real_escape_string_exists = function_exists("mysqli_real_escape_string");
 		}
 		
 		private function connect() {
@@ -22,15 +28,13 @@
 		}
 		
  		public function query_prep($value) {
-			$magic_quotes_active = get_magic_quotes_gpc();
-			$php_uptodate = function_exists("mysqli_real_escape_string");
-			if($php_uptodate) {
-				if($magic_quotes_active) {
-					$value = mysqli_real_escape_string($connection, stripslashes($value));
+			if($this->mysqli_real_escape_string_exists) {
+				if($this->magic_quotes_active) {
+					$value = $this->connection->real_escape_string(stripslashes($value));
 				}
 			} else {
-				if(!$magic_quotes_active) {
-					$value = mysqli_real_escape_string($connection, $value);
+				if(!$this->magic_quotes_active) {
+					$value = $this->connection->real_escape_string($value);
 				}
 			}
 			return trim($value);
@@ -49,14 +53,20 @@
 		}
 		
 		private function mysqli_confirm($result) {
-			global $connection;
+			global $debug;
+			$message = "Database query failed: " . $this->connection->error;
+			if($debug == TRUE) {
+				$message .= "<br />" . $this->last_query;
+			}
 			if(!$result) {
-				die("Database query failed: " . mysqli_error($connection));
+				die($message);
 			}
 		}
 		public function query($sql) {
+			$this->last_query = $sql;
 			$result = mysqli_query($this->connection, $sql);
 			$this->mysqli_confirm($result);
+			
 			return $result;
 		}
 	}
