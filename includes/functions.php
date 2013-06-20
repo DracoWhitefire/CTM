@@ -252,8 +252,9 @@
 		global $errors;
 		$val_errors_num_array = array();
 		foreach($checkNum_array as $fieldName) {
-			if(!is_numeric($_POST[$fieldName]))
-			$errors[$fieldName] = "error_num";
+			if(!is_numeric($_POST[$fieldName])) {
+				$errors[$fieldName] = "error_num";
+			}
 		}
 	}
 	function form_val_unique($val_uniq_array) {
