@@ -32,6 +32,7 @@
 		$checkLen_array = array();
 		$checkNum_array = array();
 		$checkUniq_array = array();
+		$checkTime_array = array();
 		foreach($_POST as $valField => $val) {			
 			$valFieldString_array = preg_split("/([A-Z][a-z]+)|_/", $valField, -1, PREG_SPLIT_DELIM_CAPTURE|PREG_SPLIT_NO_EMPTY);
 			if(count($valFieldString_array) > 1){
