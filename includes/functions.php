@@ -38,6 +38,9 @@
 		public function fetch_assoc($result) {
 			return mysqli_fetch_assoc($result);
 		}
+		public function num_rows($result) {
+			return mysqli_num_rows($result);
+		}
 		
 		private function mysqli_confirm($result) {
 			global $connection;
@@ -76,7 +79,7 @@
 			$query  = "SELECT * ";
 			$query .= "FROM `subjects` ";
 			$set = $db->query($query);
-			$subj_total = mysqli_num_rows($set);
+			$subj_total = $db->num_rows($set);
 			mysqli_free_result($set);
 			if(!((1 <= $id) && ($id <= $subj_total))) {
 				$id = 1;
