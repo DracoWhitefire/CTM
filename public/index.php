@@ -7,7 +7,7 @@
 <!DOCTYPE HTML>
 <?php
 	require_once("../includes/functions.php");
-	$db = new mySqlDatabase;
+	$db = new MySqlDatabase;
 	$subject_set = get_all_subjects();
 	$current_id = get_selected_id();
 	$current_subject = get_subject_by_id($current_id);

@@ -64,7 +64,7 @@
 				}
 			}
 		}
-		$validator = new validator;
+		$validator = new Validator;
 		$validator->unique($checkUniq_array);
 		$validator->required($checkReq_array);
 		$validator->length($checkLen_array);
@@ -139,7 +139,7 @@
 		if(empty($validator->errors)) {
 			//Password Hashing
 			if(!empty($_POST["password_input"])) {
-				$hashPw = user::pw_encrypt($_POST["password_input"]);
+				$hashPw = User::pw_encrypt($_POST["password_input"]);
 			}
 			if($_POST["submitForm"] == "Add User") {
 				//create user
@@ -236,7 +236,7 @@
 			}
 		}
 	}
-	$users_array = user::get("all");
+	$users_array = User::get("all");
 	if(($addUser == TRUE) || ($editUser == TRUE)) {
 		include("form.php");
 		$output = $userForm;

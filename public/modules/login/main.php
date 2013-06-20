@@ -4,14 +4,14 @@
 		$username = trim($db->query_prep($_POST["username_input"]));
 		$password = trim($db->query_prep($_POST["password_input"]));
 		$checkReq_array = array("username_input", "password_input");
-		$validator = new validator;
+		$validator = new Validator;
 		$validator->required($checkReq_array);
 		if(empty($validator->errors)) {
 			$query = "SELECT `id`, `user_name`, `passwordhash`, `rank`, `first_name` FROM `users`";
 			$user_set = $db->query($query);
 			while($user_row = $db->fetch_assoc($user_set)) {
 				if($user_row["user_name"] == $username) {
-					if(user::pw_check($password, $user_row["passwordhash"])) {
+					if(User::pw_check($password, $user_row["passwordhash"])) {
 						$_SESSION["firstname"] = $user_row["first_name"];
 						$_SESSION["rank"] = $user_row["rank"];
 						$_SESSION["id"] = $user_row["id"];

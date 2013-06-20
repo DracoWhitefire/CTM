@@ -2,7 +2,7 @@
 	require_once("config.php");
 	
 //database functions
-	class mySqlDatabase {
+	class MySqlDatabase {
 		private $connection;
 		private $magic_quotes_active;
 		private $mysqli_real_escape_string_exists;
@@ -70,7 +70,7 @@
 			return $result;
 		}
 	}	
-	class dao {
+	class Dao {
 		private static function instantiate(array $row) {
 			$object = new static;
 			foreach($row as $attribute => $value) {
@@ -171,7 +171,7 @@
 	}
 	
 //user functions
-	class user extends dao {
+	class User extends Dao {
 		public $id;
 		public $userName;
 		public $forumName;
@@ -380,7 +380,7 @@
 	}
 
 //form validation functions
-	class validator {
+	class Validator {
 		public $errors;
 		
 		public function required($val_req_array) {
