@@ -32,9 +32,9 @@
 	function get_all_subjects() {
 		global $connection;
 		$query  = "SELECT * ";
-		$query .= "FROM subjects ";
-		$query .= "WHERE visible = 1 ";
-		$query .= "ORDER BY position ASC ";
+		$query .= "FROM `subjects` ";
+		$query .= "WHERE `visible` = 1 ";
+		$query .= "ORDER BY `position` ASC ";
 		$nav_set = mysql_query($query, $connection);
 		if(!$nav_set) {
 			die("Query failed: " . mysql_error());
@@ -53,17 +53,20 @@
 	function get_subject_by_id($id) {
 		global $connection;
 		$query  = "SELECT * ";
-		$query .= "FROM subjects ";
-		$query .= "WHERE visible = 1 ";
+		$query .= "FROM `subjects` ";
+		$query .= "WHERE `visible` = 1 ";
 		$set = mysql_query($query, $connection);
+		if(!$set) {
+			die("Query failed: " . mysql_error());
+		}
 		$subj_total = mysql_num_rows($set);
 		if(!((1 <= $id) && ($id <= $subj_total))) {
 			$id = 1;
 		}
 		$query  = "SELECT * ";
-		$query .= "FROM subjects ";
+		$query .= "FROM `subjects` ";
 		$query .= "WHERE visible = 1 ";
-		$query .= "AND id = " . mysql_prep($id) . " ";
+		$query .= "AND `id` = '" . mysql_prep($id) . "' ";
 		$query .= "LIMIT 1";
 		$set = mysql_query($query, $connection);
 		if(!$set) {
