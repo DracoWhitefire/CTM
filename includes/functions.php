@@ -42,14 +42,13 @@
 		return $nav_set;
 	}
 	function get_selected_id() {
-		global $current_id;
 		if(isset($_GET["id"])) {
-			settype($_GET["id"], "int");
-			$current_id = $_GET["id"];
-			
+			(integer) $current_id = $_GET["id"];
 		} else {
-			$current_id = 1;
+			(integer) $current_id = 1;
 		}
+		settype($current_id, "integer");
+		return $current_id;
 	}
 	function get_subject_by_id($id) {
 		global $connection;

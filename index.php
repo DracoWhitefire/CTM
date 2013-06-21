@@ -3,7 +3,7 @@
 	require_once("includes/functions.php");
 	db_connect();
 	$subject_set = get_all_subjects();
-	get_selected_id();
+	$current_id = get_selected_id();
 	$current_subject = get_subject_by_id($current_id);
 ?>
 
