@@ -6,7 +6,7 @@
 		} elseif(isset($_POST["agentId_input"])) {
 			$agent_set = get_agents($_POST["agentId_input"]);
 		}
-		$agent_array = mysql_fetch_array($agent_set);
+		$agent_array = mysqli_fetch_array($agent_set);
 	}
 	
 	$agentForm = "Agent Form";

@@ -4,21 +4,17 @@
 //database functions
 	function db_connect() {
 		global $connection;
-		$connection = mysql_connect(DB_SERVER , DB_USER, DB_PW);
-		if(!$connection) {
-			die("MySQL connection failed: " . mysql_error());
-		}
-		$db = mysql_select_db(DB_NAME, $connection);
-		if(!$db) {
-			die("Database selection failed: " . mysql_error());
+		$connection = mysqli_connect(DB_SERVER , DB_USER, DB_PW, DB_NAME);
+		if(mysqli_connect_errno()) {
+			die("MySQL connection failed: " . mysqli_connect_error() . " (" . mysqli_connect_errno() . ") ");
 		}
 	}
-	function mysql_prep($value) {
+	function mysqli_prep($value) {
 		$magic_quotes_active = get_magic_quotes_gpc();
-		$php_uptodate = function_exists("mysql_real_escape_string");
+		$php_uptodate = function_exists("mysqli_real_escape_string");
 		if($php_uptodate) {
 			if($magic_quotes_active) {
-				$value = mysql_real_escape_string(stripslashes($value));
+				$value = mysqli_real_escape_string(stripslashes($value));
 			}
 		} else {
 			if(!$magic_quotes_active) {
@@ -35,9 +31,9 @@
 		$query .= "FROM `subjects` ";
 		$query .= "WHERE `visible` = 1 ";
 		$query .= "ORDER BY `position` ASC ";
-		$nav_set = mysql_query($query, $connection);
+		$nav_set = mysqli_query($connection, $query);
 		if(!$nav_set) {
-			die("Query failed: " . mysql_error());
+			die("Query failed: " . mysqli_error());
 		}
 		return $nav_set;
 	}
@@ -55,30 +51,30 @@
 		$query  = "SELECT * ";
 		$query .= "FROM `subjects` ";
 		$query .= "WHERE `visible` = 1 ";
-		$set = mysql_query($query, $connection);
+		$set = mysqli_query($connection, $query);
 		if(!$set) {
-			die("Query failed: " . mysql_error());
+			die("Query failed: " . mysqli_error());
 		}
-		$subj_total = mysql_num_rows($set);
+		$subj_total = mysqli_num_rows($set);
 		if(!((1 <= $id) && ($id <= $subj_total))) {
 			$id = 1;
 		}
 		$query  = "SELECT * ";
 		$query .= "FROM `subjects` ";
 		$query .= "WHERE visible = 1 ";
-		$query .= "AND `id` = '" . mysql_prep($id) . "' ";
+		$query .= "AND `id` = '" . mysqli_prep($id) . "' ";
 		$query .= "LIMIT 1";
-		$set = mysql_query($query, $connection);
+		$set = mysqli_query($connection, $query);
 		if(!$set) {
-			die("Query failed: " . mysql_error());
+			die("Query failed: " . mysqli_error());
 		}
-		$result = mysql_fetch_array($set);
+		$result = mysqli_fetch_array($set);
 		return $result;
 	}
 	function navigation($subject_set) {
 		global $current_id;
 		$output = "<ul>";
-			While($row = mysql_fetch_array($subject_set, MYSQL_ASSOC)) {
+			While($row = mysqli_fetch_array($subject_set, MYSQL_ASSOC)) {
 				$output .= "<li";
 				if($row["id"] == $current_id) {
 					$output .= " class=\"selected\"";
@@ -93,16 +89,16 @@
 	function get_sch_for_agent($selected_agent, $day) {
 	//function get_sch_for_agent($selected_agent, $day = "Wednesday") {
 		global $connection;
-		$selected_agent = mysql_prep($selected_agent);
-		$day = mysql_prep($day);
+		$selected_agent = mysqli_prep($selected_agent);
+		$day = mysqli_prep($day);
 		$sch_query  = "SELECT `start_time`, `end_time` ";
 		$sch_query .= "FROM `sch_{$selected_agent}` ";
 		$sch_query .= "WHERE `weekday` = '{$day}' ";
-		$sch_set = mysql_query($sch_query, $connection);
+		$sch_set = mysqli_query($connection, $sch_query);
 		if(!$sch_set) {
-			die("Query failed: " . mysql_error());
+			die("Query failed: " . mysqli_error());
 		}
-		$result = mysql_fetch_array($sch_set, MYSQL_ASSOC);
+		$result = mysqli_fetch_array($sch_set, MYSQL_ASSOC);
 		return $result;
 	}
 	function get_agents($selection = "all") {
@@ -123,9 +119,9 @@
 			$agent_query .= "WHERE `active` = '0' ";
 		}		
 		$agent_query .= "ORDER BY `id` ASC";
-		$agent_set = mysql_query($agent_query, $connection);
+		$agent_set =mysqli_query($connection, $agent_query);
 		if(!$agent_set) {
-			die("Query failed: " . mysql_error());
+			die("Query failed: " . mysqli_error());
 		}
 		return $agent_set;
 	}
@@ -298,11 +294,11 @@
 		global $errors;
 		$user_query  = "SELECT `user_name`, `id` ";
 		$user_query .= "FROM `agents` ";
-		$user_set = mysql_query($user_query);
+		$user_set = mysqli_query($connection, $user_query);
 		if(!$user_set) {
-			die("Query failed: " . mysql_error());
+			die("Query failed: " . mysqli_error());
 		}
-		while($user_row = mysql_fetch_array($user_set, 1)) {
+		while($user_row = mysqli_fetch_array($user_set, 1)) {
 			$id = $user_row["id"];
 			$user_array[$id] = $user_row["user_name"];
 		}

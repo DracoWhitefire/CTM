@@ -74,7 +74,7 @@
 					$query_array_{$string_id} = array();
 				}
 				$field = $string_array[0] . "_" . $string_array[1];
-				$postValue = trim(mysql_prep($postValue));
+				$postValue = trim(mysqli_prep($postValue));
 				$query_array_{$string_id}[$field] = $postValue;
 				$query_array[$string_id] = $query_array_{$string_id};
 			}
@@ -88,8 +88,8 @@
 			}
 			//print_r($agent_array);
 			foreach($agent_array as $field => $postValue) {
-				$field = mysql_prep($field);
-				$postValue = mysql_prep($postValue);
+				$field = mysqli_prep($field);
+				$postValue = mysqli_prep($postValue);
 				if($field == "active_check") {
 					$field = "active";
 					if($postValue == "on") {
@@ -114,9 +114,9 @@
 			$query .= "LIMIT 1 ";
 			$query .= "; ";
 			if(empty($errors)) {
-				$result = mysql_query($query);
+				$result = mysqli_query($connection, $query);
 				if(!$result) {
-					echo "MySQL Query Failed: " . mysql_error();
+					echo "MySQL Query Failed: " . mysqli_error();
 				}
 			} else {
 				$editList = TRUE;

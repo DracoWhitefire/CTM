@@ -5,7 +5,7 @@
 	$agentList .= "<tr><th></th><th>CTM Username</th><th>First Name</th><th>Last Name</th><th>Forum Name</th><th>CTM Rank</th><th>Active</th><th></th></tr>";
 	$agentList .= "</thead>";
 	$agentList .= "<tbody>";
-	while($agent_row = mysql_fetch_array($agent_set)) {
+	while($agent_row = mysqli_fetch_array($agent_set)) {
 		$id = $agent_row["id"];
 		$fieldname = "edit_{$id}";
 		$editRow = FALSE;
