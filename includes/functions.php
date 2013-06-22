@@ -14,11 +14,11 @@
 		$php_uptodate = function_exists("mysqli_real_escape_string");
 		if($php_uptodate) {
 			if($magic_quotes_active) {
-				$value = mysqli_real_escape_string(stripslashes($value));
+				$value = mysqli_real_escape_string($connection, stripslashes($value));
 			}
 		} else {
 			if(!$magic_quotes_active) {
-				$value = addslashes($value);
+				$value = mysqli_real_escape_string($connection, $value);
 			}
 		}
 		return $value;
