@@ -23,6 +23,11 @@
 		}
 		return $value;
 	}
+	function mysqli_confirm($result_set) {
+		if(!$result_set) {
+			die("Database query failed: " . mysqli_error());
+		}
+	}
 	
 //navigation functions
 	function get_all_subjects() {
@@ -32,9 +37,7 @@
 		$query .= "WHERE `visible` = 1 ";
 		$query .= "ORDER BY `position` ASC ";
 		$nav_set = mysqli_query($connection, $query);
-		if(!$nav_set) {
-			die("Query failed: " . mysqli_error());
-		}
+		mysqli_confirm($nav_set);
 		return $nav_set;
 	}
 	function get_selected_id() {
@@ -52,9 +55,7 @@
 		$query .= "FROM `subjects` ";
 		$query .= "WHERE `visible` = 1 ";
 		$set = mysqli_query($connection, $query);
-		if(!$set) {
-			die("Query failed: " . mysqli_error());
-		}
+		mysqli_confirm($set);
 		$subj_total = mysqli_num_rows($set);
 		mysqli_free_result($set);
 		if(!((1 <= $id) && ($id <= $subj_total))) {
@@ -66,9 +67,7 @@
 		$query .= "AND `id` = '" . mysqli_prep($id) . "' ";
 		$query .= "LIMIT 1";
 		$set = mysqli_query($connection, $query);
-		if(!$set) {
-			die("Query failed: " . mysqli_error());
-		}
+		mysqli_confirm($set);
 		$result = mysqli_fetch_array($set);
 		mysqli_free_result($set);
 		return $result;
@@ -98,9 +97,7 @@
 		$sch_query .= "WHERE `weekday` = '{$day}' ";
 		$sch_query .= "AND `id` = '{$selected_agent}' ";
 		$sch_set = mysqli_query($connection, $sch_query);
-		if(!$sch_set) {
-			die("Query failed: " . mysqli_error());
-		}
+		mysqli_confirm($sch_set);
 		$result = mysqli_fetch_array($sch_set, MYSQL_ASSOC);
 		mysqli_free_result($sch_set);
 		return $result;
@@ -124,9 +121,7 @@
 		}		
 		$agent_query .= "ORDER BY `id` ASC";
 		$agent_set =mysqli_query($connection, $agent_query);
-		if(!$agent_set) {
-			die("Query failed: " . mysqli_error());
-		}
+		mysqli_confirm($agent_set);
 		return $agent_set;
 	}
 	
@@ -299,9 +294,7 @@
 		$user_query  = "SELECT `user_name`, `id` ";
 		$user_query .= "FROM `agents` ";
 		$user_set = mysqli_query($connection, $user_query);
-		if(!$user_set) {
-			die("Query failed: " . mysqli_error());
-		}
+		mysqli_confirm($user_set);
 		while($user_row = mysqli_fetch_assoc($user_set)) {
 			$id = $user_row["id"];
 			$user_array[$id] = $user_row["user_name"];
