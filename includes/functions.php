@@ -92,8 +92,9 @@
 		$selected_agent = mysqli_prep($selected_agent);
 		$day = mysqli_prep($day);
 		$sch_query  = "SELECT `start_time`, `end_time` ";
-		$sch_query .= "FROM `sch_{$selected_agent}` ";
+		$sch_query .= "FROM `schedules` ";
 		$sch_query .= "WHERE `weekday` = '{$day}' ";
+		$sch_query .= "AND `id` = '{$selected_agent}' ";
 		$sch_set = mysqli_query($connection, $sch_query);
 		if(!$sch_set) {
 			die("Query failed: " . mysqli_error());
