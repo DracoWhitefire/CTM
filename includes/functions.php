@@ -56,6 +56,7 @@
 			die("Query failed: " . mysqli_error());
 		}
 		$subj_total = mysqli_num_rows($set);
+		mysqli_free_result($set);
 		if(!((1 <= $id) && ($id <= $subj_total))) {
 			$id = 1;
 		}
@@ -69,6 +70,7 @@
 			die("Query failed: " . mysqli_error());
 		}
 		$result = mysqli_fetch_array($set);
+		mysqli_free_result($set);
 		return $result;
 	}
 	function navigation($subject_set) {
@@ -100,6 +102,7 @@
 			die("Query failed: " . mysqli_error());
 		}
 		$result = mysqli_fetch_array($sch_set, MYSQL_ASSOC);
+		mysqli_free_result($sch_set);
 		return $result;
 	}
 	function get_agents($selection = "all") {
@@ -303,6 +306,7 @@
 			$id = $user_row["id"];
 			$user_array[$id] = $user_row["user_name"];
 		}
+		mysqli_free_result($user_set);
 		foreach($val_uniq_array as $fieldName) {
 			$fieldName_array = preg_split("/([A-Z][a-z]+)|_/", $fieldName, -1, PREG_SPLIT_DELIM_CAPTURE|PREG_SPLIT_NO_EMPTY);
 			foreach($user_array as $id => $name) {
