@@ -61,5 +61,7 @@
 	</body>
 </html>
 <?php
-	mysqli_close($connection);
+	if(isset($connection)) {
+		mysqli_close($connection);
+	}
 ?>
