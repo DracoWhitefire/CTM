@@ -150,4 +150,6 @@
 		$agentList .= "<input type=\"submit\" value=\"Add\" name=\"addList\" />";
 	}
 	$agentList .= "</form></div>";
+	
+	mysqli_free_result($agent_set);
 ?>

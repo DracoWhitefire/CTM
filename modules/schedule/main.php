@@ -58,4 +58,6 @@
 	}
 	$output .= "</form></div>";
 	echo $output;
+	
+	mysqli_free_result($agent_set);
 ?>

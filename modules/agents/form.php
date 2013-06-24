@@ -149,4 +149,6 @@
 	$agentForm .= "<input type=\"reset\" value=\"Reset\" />";
 	$agentForm .= "<input type=\"submit\" value=\"Cancel\" name=\"cancelSubmitForm\" />";
 	$agentForm .= "</form></div>";
+	
+	mysqli_free_result($agent_set);
 ?>
