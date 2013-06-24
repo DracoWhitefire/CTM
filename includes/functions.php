@@ -302,7 +302,7 @@
 		if(!$user_set) {
 			die("Query failed: " . mysqli_error());
 		}
-		while($user_row = mysqli_fetch_array($user_set, 1)) {
+		while($user_row = mysqli_fetch_assoc($user_set)) {
 			$id = $user_row["id"];
 			$user_array[$id] = $user_row["user_name"];
 		}
