@@ -68,7 +68,7 @@
 		$query .= "LIMIT 1";
 		$set = mysqli_query($connection, $query);
 		mysqli_confirm($set);
-		$result = mysqli_fetch_array($set);
+		$result = mysqli_fetch_assoc($set);
 		mysqli_free_result($set);
 		return $result;
 	}
