@@ -130,10 +130,43 @@
 	}
 	if(isset($_POST["submitForm"])) {
 		if(empty($errors)) {
-			
+			if($_POST["submitForm"] == "Add User") {
+				if(isset($_POST["active_input"])) {
+					$active = 1;
+				} else {
+					$active = 0;
+				}
+				$query  = "INSERT INTO `agents` ";
+				$query .= "(`user_name`, `forum_name`, `first_name`, `last_name`, `rank`, `passwordhash`, `active`) ";
+				$query .= "VALUES ('" . mysqli_prep($_POST["userName_input"]) . "', '" . mysqli_prep($_POST["forumName_input"]) . "', '" . mysqli_prep($_POST["firstName_input"]) . "', '" . mysqli_prep($_POST["lastName_input"]) . "', '" . mysqli_prep($_POST["rank_select"]) . "', '" . mysqli_prep($_POST["password_input"]) . "', '" . mysqli_prep($active) . "') ";
+				//$query .= "LIMIT 1";
+				$query .= ";";
+				$insert_success = mysqli_query($connection, $query);
+				mysqli_confirm($insert_success);
+				
+				(int) $createdId = mysqli_insert_id($connection);
+				$query  = "INSERT INTO `schedules` ";
+				$query .= "(`id`, `weekday`, `start_time`, `end_time`) ";
+				$query .= "VALUES ";
+				$weekdays_array = array("monday", "tuesday", "wednesday", "thursday", "friday");
+				foreach($weekdays_array as $weekday) {
+					$beginFieldname = ucfirst($weekday) . "Begin_input";
+					$endFieldname = ucfirst($weekday) . "End_input";
+					$query .= "({$createdId}, '{$weekday}', '" . mysqli_prep($_POST[$beginFieldname]) . "', '" . mysqli_prep($_POST[$endFieldname]) . "')";
+					if($weekday != "friday") {
+						$query .= ",";
+					}
+				}
+				$query .= ";";
+				$insert_success = mysqli_query($connection, $query);
+				mysqli_confirm($insert_success);
+			} elseif($_POST["submitForm"] == "Submit User") {
+				
+			}
 		} else {
 			if($_POST["submitForm"] == "Add User") {
 				$editAgent = TRUE;
+				$addAgent = TRUE;
 				
 			} elseif($_POST["submitForm"] == "Submit User") {
 				$editAgent = TRUE;
