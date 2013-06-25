@@ -73,6 +73,8 @@
 		return $result;
 	}
 	function navigation($subject_set) {
+		//requires the (result of the) function get_all_subjects()
+		//requires the function get_selected_id()
 		global $current_id;
 		$output = "<ul>";
 			While($row = mysqli_fetch_array($subject_set, MYSQL_ASSOC)) {
