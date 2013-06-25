@@ -33,6 +33,7 @@
 		$checkNum_array = array();
 		$checkUniq_array = array();
 		$checkTime_array = array();
+		$checkTimeDiff_array = array();
 		foreach($_POST as $valField => $val) {			
 			$valFieldString_array = preg_split("/([A-Z][a-z]+)|_/", $valField, -1, PREG_SPLIT_DELIM_CAPTURE|PREG_SPLIT_NO_EMPTY);
 			if(count($valFieldString_array) > 1){
@@ -50,7 +51,9 @@
 				if((strtolower($valFieldString_array[1]) == "begin") || (strtolower($valFieldString_array[1]) == "end")) {
 					$checkReq_array[] = $valField;
 					$checkTime_array[] = $valField;
-					
+					if(strtolower($valFieldString_array[1]) == "begin") {
+						$checkTimeDiff_array[$valField] = $valFieldString_array[0] . "End_" . $valFieldString_array[2];
+					}
 				}
 			}
 		}
@@ -59,6 +62,7 @@
 		form_val_length($checkLen_array);
 		form_val_num($checkNum_array);
 		form_val_time($checkTime_array);
+		form_val_timediff($checkTimeDiff_array);
 	}
 	if(isset($_POST["submitList"])) {
 		// This sorts all POST-vars by agent id

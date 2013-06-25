@@ -341,7 +341,18 @@
 			}
 		}
 	}
-	
+	function form_val_timediff($val_timediff_array) {
+		//requires the function format_time()
+		global $errors;
+		foreach($val_timediff_array as $startTime_fieldname => $endTime_fieldname) {
+			$startTime = (float) strtotime(format_time($_POST[$startTime_fieldname], "db"));
+			$endTime = (float) strtotime(format_time($_POST[$endTime_fieldname], "db"));
+			if(($endTime - $startTime) < 0) {
+				$errors[$startTime_fieldname] = "error_timediff";
+				$errors[$endTime_fieldname] = "error_timediff";
+			}
+		}
+	}
 	
 //general functions
 	function convert_rank($rank) {
