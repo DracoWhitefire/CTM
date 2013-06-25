@@ -26,8 +26,8 @@
 		$editAgent = FALSE;
 		$editList = FALSE;
 	}
+	//Form Validation	
 	if((isset($_POST["submitList"])) || (isset($_POST["submitForm"]))) {
-		//Form Validation		
 		$checkReq_array = array();
 		$checkLen_array = array();
 		$checkNum_array = array();
@@ -64,6 +64,7 @@
 		form_val_time($checkTime_array);
 		form_val_timediff($checkTimeDiff_array);
 	}
+	//Form Processing
 	if(isset($_POST["submitList"])) {
 		// This sorts all POST-vars by agent id
 		foreach($_POST as $varName => $postValue) {
