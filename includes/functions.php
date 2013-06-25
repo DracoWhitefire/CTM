@@ -356,11 +356,9 @@
 			$startTime = (float) strtotime(format_time($_POST[$startTime_fieldname], "db"));
 			$endTime = (float) strtotime(format_time($_POST[$endTime_fieldname], "db"));
 			if(($endTime - $startTime) < 0) {
-				if(!isset($errors[$fieldName])) {
+				if(!isset($errors[$startTime_fieldname]) && (!isset($errors[$endTime_fieldname]))) {
 					$errors[$startTime_fieldname] = "error_timediff";	
-				}
-				if(!isset($errors[$fieldName])) {
-					$errors[$endTime_fieldname] = "error_timediff";	
+					$errors[$endTime_fieldname] = "error_timediff";
 				}
 			}
 		}
