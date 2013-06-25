@@ -124,9 +124,9 @@
 		}
 		if($editAgent == TRUE) {
 			if(isset($_POST["{$weekday}Begin_input"])) {
-				$agentForm .= "value=\"" . htmlspecialchars($_POST["{$weekday}Begin_input"]) . "\" ";
+				$agentForm .= "value=\"" . format_time($_POST["{$weekday}Begin_input"], "html") . "\" ";
 			}
-			$agentForm .= "value=\"" . htmlspecialchars($agentSched_array["start_time"]) . "\" ";
+			$agentForm .= "value=\"" . format_time($agentSched_array["start_time"], "html") . "\" ";
 		}
 		$agentForm .= "/></td><td><input type=\"text\" name=\"{$weekday}End_input\" ";
 		if(isset($errors["{$weekday}End_input"])) {
@@ -134,9 +134,9 @@
 		}
 		if($editAgent == TRUE) {
 			if(isset($_POST["{$weekday}End_input"])) {
-				$agentForm .= "value=\"" . htmlspecialchars($_POST["{$weekday}End_input"]) . "\" ";
+				$agentForm .= "value=\"" . format_time($_POST["{$weekday}End_input"], "html") . "\" ";
 			}
-			$agentForm .= "value=\"" . htmlspecialchars($agentSched_array["end_time"]) . "\" ";
+			$agentForm .= "value=\"" . format_time($agentSched_array["end_time"], "html") . "\" ";
 		}
 		$agentForm .= "/></td></tr>";
 	}
