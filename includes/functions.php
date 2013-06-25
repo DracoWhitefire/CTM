@@ -327,14 +327,15 @@
 							break 1;
 						}
 					} elseif($fieldName_array[2] == "input") {
-						if($_POST["agentId_input"] != $id) {
-							if(!isset($errors[$fieldName])) {
-								$errors[$fieldName] = "error_unique";	
+						if(isset($_POST["agentId_input"])) {
+							if($_POST["agentId_input"] != $id) {
+								if(!isset($errors[$fieldName])) {
+									$errors[$fieldName] = "error_unique";	
+								}
+								break 1;
 							}
-							break 1;
 						}
 					}
-					
 				}
 			}
 		}
