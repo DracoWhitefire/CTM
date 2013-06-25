@@ -260,8 +260,13 @@
 	}
 	
 //time functions
-	function format_time($time_string) {
-		return preg_replace("/^(0)?([1-9]?[0-9]:[0-9]{2})(:[0-9]{2})$/", "\\2", $time_string);
+	function format_time($time_string, $target) {
+		if($target == "db") {
+			$result = preg_replace("/^([0-9]:[0-9]{2})(:[0-9]{2})$/", "0\\1", $time_string);
+		} elseif ($target == "html") {
+			$result = preg_replace("/^(0)?([1-9]?[0-9]:[0-9]{2})(:[0-9]{2})$/", "\\2", $time_string);			
+		}
+		return htmlspecialchars($result);
 	}
 
 //form validation functions
