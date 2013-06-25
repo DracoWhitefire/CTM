@@ -43,11 +43,10 @@
 	}
 	function get_selected_id() {
 		if(isset($_GET["id"])) {
-			(integer) $current_id = $_GET["id"];
+			(integer) $current_id = (int) $_GET["id"];
 		} else {
-			(integer) $current_id = 1;
+			(integer) $current_id = (int) 1;
 		}
-		settype($current_id, "integer");
 		return $current_id;
 	}
 	function get_subject_by_id($id) {
@@ -297,7 +296,7 @@
 		$user_set = mysqli_query($connection, $user_query);
 		mysqli_confirm($user_set);
 		while($user_row = mysqli_fetch_assoc($user_set)) {
-			$id = $user_row["id"];
+			$id = (int) $user_row["id"];
 			$user_array[$id] = $user_row["user_name"];
 		}
 		mysqli_free_result($user_set);
