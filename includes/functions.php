@@ -297,7 +297,9 @@
 		global $errors;
 		foreach($checkNum_array as $fieldName) {
 			if(!is_numeric($_POST[$fieldName])) {
-				$errors[$fieldName] = "error_num";
+				if(!isset($errors[$fieldName])) {
+					$errors[$fieldName] = "error_num";	
+				}
 			}
 		}
 	}
@@ -319,12 +321,16 @@
 				if($name == $_POST[$fieldName]) {
 					if(is_numeric($fieldName_array[2])) {
 						if($fieldName_array[2] != $id) {
-							$errors[$fieldName] = "error_unique";
+							if(!isset($errors[$fieldName])) {
+								$errors[$fieldName] = "error_unique";	
+							}
 							break 1;
 						}
 					} elseif($fieldName_array[2] == "input") {
 						if($_POST["agentId_input"] != $id) {
-							$errors[$fieldName] = "error_unique";
+							if(!isset($errors[$fieldName])) {
+								$errors[$fieldName] = "error_unique";	
+							}
 							break 1;
 						}
 					}
@@ -337,7 +343,9 @@
 		global $errors;
 		foreach($val_time_array as $fieldName) {
 			if(preg_match("/^([0](?=[0-9])|1(?=[0-9])|2(?=[0-3]))?[0-9]:[0-5][0-9](:[0-5][0-9])?$/", $_POST[$fieldName]) == 0) {
-				$errors[$fieldName] = "error_time";
+				if(!isset($errors[$fieldName])) {
+					$errors[$fieldName] = "error_time";	
+				}
 			}
 		}
 	}
@@ -348,8 +356,12 @@
 			$startTime = (float) strtotime(format_time($_POST[$startTime_fieldname], "db"));
 			$endTime = (float) strtotime(format_time($_POST[$endTime_fieldname], "db"));
 			if(($endTime - $startTime) < 0) {
-				$errors[$startTime_fieldname] = "error_timediff";
-				$errors[$endTime_fieldname] = "error_timediff";
+				if(!isset($errors[$fieldName])) {
+					$errors[$startTime_fieldname] = "error_timediff";	
+				}
+				if(!isset($errors[$fieldName])) {
+					$errors[$endTime_fieldname] = "error_timediff";	
+				}
 			}
 		}
 	}
