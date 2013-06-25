@@ -19,22 +19,17 @@
 		$output .= "<td>" . htmlspecialchars($agent_row["forum_name"]) . "</td><td class=\"time\" >";
 		$schedule = get_sch_for_agent($agent_row["id"], $selectedDay);
 		(float) $endTime = strtotime($schedule["end_time"]);
-		//settype($endTime, "float");
 		(float) $startTime = strtotime($schedule["start_time"]);
-		//settype($startTime, "float");
-		
-		//settype($workingHours, "float");
 		if(($endTime - $startTime) <= (4*60*60)) {
-			(float) $workingHours = gmstrftime("%H:%M", ($endTime - $startTime));
+			(float) $workingHours = gmstrftime("%k:%M", ($endTime - $startTime));
 		} else {
-			(float) $workingHours = gmstrftime("%H:%M", ($endTime - $startTime - (30*60)));
-			//$workingHours = $endTime - $startTime - (30*60);
+			(float) $workingHours = gmstrftime("%k:%M", ($endTime - $startTime - (30*60)));
 		}
 		
 		if($editing == TRUE) {
 			$output .= "<input type=\"text\" name=\"starttime_" . htmlspecialchars($agent_row["id"]) . "\" value=\"";
 		}		
-		$output .= $schedule["start_time"];
+		$output .= htmlspecialchars(format_time($schedule["start_time"]));
 		if($editing == TRUE) {
 			$output .= "\" />";
 		}
@@ -42,7 +37,7 @@
 		if($editing == TRUE) {
 			$output .= "<input type=\"text\" name=\"endtime_" . htmlspecialchars($agent_row["id"]) . "\" value=\"";
 		}	
-		$output .= $schedule["end_time"];
+		$output .= htmlspecialchars(format_time($schedule["end_time"]));
 		if($editing == TRUE) {
 			$output .= "\" />";
 		}

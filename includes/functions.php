@@ -259,6 +259,11 @@
 		return $output;	
 	}
 	
+//time functions
+	function format_time($time_string) {
+		return preg_replace("/^(0)?([1-9]?[0-9]:[0-9]{2})(:[0-9]{2})$/", "\\2", $time_string);
+	}
+
 //form validation functions
 	function form_val_required($val_req_array) {
 		global $errors;
