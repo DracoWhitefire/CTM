@@ -116,7 +116,7 @@
 			if(empty($errors)) {
 				$result = mysqli_query($connection, $query);
 				if(!$result) {
-					echo "MySQL Query Failed: " . mysqli_error();
+					echo "MySQL Query Failed: " . mysqli_error($connection);
 				}
 			} else {
 				$editList = TRUE;
