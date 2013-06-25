@@ -262,7 +262,8 @@
 //time functions
 	function format_time($time_string, $target) {
 		if($target == "db") {
-			$result = preg_replace("/^([0-9]:[0-9]{2})(:[0-9]{2})$/", "0\\1", $time_string);
+			$tempresult = preg_replace("/^([0-9]:[0-9]{2})(:[0-9]{2})?$/", "0\\1\\2", $time_string);
+			$result = preg_replace("/^([0-9]{2}:[0-9]{2})$/", "\\1:00", $tempresult);
 		} elseif ($target == "html") {
 			$result = preg_replace("/^(0)?([1-9]?[0-9]:[0-9]{2})(:[0-9]{2})$/", "\\2", $time_string);			
 		}
@@ -340,6 +341,7 @@
 			}
 		}
 	}
+	
 	
 //general functions
 	function convert_rank($rank) {
