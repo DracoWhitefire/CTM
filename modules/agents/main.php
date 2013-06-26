@@ -130,14 +130,13 @@
 	}
 	if(isset($_POST["submitForm"])) {
 		if(empty($errors)) {
-			if($_POST["submitForm"] == "Add User") {
-				//Password Hashing
+			//Password Hashing
 				$postPw = trim($_POST["password_input"]);
 				$hashFormat = "$2y$10$";
 				$hashSalt = md5(mysqli_prep($_POST["userName_input"]));
 				$hashFormatSalt = $hashFormat . $hashSalt;
 				$hashPw = crypt($postPw, $hashFormatSalt);
-				
+			if($_POST["submitForm"] == "Add User") {
 				//create agent
 				if(isset($_POST["active_input"])) {
 					$active = 1;
@@ -176,7 +175,7 @@
 					$active = 0;
 				}
 				$query  = "UPDATE `agents` SET ";
-				$query .= "`user_name`='" . mysqli_prep($_POST["userName_input"]) . "', `forum_name`='" . mysqli_prep($_POST["forumName_input"]) . "', `first_name`='" . mysqli_prep($_POST["firstName_input"]) . "', `last_name`='" . mysqli_prep($_POST["lastName_input"]) . "', `rank`='" . mysqli_prep($_POST["rank_select"]) . "', `passwordhash`='" . mysqli_prep($_POST["password_input"]) . "', `active`='" . mysqli_prep($active) . "' ";
+				$query .= "`user_name`='" . mysqli_prep($_POST["userName_input"]) . "', `forum_name`='" . mysqli_prep($_POST["forumName_input"]) . "', `first_name`='" . mysqli_prep($_POST["firstName_input"]) . "', `last_name`='" . mysqli_prep($_POST["lastName_input"]) . "', `rank`='" . mysqli_prep($_POST["rank_select"]) . "', `passwordhash`='" . mysqli_prep($hashPw) . "', `active`='" . mysqli_prep($active) . "' ";
 				$query .= "WHERE `id`=" . mysqli_prep($_POST["agentId_input"]) . " ";
 				$query .= "LIMIT 1" ;
 				$query .= ";";
