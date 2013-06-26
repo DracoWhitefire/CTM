@@ -21,7 +21,7 @@
 				$value = mysqli_real_escape_string($connection, $value);
 			}
 		}
-		return $value;
+		return trim($value);
 	}
 	function mysqli_confirm($result_set) {
 		global $connection;
