@@ -177,7 +177,10 @@
 				foreach($weekdays_array as $weekday) {
 					$beginFieldname = ucfirst($weekday) . "Begin_input";
 					$endFieldname = ucfirst($weekday) . "End_input";
-					$query .= "({$createdId}, '{$weekday}', '" . mysqli_prep($_POST[$beginFieldname]) . "', '" . mysqli_prep($_POST[$endFieldname]) . "')";
+					$query .= 	"(" .	$createdId . ", '" .
+										$weekday . "', '" .
+										mysqli_prep($_POST[$beginFieldname]) . "', '" .
+										mysqli_prep($_POST[$endFieldname]) . "')";
 					if($weekday != "friday") {
 						$query .= ",";
 					}
