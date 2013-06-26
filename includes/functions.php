@@ -135,7 +135,7 @@
 		return $hashPw;
 	}
 	function generate_salt($length) {
-		return substr(str_replace("+", ".", base64_encode(md5(uniqid(mt_rand(), TRUE)))), $length);
+		return substr(str_replace("+", ".", base64_encode(md5(uniqid(mt_rand(), TRUE)))),0, $length);
 	}
 	function pw_check($pw_string, $existing_hash) {
 		$hash = crypt($pw_string, $existing_hash);
