@@ -170,6 +170,32 @@
 				$insert_success = mysqli_query($connection, $query);
 				mysqli_confirm($insert_success);
 			} elseif($_POST["submitForm"] == "Submit User") {
+				if(isset($_POST["active_input"])) {
+					$active = 1;
+				} else {
+					$active = 0;
+				}
+				$query  = "UPDATE `agents` SET ";
+				$query .= "`user_name`='" . mysqli_prep($_POST["userName_input"]) . "', `forum_name`='" . mysqli_prep($_POST["forumName_input"]) . "', `first_name`='" . mysqli_prep($_POST["firstName_input"]) . "', `last_name`='" . mysqli_prep($_POST["lastName_input"]) . "', `rank`='" . mysqli_prep($_POST["rank_select"]) . "', `passwordhash`='" . mysqli_prep($_POST["password_input"]) . "', `active`='" . mysqli_prep($active) . "' ";
+				$query .= "WHERE `id`=" . mysqli_prep($_POST["agentId_input"]) . " ";
+				$query .= "LIMIT 1" ;
+				$query .= ";";
+				$update_success = mysqli_query($connection, $query);
+				mysqli_confirm($update_success);
+				
+				$weekdays_array = array("monday", "tuesday", "wednesday", "thursday", "friday");
+				foreach($weekdays_array as $weekday) {
+					$beginFieldname = ucfirst($weekday) . "Begin_input";
+					$endFieldname = ucfirst($weekday) . "End_input";
+					$query  = "UPDATE `schedules` SET ";
+					$query .= "`start_time`='" . mysqli_prep($_POST[$beginFieldname]) . "', `end_time`='" . mysqli_prep($_POST[$endFieldname]) . "' ";
+					$query .= "WHERE `id` = '" . mysqli_prep($_POST["agentId_input"]) . "' ";
+					$query .= "AND `weekday` = '{$weekday}' ";
+					$query .= "LIMIT 1 ";
+					$query .= ";";
+					$insert_success = mysqli_query($connection, $query);
+					mysqli_confirm($insert_success);
+				}
 				
 			}
 		} else {
