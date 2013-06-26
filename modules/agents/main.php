@@ -142,11 +142,7 @@
 		if(empty($errors)) {
 			//Password Hashing
 			if(!empty($_POST["password_input"])) {
-				$postPw = trim($_POST["password_input"]);
-				$hashFormat = "$2y$10$";
-				$hashSalt = md5(mysqli_prep($_POST["userName_input"]));
-				$hashFormatSalt = $hashFormat . $hashSalt;
-				$hashPw = crypt($postPw, $hashFormatSalt);
+				$postPw = pw_encrypt($_POST["password_input"]);
 			}
 			if($_POST["submitForm"] == "Add User") {
 				//create agent

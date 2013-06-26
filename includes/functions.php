@@ -126,6 +126,25 @@
 		mysqli_confirm($agent_set);
 		return $agent_set;
 	}
+	function pw_encrypt($pw_string) {
+		$hashFormat = "$2y$10$";
+		$saltLength = 22;
+		$hashSalt = generate_salt($saltLength);
+		$hashFormatSalt = $hashFormat . $hashSalt;
+		$hashPw = crypt(trim($pw_string), $hashFormatSalt);
+		return $hashPw;
+	}
+	function generate_salt($length) {
+		return substr(str_replace("+", ".", base64_encode(md5(uniqid(mt_rand(), TRUE)))), $length);
+	}
+	function pw_check($pw_string, $existing_hash) {
+		$hash = crypt($pw_string, $existing_hash);
+		if($hash === $existing_hash) {
+			return TRUE;
+		} else {
+			return FALSE;
+		}
+	}
 	
 //date functions
 	function get_selected_date() {
