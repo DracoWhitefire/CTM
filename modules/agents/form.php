@@ -28,7 +28,7 @@
 		$agentForm .= "\" ";
 	}
 	$agentForm .= "/><br />";
-	$agentForm .= "<label for=\"forumName_input\">Forum Name</label><input type=\"text\" id=\"forumName_input\" name=\"forumName_input\" ";
+	$agentForm .= "<label for=\"forumName_input\">Forum Name</label><input type=\"text\" id=\"forumName_input\" name=\"forumName_input\" autocomplete=\"off\" ";
 	if(isset($errors["forumName_input"])) {
 		$agentForm .= "class=\"error\" ";
 	}
@@ -42,7 +42,7 @@
 		$agentForm .= "\" ";
 	}
 	$agentForm .= "/><br />";
-	$agentForm .= "<label for=\"firstName_input\">First Name</label><input type=\"text\" id=\"firstName_input\" name=\"firstName_input\" ";
+	$agentForm .= "<label for=\"firstName_input\">First Name</label><input type=\"text\" id=\"firstName_input\" name=\"firstName_input\" autocomplete=\"off\" ";
 	if(isset($errors["firstName_input"])) {
 		$agentForm .= "class=\"error\" ";
 	}
@@ -56,7 +56,7 @@
 		$agentForm .= "\" ";
 	}
 	$agentForm .= "/><br />";
-	$agentForm .= "<label for=\"lastName_input\">Last Name</label><input type=\"text\" id=\"lastName_input\" name=\"lastName_input\" ";
+	$agentForm .= "<label for=\"lastName_input\">Last Name</label><input type=\"text\" id=\"lastName_input\" name=\"lastName_input\" autocomplete=\"off\" ";
 	if(isset($errors["lastName_input"])) {
 		$agentForm .= "class=\"error\" ";
 	}
