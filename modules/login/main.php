@@ -8,12 +8,15 @@
 		$checkReq_array = array("username_input", "password_input");
 		form_val_required($checkReq_array);
 		if(empty($errors)) {
-			$query = "SELECT `user_name`, `passwordhash` FROM `agents`";
+			$query = "SELECT `id`, `user_name`, `passwordhash`, `rank`, `first_name` FROM `agents`";
 			$agent_set = mysqli_query($connection, $query);
 			while($agent_row = mysqli_fetch_assoc($agent_set)) {
 				if($agent_row["user_name"] == $username) {
 					if(pw_check($password, $agent_row["passwordhash"])) {
-						$message = "SUCCES!";
+						$_SESSION["firstname"] = $agent_row["first_name"];
+						$_SESSION["rank"] = $agent_row["rank"];
+						$_SESSION["id"] = $agent_row["id"];
+						header("location: index.php");
 					} else {
 						$message = "Login Failed!";
 					}

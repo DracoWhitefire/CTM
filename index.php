@@ -1,3 +1,9 @@
+<?php
+	session_start();
+	if((!isset($_SESSION["id"])) && ($_GET["id"] != "7")) {
+	header("location:index.php?id=7");
+}
+?>
 <!DOCTYPE HTML>
 <?php
 	require_once("includes/functions.php");
@@ -37,7 +43,7 @@
 					</div>
 					<hr />
 					<div id="debug_div">
-						<!--<pre>
+						<pre>
 							<span>
 								Post:
 								<?php
@@ -52,7 +58,7 @@
 									}
 								?>
 							</span>
-						</pre>-->
+						</pre>
 					</div>
 				</div>
 
