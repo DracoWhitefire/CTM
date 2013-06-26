@@ -131,6 +131,14 @@
 	if(isset($_POST["submitForm"])) {
 		if(empty($errors)) {
 			if($_POST["submitForm"] == "Add User") {
+				//Password Hashing
+				$postPw = trim($_POST["password_input"]);
+				$hashFormat = "$2y$10$";
+				$hashSalt = md5(mysqli_prep($_POST["userName_input"]));
+				$hashFormatSalt = $hashFormat . $hashSalt;
+				$hashPw = crypt($postPw, $hashFormatSalt);
+				
+				//create agent
 				if(isset($_POST["active_input"])) {
 					$active = 1;
 				} else {
@@ -138,12 +146,13 @@
 				}
 				$query  = "INSERT INTO `agents` ";
 				$query .= "(`user_name`, `forum_name`, `first_name`, `last_name`, `rank`, `passwordhash`, `active`) ";
-				$query .= "VALUES ('" . mysqli_prep($_POST["userName_input"]) . "', '" . mysqli_prep($_POST["forumName_input"]) . "', '" . mysqli_prep($_POST["firstName_input"]) . "', '" . mysqli_prep($_POST["lastName_input"]) . "', '" . mysqli_prep($_POST["rank_select"]) . "', '" . mysqli_prep($_POST["password_input"]) . "', '" . mysqli_prep($active) . "') ";
+				$query .= "VALUES ('" . mysqli_prep($_POST["userName_input"]) . "', '" . mysqli_prep($_POST["forumName_input"]) . "', '" . mysqli_prep($_POST["firstName_input"]) . "', '" . mysqli_prep($_POST["lastName_input"]) . "', '" . mysqli_prep($_POST["rank_select"]) . "', '" . mysqli_prep($hashPw) . "', '" . mysqli_prep($active) . "') ";
 				//$query .= "LIMIT 1";
 				$query .= ";";
 				$insert_success = mysqli_query($connection, $query);
 				mysqli_confirm($insert_success);
 				
+				//create schedule for agent
 				(int) $createdId = mysqli_insert_id($connection);
 				$query  = "INSERT INTO `schedules` ";
 				$query .= "(`id`, `weekday`, `start_time`, `end_time`) ";
