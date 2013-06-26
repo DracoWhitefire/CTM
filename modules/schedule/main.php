@@ -18,12 +18,13 @@
 		$output .= "<tr>";
 		$output .= "<td>" . htmlspecialchars($agent_row["forum_name"]) . "</td><td class=\"time\" >";
 		$schedule = get_sch_for_agent($agent_row["id"], $selectedDay);
-		(float) $endTime = strtotime($schedule["end_time"]);
-		(float) $startTime = strtotime($schedule["start_time"]);
+		$endTime = strtotime($schedule["end_time"]);
+		$startTime = strtotime($schedule["start_time"]);
+		
 		if(($endTime - $startTime) <= (4*60*60)) {
-			(float) $workingHours = gmstrftime("%k:%M", ($endTime - $startTime));
+			$workingHours = is_bool(strftime("%k")) ? preg_replace("/^0?(\d{1,2}:\d{2})$/", "\\1", strftime("%H:%M", ($endTime - $startTime))) : strftime("%k:%M", ($endTime - $startTime));
 		} else {
-			(float) $workingHours = gmstrftime("%k:%M", ($endTime - $startTime - (30*60)));
+			$workingHours = is_bool(strftime("%k")) ? preg_replace("/^0?(\d{1,2}:\d{2})$/", "\\1", strftime("%H:%M", ($endTime - $startTime - (30*60)))) : strftime("%k:%M", ($endTime - $startTime - (30*60)));
 		}
 		
 		if($editing == TRUE) {
