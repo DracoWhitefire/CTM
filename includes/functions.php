@@ -51,28 +51,37 @@
 	}
 	function get_subject_by_id($id) {
 		global $connection;
-		$query  = "SELECT * ";
-		$query .= "FROM `subjects` ";
-		$set = mysqli_query($connection, $query);
-		mysqli_confirm($set);
-		$subj_total = mysqli_num_rows($set);
-		mysqli_free_result($set);
-		if(!((1 <= $id) && ($id <= $subj_total))) {
-			$id = 1;
-		}
-		$query  = "SELECT * ";
-		$query .= "FROM `subjects` ";
-		$query .= "WHERE `id` = '" . mysqli_prep($id) . "' ";
-		$query .= "LIMIT 1";
-		$set = mysqli_query($connection, $query);
-		mysqli_confirm($set);
-		$result = mysqli_fetch_assoc($set);
-		mysqli_free_result($set);
-		if($result["min_rank"] <= $_SESSION["rank"]) {
-			return $result;
+		if(isset($_SESSION["rank"])) {
+			$query  = "SELECT * ";
+			$query .= "FROM `subjects` ";
+			$set = mysqli_query($connection, $query);
+			mysqli_confirm($set);
+			$subj_total = mysqli_num_rows($set);
+			mysqli_free_result($set);
+			if(!((1 <= $id) && ($id <= $subj_total))) {
+				$id = 1;
+			}
+			$query  = "SELECT * ";
+			$query .= "FROM `subjects` ";
+			$query .= "WHERE `id` = '" . mysqli_prep($id) . "' ";
+			$query .= "LIMIT 1";
+			$set = mysqli_query($connection, $query);
+			mysqli_confirm($set);
+			$result = mysqli_fetch_assoc($set);
+			mysqli_free_result($set);
+			if($result["min_rank"] <= $_SESSION["rank"]) {
+				return $result;
+			}
 		} else {
-			header("location:index.php");
-			die();
+			$query  = "SELECT * ";
+			$query .= "FROM `subjects` ";
+			$query .= "WHERE `id` = '7' ";
+			$query .= "LIMIT 1";
+			$set = mysqli_query($connection, $query);
+			mysqli_confirm($set);
+			$result = mysqli_fetch_assoc($set);
+			mysqli_free_result($set);
+			return $result;
 		}
 	}
 	function navigation($subject_set) {
