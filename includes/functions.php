@@ -53,7 +53,6 @@
 		global $connection;
 		$query  = "SELECT * ";
 		$query .= "FROM `subjects` ";
-		$query .= "WHERE `visible` = 1 ";
 		$set = mysqli_query($connection, $query);
 		mysqli_confirm($set);
 		$subj_total = mysqli_num_rows($set);
@@ -63,8 +62,7 @@
 		}
 		$query  = "SELECT * ";
 		$query .= "FROM `subjects` ";
-		$query .= "WHERE visible = 1 ";
-		$query .= "AND `id` = '" . mysqli_prep($id) . "' ";
+		$query .= "WHERE `id` = '" . mysqli_prep($id) . "' ";
 		$query .= "LIMIT 1";
 		$set = mysqli_query($connection, $query);
 		mysqli_confirm($set);
@@ -76,16 +74,22 @@
 		//requires the (result of the) function get_all_subjects()
 		//requires the function get_selected_id()
 		global $current_id;
-		$output = "<ul>";
+		if(isset($_SESSION["id"])) {
+			$output = "<ul>";
 			While($row = mysqli_fetch_array($subject_set, MYSQL_ASSOC)) {
-				$output .= "<li";
-				if($row["id"] == $current_id) {
-					$output .= " class=\"selected\"";
+				if($row["visible"] == TRUE) {
+					$output .= "<li";
+					if($row["id"] == $current_id) {
+						$output .= " class=\"selected\"";
+					}
+					$output .= "><a href=\"" . htmlspecialchars("index.php?id=" . urlencode($row["id"])) . "\" >" . htmlspecialchars($row["menu_name"]) . "</a></li>";
 				}
-				$output .= "><a href=\"" . htmlspecialchars("index.php?id=" . urlencode($row["id"])) . "\" >" . htmlspecialchars($row["menu_name"]) . "</a></li>";
 			}
-		$output .= "</ul>";
-		return $output;
+			$output .= "</ul>";
+			return $output;
+		} else {
+			return NULL;
+		}
 	}
 	
 //agent functions
