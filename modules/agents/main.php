@@ -186,6 +186,7 @@
 				$insert_success = mysqli_query($connection, $query);
 				mysqli_confirm($insert_success);
 			} elseif($_POST["submitForm"] == "Submit User") {
+				//Update existing agent
 				if(isset($_POST["active_input"])) {
 					$active = 1;
 				} else {
