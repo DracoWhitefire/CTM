@@ -53,6 +53,7 @@
 #content_div {
 	padding: 10px;
 	min-height: 230px;
+	overflow: auto;
 }
 
 #copyright_div {

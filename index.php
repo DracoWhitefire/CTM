@@ -32,24 +32,27 @@
 							include($includefile);
 							
 						?>
-						<div id="debug_div">
-							<pre>
-								<span>
-									Post:
-									<?php
-										print_r($_POST);						
-									?>
-								</span><br />
-								<span>
-									Errors:
-									<?php
-										if(isset($errors)) {
-											print_r($errors);
-										}
-									?>
-								</span>
-							</pre>
-						</div>
+						
+						
+					</div>
+					<hr />
+					<div id="debug_div">
+						<!--<pre>
+							<span>
+								Post:
+								<?php
+									print_r($_POST);						
+								?>
+							</span><br />
+							<span>
+								Errors:
+								<?php
+									if(isset($errors)) {
+										print_r($errors);
+									}
+								?>
+							</span>
+						</pre>-->
 					</div>
 				</div>
 
