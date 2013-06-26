@@ -34,6 +34,7 @@
 		$checkUniq_array = array();
 		$checkTime_array = array();
 		$checkTimeDiff_array = array();
+		$checkSame_array = array();
 		foreach($_POST as $valField => $val) {			
 			$valFieldString_array = preg_split("/([A-Z][a-z]+)|_/", $valField, -1, PREG_SPLIT_DELIM_CAPTURE|PREG_SPLIT_NO_EMPTY);
 			if(count($valFieldString_array) > 1){
@@ -55,6 +56,9 @@
 						$checkTimeDiff_array[$valField] = $valFieldString_array[0] . "End_" . $valFieldString_array[2];
 					}
 				}
+				if(strtolower($valFieldString_array[0]) == "password") {
+					$checkSame_array[$valField] = "conf" . ucfirst($valFieldString_array[0]) . "_" . $valFieldString_array[1];
+				}
 			}
 		}
 		form_val_unique($checkUniq_array);
@@ -63,6 +67,7 @@
 		form_val_num($checkNum_array);
 		form_val_time($checkTime_array);
 		form_val_timediff($checkTimeDiff_array);
+		form_val_compare($checkSame_array);
 	}
 	//Form Processing
 	if(isset($_POST["submitList"])) {

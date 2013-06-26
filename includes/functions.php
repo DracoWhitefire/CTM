@@ -364,6 +364,17 @@
 			}
 		}
 	}
+	function form_val_compare($val_compare_array) {
+		global $errors;
+		foreach($val_compare_array as $firstField => $secondField) {
+			if($_POST[$firstField] !== $_POST[$secondField]) {
+				if(!isset($errors[$firstField]) && !isset($errors[$secondField])) {
+					$errors[$firstField] = "error_compare";
+					$errors[$secondField] = "error_compare";
+				}
+			}
+		}
+	}
 	
 //general functions
 	function convert_rank($rank) {
