@@ -142,7 +142,7 @@
 		if(empty($errors)) {
 			//Password Hashing
 			if(!empty($_POST["password_input"])) {
-				$postPw = pw_encrypt($_POST["password_input"]);
+				$hashPw = pw_encrypt($_POST["password_input"]);
 			}
 			if($_POST["submitForm"] == "Add User") {
 				//create agent
