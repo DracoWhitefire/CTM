@@ -42,7 +42,7 @@
 						
 					</div>
 					<hr />
-					<div id="debug_div">
+					<!--<div id="debug_div">
 						<pre>
 							<span>
 								Post:
@@ -59,7 +59,7 @@
 								?>
 							</span>
 						</pre>
-					</div>
+					</div>-->
 				</div>
 
 			</div>
