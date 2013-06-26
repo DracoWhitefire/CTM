@@ -364,6 +364,17 @@
 			}
 		}
 	}
+	function form_val_pw($val_pw_array) {
+		global $errors;
+		foreach($val_pw_array as $pw_field) {
+			$success = preg_match("/^(?=.*\d)(?=.*[a-zA-Z])(?=.*[^a-zA-Z\d\s]).{8,20}$/", trim($_POST[$pw_field])); 
+			if(!$success) {
+				if(!isset($errors[$pw_field])) {
+					$errors[$pw_field] = "error_pw";
+				}
+			}
+		}
+	}
 	function form_val_compare($val_compare_array) {
 		global $errors;
 		foreach($val_compare_array as $firstField => $secondField) {
