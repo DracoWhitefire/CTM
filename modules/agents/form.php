@@ -9,12 +9,11 @@
 		$agent_array = mysqli_fetch_array($agent_set);
 	}
 	
-	$agentForm = "Agent Form";
-	$agentForm .= "<div id=\"agentForm_div\"><form id=\"agentForm_form\" method=\"POST\" action=\"index.php" . htmlspecialchars("?id={$current_id}") . "\">";
+	$agentForm = "<div id=\"agentForm_div\"><form id=\"agentForm_form\" method=\"POST\" action=\"index.php" . htmlspecialchars("?id={$current_id}") . "\">";
 	if($editAgent == TRUE) {
 		$agentForm .= "<input type=\"hidden\" name=\"agentId_input\" value=\"" . htmlspecialchars($agent_array['id']) . "\" />";
 	}
-	$agentForm .= "<label for=\"userName_input\">CTM Username</label><input type=\"text\" id=\"userName_input\" name=\"userName_input\" ";
+	$agentForm .= "<div id=\"agentFormPersonal_div\"><label for=\"userName_input\">CTM Username</label><input type=\"text\" id=\"userName_input\" name=\"userName_input\" ";
 	if(isset($errors["userName_input"])) {
 		$agentForm .= "class=\"error\" ";
 	}
@@ -88,7 +87,7 @@
 		$agentForm .= ">" . htmlspecialchars($rankName) . "</option>";
 	}
 	$agentForm .= "</select><br />";
-	$agentForm .= "<label for=\"active_input\">Active</label><input type=\"checkbox\" id=\"active_input\" name=\"active_input\" ";
+	$agentForm .= "<label for=\"active_input\" class=\"check\">Active</label><input type=\"checkbox\" id=\"active_input\" name=\"active_input\" ";
 	if($editAgent == TRUE) {
 		if(isset($_POST["active_input"])) {
 			if($_POST["active_input"] == TRUE) {
@@ -110,7 +109,7 @@
 		$agentForm .= "class=\"error\" ";
 	}
 	$agentForm .= "/><br />";
-	$agentForm .= "<label for=\"changePw_input\">Change password on next login</label><input type=\"checkbox\" id=\"changePw_input\" name=\"changePw_input\" />";
+	$agentForm .= "<label for=\"changePw_input\" class=\"check\">Change password on next login</label><input type=\"checkbox\" id=\"changePw_input\" name=\"changePw_input\" /></div><hr />";
 	$weekdays_array = array("Monday", "Tuesday", "Wednesday", "Thursday", "Friday");
 	$agentForm .= "<div id=\"agentFormSchedule_div\"><table id=\"agentFormSchedule_table\">";
 	$agentForm .= "<thead><tr><th>Weekday</th><th>Begin Shift</th><th>End Shift</th></tr></thead><tbody>";
@@ -140,7 +139,7 @@
 		}
 		$agentForm .= "/></td></tr>";
 	}
-	$agentForm .= "</tbody></table></div>";
+	$agentForm .= "</tbody></table></div><hr />";
 	if($addAgent == TRUE) {
 		$agentForm .= "<input type=\"submit\" value=\"Add User\" name=\"submitForm\" />";
 	} elseif($editAgent == TRUE) {

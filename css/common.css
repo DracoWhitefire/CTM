@@ -161,6 +161,10 @@
 	border-bottom: 2px solid red;
 }
 
+#agentForm_div {
+
+}
+
 #agentForm_div  input[type=text].error, input[type=password].error {
 	//background: red;
 	border-left: 2px solid #a60000;
@@ -171,11 +175,20 @@
 
 #agentForm_div label, input[type=text], input[type=password] {	
 	width: 22%;
-	display: block;
-	float: left;
+	display: inline-block;
 	box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
+}
+
+#agentForm_div label.check {
+	display: block;
+	float: left;
+}
+
+#agentForm_div hr {
+	margin: 1.5em 0 0.5em 0;
+	clear:both;
 }
 
 #agentForm_div select {
