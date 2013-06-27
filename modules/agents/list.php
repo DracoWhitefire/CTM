@@ -1,12 +1,12 @@
 <?php
-	$agentList = "<div id=\"agentlist_div\"><form id=\"agentlist_form\"  action=\"index.php?id=" . urlencode($current_id) . "\" method=\"POST\" >";
-	$agentList .= "<table id=\"agentlist_table\">";
-	$agentList .= "<thead>";
-	$agentList .= "<tr><th></th><th>CTM Username</th><th>First Name</th><th>Last Name</th><th>Forum Name</th><th>CTM Rank</th><th>Active</th><th></th></tr>";
-	$agentList .= "</thead>";
-	$agentList .= "<tbody>";
-	while($agent_row = mysqli_fetch_array($agent_set)) {
-		$id = $agent_row["id"];
+	$userList = "<div id=\"userlist_div\"><form id=\"userlist_form\"  action=\"index.php?id=" . urlencode($current_id) . "\" method=\"POST\" >";
+	$userList .= "<table id=\"userlist_table\">";
+	$userList .= "<thead>";
+	$userList .= "<tr><th></th><th>CTM Username</th><th>First Name</th><th>Last Name</th><th>Forum Name</th><th>CTM Rank</th><th>Active</th><th></th></tr>";
+	$userList .= "</thead>";
+	$userList .= "<tbody>";
+	while($user_row = mysqli_fetch_array($user_set)) {
+		$id = $user_row["id"];
 		$fieldname = "edit_{$id}";
 		$editRow = FALSE;
 		if((isset($_POST["$fieldname"]))) {
@@ -16,140 +16,140 @@
 		} elseif((!empty($errors)) && ((isset($errorId_array[$id])) || isset($_POST["user_name_{$id}"]))) {
 			$editRow = TRUE;
 		}
-		$agentList .= "<tr><td class=\"check\" >";
+		$userList .= "<tr><td class=\"check\" >";
 		if($editList == FALSE) {
-			$agentList .= "<input type=\"checkbox\" name=\"" . htmlspecialchars("edit_{$id}") . "\" />";
+			$userList .= "<input type=\"checkbox\" name=\"" . htmlspecialchars("edit_{$id}") . "\" />";
 		}
-		$agentList .= "</td>";
-		$agentList .= "<td class=\"name";
+		$userList .= "</td>";
+		$userList .= "<td class=\"name";
 		if(isset($errors["user_name_{$id}"])) {
-			$agentList .= " error\"";
+			$userList .= " error\"";
 		} else {
-			$agentList .= "\"";
+			$userList .= "\"";
 		}
-		$agentList .= " >";
+		$userList .= " >";
 		if($editRow == TRUE) {
-			$agentList .= "<input type=\"text\" name=\"" . htmlspecialchars("user_name_{$id}") . "\" value=\"";
+			$userList .= "<input type=\"text\" name=\"" . htmlspecialchars("user_name_{$id}") . "\" value=\"";
 		}
 		if(isset($_POST["user_name_{$id}"])) {
-			$agentList .= htmlspecialchars($_POST["user_name_{$id}"]);
+			$userList .= htmlspecialchars($_POST["user_name_{$id}"]);
 		} else {
-			$agentList .= htmlspecialchars($agent_row["user_name"]);
+			$userList .= htmlspecialchars($user_row["user_name"]);
 		}		
 		if($editRow == TRUE) {
-			$agentList .= "\" />";
+			$userList .= "\" />";
 		}
-		$agentList .= "</td>";
-		$agentList .= "<td class=\"name";
+		$userList .= "</td>";
+		$userList .= "<td class=\"name";
 		if(isset($errors["first_name_{$id}"])) {
-			$agentList .= " error\"";
+			$userList .= " error\"";
 		} else {
-			$agentList .= "\"";
+			$userList .= "\"";
 		}
-		$agentList .= " >";
+		$userList .= " >";
 		if($editRow == TRUE) {
-			$agentList .= "<input type=\"text\" name=\"" . htmlspecialchars("first_name_{$id}") . "\" value=\"";
+			$userList .= "<input type=\"text\" name=\"" . htmlspecialchars("first_name_{$id}") . "\" value=\"";
 		}
 		if(isset($_POST["first_name_{$id}"])) {
-			$agentList .= htmlspecialchars($_POST["first_name_{$id}"]);
+			$userList .= htmlspecialchars($_POST["first_name_{$id}"]);
 		} else {
-			$agentList .= htmlspecialchars($agent_row["first_name"]);
+			$userList .= htmlspecialchars($user_row["first_name"]);
 		}		
 		if($editRow == TRUE) {
-			$agentList .= "\" />";
+			$userList .= "\" />";
 		}
-		$agentList .= "</td>"; 
-		$agentList .= "<td class=\"name";
+		$userList .= "</td>"; 
+		$userList .= "<td class=\"name";
 		if(isset($errors["last_name_{$id}"])) {
-			$agentList .= " error\"";
+			$userList .= " error\"";
 		} else {
-			$agentList .= "\"";
+			$userList .= "\"";
 		}
-		$agentList .= " >";
+		$userList .= " >";
 		if($editRow == TRUE) {
-			$agentList .= "<input type=\"text\" name=\"" . htmlspecialchars("last_name_{$id}") . "\" value=\"";
+			$userList .= "<input type=\"text\" name=\"" . htmlspecialchars("last_name_{$id}") . "\" value=\"";
 		}
 		if(isset($_POST["last_name_{$id}"])) {
-			$agentList .= htmlspecialchars($_POST["last_name_{$id}"]);
+			$userList .= htmlspecialchars($_POST["last_name_{$id}"]);
 		} else {
-			$agentList .= htmlspecialchars($agent_row["last_name"]);
+			$userList .= htmlspecialchars($user_row["last_name"]);
 		}
 		if($editRow == TRUE) {
-			$agentList .= "\" />";
+			$userList .= "\" />";
 		}
-		$agentList .= "</td>"; 
-		$agentList .= "<td class=\"name";
+		$userList .= "</td>"; 
+		$userList .= "<td class=\"name";
 		if(isset($errors["forum_name_{$id}"])) {
-			$agentList .= " error\"";
+			$userList .= " error\"";
 		} else {
-			$agentList .= "\"";
+			$userList .= "\"";
 		}
-		$agentList .= ">";
+		$userList .= ">";
 		if($editRow == TRUE) {
-			$agentList .= "<input type=\"text\" name=\"" . htmlspecialchars("forum_name_{$id}") . "\" value=\"";
+			$userList .= "<input type=\"text\" name=\"" . htmlspecialchars("forum_name_{$id}") . "\" value=\"";
 		}
 		if(isset($_POST["forum_name_{$id}"])) {
-			$agentList .= htmlspecialchars($_POST["forum_name_{$id}"]);
+			$userList .= htmlspecialchars($_POST["forum_name_{$id}"]);
 		} else {
-			$agentList .= htmlspecialchars($agent_row["forum_name"]);
+			$userList .= htmlspecialchars($user_row["forum_name"]);
 		}
 		if($editRow == TRUE) {
-			$agentList .= "\" />";
+			$userList .= "\" />";
 		}
-		$agentList .= "<td class=\"rank\" >";
+		$userList .= "<td class=\"rank\" >";
 		if($editRow == TRUE) {
-			$agentList .= "<select id=\"" . htmlspecialchars("rank_select_{$id}") . "\" name=\"" . htmlspecialchars("rank_select_{$id}") . "\">";
-			$agentList .= "<option value=\"1\" ";
-			if($agent_row["rank"] == 1) {
-				$agentList .= "selected=\"selected\" ";
+			$userList .= "<select id=\"" . htmlspecialchars("rank_select_{$id}") . "\" name=\"" . htmlspecialchars("rank_select_{$id}") . "\">";
+			$userList .= "<option value=\"1\" ";
+			if($user_row["rank"] == 1) {
+				$userList .= "selected=\"selected\" ";
 			}
-			$agentList .= ">Guest</option>";
-			$agentList .= "<option value=\"10\" ";
-			if($agent_row["rank"] == 10) {
-				$agentList .= "selected=\"selected\" ";
+			$userList .= ">Guest</option>";
+			$userList .= "<option value=\"10\" ";
+			if($user_row["rank"] == 10) {
+				$userList .= "selected=\"selected\" ";
 			}
-			$agentList .= ">Agent</option>";
-			$agentList .= "<option value=\"50\" ";
-			if($agent_row["rank"] == 50) {
-				$agentList .= "selected=\"selected\" ";
+			$userList .= ">User</option>";
+			$userList .= "<option value=\"50\" ";
+			if($user_row["rank"] == 50) {
+				$userList .= "selected=\"selected\" ";
 			}
-			$agentList .= ">Admin</option>";
-			$agentList .= "<option value=\"100\" ";
-			if($agent_row["rank"] == 100) {
-				$agentList .= "selected=\"selected\" ";
+			$userList .= ">Admin</option>";
+			$userList .= "<option value=\"100\" ";
+			if($user_row["rank"] == 100) {
+				$userList .= "selected=\"selected\" ";
 			}
-			$agentList .= ">Superadmin</option>";
-			$agentList .= "</select>";
+			$userList .= ">Superadmin</option>";
+			$userList .= "</select>";
 		} else {
-			$agentList .= htmlspecialchars(convert_rank($agent_row["rank"]));
+			$userList .= htmlspecialchars(convert_rank($user_row["rank"]));
 		}
-		$agentList .= "</td>"; 
-		$agentList .= "<td><input type=\"checkbox\" name=\"" . htmlspecialchars("active_check_{$id}") . "\" ";
+		$userList .= "</td>"; 
+		$userList .= "<td><input type=\"checkbox\" name=\"" . htmlspecialchars("active_check_{$id}") . "\" ";
 		if($editRow == FALSE) {
-			$agentList .= "disabled=\"disabled\" ";
+			$userList .= "disabled=\"disabled\" ";
 		}
-		if($agent_row["active"] == TRUE) {
-			$agentList .= "checked=\"checked\" ";
+		if($user_row["active"] == TRUE) {
+			$userList .= "checked=\"checked\" ";
 		}
-		$agentList .= "/>";
-		$agentList .= "</td>";
-		$agentList .= "<td>";
+		$userList .= "/>";
+		$userList .= "</td>";
+		$userList .= "<td>";
 		if($editList == FALSE) {
-			$agentList .= "<button type=\"submit\" name=\"singleEditList\" formmethod=\"post\" value=\"" . htmlspecialchars($id) . "\"  >Edit</button>";
+			$userList .= "<button type=\"submit\" name=\"singleEditList\" formmethod=\"post\" value=\"" . htmlspecialchars($id) . "\"  >Edit</button>";
 		}
-		$agentList .= "</td></tr>";
+		$userList .= "</td></tr>";
 	}
 
-	$agentList .= "</tbody>";
-	$agentList .= "</table>";
+	$userList .= "</tbody>";
+	$userList .= "</table>";
 	if($editList == TRUE) {
-		$agentList .= "<input type=\"submit\" value=\"Submit\" name=\"submitList\" />";
-		$agentList .= "<input type=\"submit\" value=\"Cancel\" name=\"cancelEditList\" />";
+		$userList .= "<input type=\"submit\" value=\"Submit\" name=\"submitList\" />";
+		$userList .= "<input type=\"submit\" value=\"Cancel\" name=\"cancelEditList\" />";
 	} else {
-		$agentList .= "<input type=\"submit\" value=\"Bulk Edit\" name=\"editList\" />";
-		$agentList .= "<input type=\"submit\" value=\"Add\" name=\"addList\" />";
+		$userList .= "<input type=\"submit\" value=\"Bulk Edit\" name=\"editList\" />";
+		$userList .= "<input type=\"submit\" value=\"Add\" name=\"addList\" />";
 	}
-	$agentList .= "</form></div>";
+	$userList .= "</form></div>";
 	
-	mysqli_free_result($agent_set);
+	mysqli_free_result($user_set);
 ?>

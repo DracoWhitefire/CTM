@@ -12,12 +12,12 @@
 </div>
 <?php
 	$output = "<div id=\"scheduleSelected_div\"><form id=\"scheduleSelected_form\" action=\"index.php" . htmlspecialchars("?id={$current_id}") . "\" method=\"POST\" ><table id = \"scheduleSelected_table\"><thead><tr><th>Forum Name</th><th>Start Time</th><th>End Time</th><th>Working Hours</th></tr></thead><tbody>";
-	$agent_set = get_agents("active");
+	$user_set = get_users("active");
 	$selectedDay = date("l", strtotime($date["d"] . "-" . $date["m"] . "-" . $date["y"]));
-	while($agent_row = mysqli_fetch_array($agent_set, MYSQL_ASSOC)) {
+	while($user_row = mysqli_fetch_array($user_set, MYSQL_ASSOC)) {
 		$output .= "<tr>";
-		$output .= "<td>" . htmlspecialchars($agent_row["forum_name"]) . "</td><td class=\"time\" >";
-		$schedule = get_sch_for_agent($agent_row["id"], $selectedDay);
+		$output .= "<td>" . htmlspecialchars($user_row["forum_name"]) . "</td><td class=\"time\" >";
+		$schedule = get_sch_for_user($user_row["id"], $selectedDay);
 		$endTime = strtotime($schedule["end_time"]);
 		$startTime = strtotime($schedule["start_time"]);
 		
@@ -28,7 +28,7 @@
 		}
 		
 		if($editing == TRUE) {
-			$output .= "<input type=\"text\" name=\"starttime_" . htmlspecialchars($agent_row["id"]) . "\" value=\"";
+			$output .= "<input type=\"text\" name=\"starttime_" . htmlspecialchars($user_row["id"]) . "\" value=\"";
 		}		
 		$output .= format_time($schedule["start_time"], "html");
 		if($editing == TRUE) {
@@ -36,7 +36,7 @@
 		}
 		$output .= "</td><td class=\"time\" >";
 		if($editing == TRUE) {
-			$output .= "<input type=\"text\" name=\"endtime_" . htmlspecialchars($agent_row["id"]) . "\" value=\"";
+			$output .= "<input type=\"text\" name=\"endtime_" . htmlspecialchars($user_row["id"]) . "\" value=\"";
 		}	
 		$output .= format_time($schedule["end_time"], "html");
 		if($editing == TRUE) {
@@ -55,5 +55,5 @@
 	$output .= "</form></div>";
 	echo $output;
 	
-	mysqli_free_result($agent_set);
+	mysqli_free_result($user_set);
 ?>

@@ -6,24 +6,24 @@
 	if(isset($_POST["editList"])) {
 		if(count($_POST) > 1) {
 			$editList = TRUE;
-			$addAgent = FALSE;
-			$editAgent = FALSE;
+			$addUser = FALSE;
+			$editUser = FALSE;
 		} else {
 			$editList = FALSE;
-			$addAgent = FALSE;
-			$editAgent = FALSE;
+			$addUser = FALSE;
+			$editUser = FALSE;
 		}
 	} elseif(isset($_POST["addList"])) {
-		$addAgent = TRUE;
-		$editAgent = FALSE;
+		$addUser = TRUE;
+		$editUser = FALSE;
 		$editList = FALSE;
 	} elseif(isset($_POST["singleEditList"])) {
-		$editAgent = TRUE;
-		$addAgent = FALSE;
+		$editUser = TRUE;
+		$addUser = FALSE;
 		$editList = FALSE;
 	} else {
-		$addAgent = FALSE;
-		$editAgent = FALSE;
+		$addUser = FALSE;
+		$editUser = FALSE;
 		$editList = FALSE;
 	}
 	//Form Validation	
@@ -76,14 +76,14 @@
 	}
 	//Form Processing
 	if(isset($_POST["submitList"])) {
-		// This sorts all POST-vars by agent id
+		// This sorts all POST-vars by user id
 		foreach($_POST as $varName => $postValue) {
 			$string_array = explode("_", $varName);
 			if(count($string_array) > 1){
 				if(count($string_array) > 2) {
 					$string_id = $string_array[2];
 				} else {
-					$string_id = $_POST["agentId_input"];
+					$string_id = $_POST["userId_input"];
 				}				
 				if(!isset($query_array_{$string_id})) {
 					$query_array_{$string_id} = array();
@@ -95,14 +95,14 @@
 			}
 		}
 		// This combines every field in an id (row) into one query and runs the query
-		foreach($query_array as $array_id => $agent_array) {
+		foreach($query_array as $array_id => $user_array) {
 			$i = 1;
 			$changefields = "";
-			if(!isset($agent_array["active_check"])) {
-				$agent_array["active_check"] = "off";
+			if(!isset($user_array["active_check"])) {
+				$user_array["active_check"] = "off";
 			}
-			//print_r($agent_array);
-			foreach($agent_array as $field => $postValue) {
+			//print_r($user_array);
+			foreach($user_array as $field => $postValue) {
 				$field = mysqli_prep($field);
 				$postValue = mysqli_prep($postValue);
 				if($field == "active_check") {
@@ -117,13 +117,13 @@
 					$field = "rank";
 				}
 				$changefields .= "`{$field}` = '{$postValue}'";
-				if($i < count($agent_array)) {
+				if($i < count($user_array)) {
 					$changefields .= ",";
 				}
 				$changefields .= " ";
 				$i++;
 			}
-			$query  = "UPDATE `agents` SET ";
+			$query  = "UPDATE `users` SET ";
 			$query .= $changefields;
 			$query .= "WHERE `id` = '{$array_id}' ";
 			$query .= "LIMIT 1 ";
@@ -145,13 +145,13 @@
 				$hashPw = pw_encrypt($_POST["password_input"]);
 			}
 			if($_POST["submitForm"] == "Add User") {
-				//create agent
+				//create user
 				if(isset($_POST["active_input"])) {
 					$active = 1;
 				} else {
 					$active = 0;
 				}
-				$query  = "INSERT INTO `agents` ";
+				$query  = "INSERT INTO `users` ";
 				$query .= "(`user_name`, `forum_name`, `first_name`, `last_name`, `rank`, `passwordhash`, `active`) ";
 				$query .= "VALUES ('" . 	mysqli_prep($_POST["userName_input"]) . "', '" . 
 											mysqli_prep($_POST["forumName_input"]) . "', '" . 
@@ -164,7 +164,7 @@
 				$insert_success = mysqli_query($connection, $query);
 				mysqli_confirm($insert_success);
 				
-				//create schedule for agent
+				//create schedule for user
 				(int) $createdId = mysqli_insert_id($connection);
 				$query  = "INSERT INTO `schedules` ";
 				$query .= "(`id`, `weekday`, `start_time`, `end_time`) ";
@@ -185,13 +185,13 @@
 				$insert_success = mysqli_query($connection, $query);
 				mysqli_confirm($insert_success);
 			} elseif($_POST["submitForm"] == "Submit User") {
-				//Update existing agent
+				//Update existing user
 				if(isset($_POST["active_input"])) {
 					$active = 1;
 				} else {
 					$active = 0;
 				}
-				$query  = 	"UPDATE `agents` SET ";
+				$query  = 	"UPDATE `users` SET ";
 				$query .= 	"`user_name`='" . 	mysqli_prep($_POST["userName_input"]) . "', " . 
 							"`forum_name`='" . 	mysqli_prep($_POST["forumName_input"]) . "', " . 
 							"`first_name`='" . 	mysqli_prep($_POST["firstName_input"]) . "', " .  
@@ -201,7 +201,7 @@
 					$query .= "', `passwordhash`='" . mysqli_prep($hashPw);
 				}
 				$query .= "', `active`='" . mysqli_prep($active) . "' ";
-				$query .= "WHERE `id`=" . mysqli_prep($_POST["agentId_input"]) . " ";
+				$query .= "WHERE `id`=" . mysqli_prep($_POST["userId_input"]) . " ";
 				$query .= "LIMIT 1" ;
 				$query .= ";";
 				$update_success = mysqli_query($connection, $query);
@@ -213,7 +213,7 @@
 					$endFieldname = ucfirst($weekday) . "End_input";
 					$query  = "UPDATE `schedules` SET ";
 					$query .= "`start_time`='" . mysqli_prep($_POST[$beginFieldname]) . "', `end_time`='" . mysqli_prep($_POST[$endFieldname]) . "' ";
-					$query .= "WHERE `id` = '" . mysqli_prep($_POST["agentId_input"]) . "' ";
+					$query .= "WHERE `id` = '" . mysqli_prep($_POST["userId_input"]) . "' ";
 					$query .= "AND `weekday` = '{$weekday}' ";
 					$query .= "LIMIT 1 ";
 					$query .= ";";
@@ -224,11 +224,11 @@
 			}
 		} else {
 			if($_POST["submitForm"] == "Add User") {
-				$editAgent = TRUE;
-				$addAgent = TRUE;
+				$editUser = TRUE;
+				$addUser = TRUE;
 				
 			} elseif($_POST["submitForm"] == "Submit User") {
-				$editAgent = TRUE;
+				$editUser = TRUE;
 			}
 		}
 	}
@@ -241,13 +241,13 @@
 				$errorId_array[$errorId] = TRUE;
 		}
 	}
-	$agent_set = get_agents("all");
-	if(($addAgent == TRUE) || ($editAgent == TRUE)) {
+	$user_set = get_users("all");
+	if(($addUser == TRUE) || ($editUser == TRUE)) {
 		include("form.php");
-		$output = $agentForm;
+		$output = $userForm;
 	} else {
 		include("list.php");
-		$output = $agentList;
+		$output = $userList;
 	}
 	echo $output;
 ?>

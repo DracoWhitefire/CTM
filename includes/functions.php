@@ -106,43 +106,43 @@
 		}
 	}
 	
-//agent functions
-	function get_sch_for_agent($selected_agent, $day) {
-	//function get_sch_for_agent($selected_agent, $day = "Wednesday") {
+//user functions
+	function get_sch_for_user($selected_user, $day) {
+	//function get_sch_for_user($selected_user, $day = "Wednesday") {
 		global $connection;
-		$selected_agent = mysqli_prep($selected_agent);
+		$selected_user = mysqli_prep($selected_user);
 		$day = mysqli_prep($day);
 		$sch_query  = "SELECT `start_time`, `end_time` ";
 		$sch_query .= "FROM `schedules` ";
 		$sch_query .= "WHERE `weekday` = '{$day}' ";
-		$sch_query .= "AND `id` = '{$selected_agent}' ";
+		$sch_query .= "AND `id` = '{$selected_user}' ";
 		$sch_set = mysqli_query($connection, $sch_query);
 		mysqli_confirm($sch_set);
 		$result = mysqli_fetch_array($sch_set, MYSQL_ASSOC);
 		mysqli_free_result($sch_set);
 		return $result;
 	}
-	function get_agents($selection = "all") {
+	function get_users($selection = "all") {
 		global $connection;
-		$agent_query  = "SELECT `id`, 
+		$user_query  = "SELECT `id`, 
 								`user_name`, 
 								`forum_name`, 
 								`first_name`, 
 								`last_name`, 
 								`rank`, 
 								`active` ";
-		$agent_query .= "FROM `agents` ";
+		$user_query .= "FROM `users` ";
 		if(is_numeric($selection)) {
-			$agent_query .= "WHERE `id` = '{$selection}' ";
+			$user_query .= "WHERE `id` = '{$selection}' ";
 		} elseif($selection == "active") {
-			$agent_query .= "WHERE `active` = '1' ";
+			$user_query .= "WHERE `active` = '1' ";
 		} elseif ($selection == "inactive") {
-			$agent_query .= "WHERE `active` = '0' ";
+			$user_query .= "WHERE `active` = '0' ";
 		}		
-		$agent_query .= "ORDER BY `id` ASC";
-		$agent_set =mysqli_query($connection, $agent_query);
-		mysqli_confirm($agent_set);
-		return $agent_set;
+		$user_query .= "ORDER BY `id` ASC";
+		$user_set =mysqli_query($connection, $user_query);
+		mysqli_confirm($user_set);
+		return $user_set;
 	}
 	function pw_encrypt($pw_string) {
 		$hashFormat = "$2y$10$";
@@ -344,7 +344,7 @@
 		global $connection;
 		global $errors;
 		$user_query  = "SELECT `user_name`, `id` ";
-		$user_query .= "FROM `agents` ";
+		$user_query .= "FROM `users` ";
 		$user_set = mysqli_query($connection, $user_query);
 		mysqli_confirm($user_set);
 		while($user_row = mysqli_fetch_assoc($user_set)) {
@@ -364,8 +364,8 @@
 							break 1;
 						}
 					} elseif($fieldName_array[2] == "input") {
-						if(isset($_POST["agentId_input"])) {
-							if($_POST["agentId_input"] != $id) {
+						if(isset($_POST["userId_input"])) {
+							if($_POST["userId_input"] != $id) {
 								if(!isset($errors[$fieldName])) {
 									$errors[$fieldName] = "error_unique";	
 								}
@@ -431,7 +431,7 @@
 			if((1 <= $rank) && ($rank < 10)) {
 				$convRank = "Guest";
 			} elseif ((10 <= $rank) && ($rank < 50)) {
-				$convRank = "Agent";
+				$convRank = "User";
 			} elseif ((50 <= $rank) && ($rank < 100)) {
 				$convRank = "Admin";
 			} elseif ($rank == 100) {
@@ -440,7 +440,7 @@
 		} else {
 			if ($rank == "Guest") {
 				$convRank = 1;
-			} elseif ($rank == "Agent") {
+			} elseif ($rank == "User") {
 				$convRank = 10;
 			} elseif ($rank == "Admin") {
 				$convRank = 50;
