@@ -6,7 +6,8 @@
 		$username = trim(mysqli_prep($_POST["username_input"]));
 		$password = trim(mysqli_prep($_POST["password_input"]));
 		$checkReq_array = array("username_input", "password_input");
-		form_val_required($checkReq_array);
+		$validator = new validator;
+		$validator->required($checkReq_array);
 		if(empty($errors)) {
 			$query = "SELECT `id`, `user_name`, `passwordhash`, `rank`, `first_name` FROM `users`";
 			$user_set = mysqli_query($connection, $query);

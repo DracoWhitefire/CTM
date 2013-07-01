@@ -65,14 +65,15 @@
 				}
 			}
 		}
-		form_val_unique($checkUniq_array);
-		form_val_required($checkReq_array);
-		form_val_length($checkLen_array);
-		form_val_num($checkNum_array);
-		form_val_time($checkTime_array);
-		form_val_timediff($checkTimeDiff_array);
-		form_val_pw($checkPw_array);
-		form_val_compare($checkSame_array);
+		$validator = new validator;
+		$validator->unique($checkUniq_array);
+		$validator->required($checkReq_array);
+		$validator->length($checkLen_array);
+		$validator->numeric($checkNum_array);
+		$validator->time($checkTime_array);
+		$validator->timediff($checkTimeDiff_array);
+		$validator->password($checkPw_array);
+		$validator->compare($checkSame_array);
 	}
 	//Form Processing
 	if(isset($_POST["submitList"])) {
