@@ -6,7 +6,7 @@
 ?>
 <!DOCTYPE HTML>
 <?php
-	require_once("includes/functions.php");
+	require_once("../includes/functions.php");
 	db_connect();
 	$subject_set = get_all_subjects();
 	$current_id = get_selected_id();

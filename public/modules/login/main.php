@@ -1,6 +1,4 @@
 <?php
-	$errors = array();
-	require_once("includes/functions.php");
 	if(isset($_POST["login"])) {
 		//login attempt
 		$username = trim(mysqli_prep($_POST["username_input"]));
