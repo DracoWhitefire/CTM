@@ -8,7 +8,7 @@
 		$checkReq_array = array("username_input", "password_input");
 		$validator = new validator;
 		$validator->required($checkReq_array);
-		if(empty($errors)) {
+		if(empty($validator->errors)) {
 			$query = "SELECT `id`, `user_name`, `passwordhash`, `rank`, `first_name` FROM `users`";
 			$user_set = mysqli_query($connection, $query);
 			while($user_row = mysqli_fetch_assoc($user_set)) {
