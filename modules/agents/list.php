@@ -13,7 +13,7 @@
 			if($_POST["$fieldname"] == "on") {
 				$editRow = TRUE;
 			}
-		} elseif((!empty($errors)) && ((isset($errorId_array[$id])) || isset($_POST["user_name_{$id}"]))) {
+		} elseif((!empty($validator->errors)) && ((isset($errorId_array[$id])) || isset($_POST["user_name_{$id}"]))) {
 			$editRow = TRUE;
 		}
 		$userList .= "<tr><td class=\"check\" >";
@@ -22,7 +22,7 @@
 		}
 		$userList .= "</td>";
 		$userList .= "<td class=\"name";
-		if(isset($errors["user_name_{$id}"])) {
+		if(isset($validator->errors["user_name_{$id}"])) {
 			$userList .= " error\"";
 		} else {
 			$userList .= "\"";
@@ -41,7 +41,7 @@
 		}
 		$userList .= "</td>";
 		$userList .= "<td class=\"name";
-		if(isset($errors["first_name_{$id}"])) {
+		if(isset($validator->errors["first_name_{$id}"])) {
 			$userList .= " error\"";
 		} else {
 			$userList .= "\"";
@@ -60,7 +60,7 @@
 		}
 		$userList .= "</td>"; 
 		$userList .= "<td class=\"name";
-		if(isset($errors["last_name_{$id}"])) {
+		if(isset($validator->errors["last_name_{$id}"])) {
 			$userList .= " error\"";
 		} else {
 			$userList .= "\"";
@@ -79,7 +79,7 @@
 		}
 		$userList .= "</td>"; 
 		$userList .= "<td class=\"name";
-		if(isset($errors["forum_name_{$id}"])) {
+		if(isset($validator->errors["forum_name_{$id}"])) {
 			$userList .= " error\"";
 		} else {
 			$userList .= "\"";

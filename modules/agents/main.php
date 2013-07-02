@@ -1,5 +1,4 @@
 <?php
-	$errors = array();
 	if(isset($_POST["cancelEditList"])) {
 		$_POST = "";
 	}
@@ -129,7 +128,7 @@
 			$query .= "WHERE `id` = '{$array_id}' ";
 			$query .= "LIMIT 1 ";
 			$query .= "; ";
-			if(empty($errors)) {
+			if(empty($validator->errors)) {
 				$result = mysqli_query($connection, $query);
 				if(!$result) {
 					echo "MySQL Query Failed: " . mysqli_error($connection);
@@ -140,7 +139,7 @@
 		}
 	}
 	if(isset($_POST["submitForm"])) {
-		if(empty($errors)) {
+		if(empty($validator->errors)) {
 			//Password Hashing
 			if(!empty($_POST["password_input"])) {
 				$hashPw = pw_encrypt($_POST["password_input"]);
@@ -235,11 +234,13 @@
 	}
 	// If validation fails:	
 	if(isset($_POST["submitList"])) {
-		$errorId_array = array();
-		foreach($errors as $errorField => $errorName) {
-				$errorString_array = explode("_", $errorField);
-				$errorId = $errorString_array[2];
-				$errorId_array[$errorId] = TRUE;
+		if(isset($validator->errors) && !empty($validator->errors)) {
+			$errorId_array = array();
+			foreach($validator->errors as $errorField => $errorName) {
+					$errorString_array = explode("_", $errorField);
+					$errorId = $errorString_array[2];
+					$errorId_array[$errorId] = TRUE;
+			}
 		}
 	}
 	$user_set = get_users("all");

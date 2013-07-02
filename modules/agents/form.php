@@ -14,7 +14,7 @@
 		$userForm .= "<input type=\"hidden\" name=\"userId_input\" value=\"" . htmlspecialchars($user_array['id']) . "\" />";
 	}
 	$userForm .= "<div id=\"userFormPersonal_div\"><label for=\"userName_input\">CTM Username</label><input type=\"text\" id=\"userName_input\" name=\"userName_input\" ";
-	if(isset($errors["userName_input"])) {
+	if(isset($validator->errors["userName_input"])) {
 		$userForm .= "class=\"error\" ";
 	}
 	if($editUser == TRUE) {
@@ -28,7 +28,7 @@
 	}
 	$userForm .= "/><br />";
 	$userForm .= "<label for=\"forumName_input\">Forum Name</label><input type=\"text\" id=\"forumName_input\" name=\"forumName_input\" autocomplete=\"off\" ";
-	if(isset($errors["forumName_input"])) {
+	if(isset($validator->errors["forumName_input"])) {
 		$userForm .= "class=\"error\" ";
 	}
 	if($editUser == TRUE) {
@@ -42,7 +42,7 @@
 	}
 	$userForm .= "/><br />";
 	$userForm .= "<label for=\"firstName_input\">First Name</label><input type=\"text\" id=\"firstName_input\" name=\"firstName_input\" autocomplete=\"off\" ";
-	if(isset($errors["firstName_input"])) {
+	if(isset($validator->errors["firstName_input"])) {
 		$userForm .= "class=\"error\" ";
 	}
 	if($editUser == TRUE) {
@@ -56,7 +56,7 @@
 	}
 	$userForm .= "/><br />";
 	$userForm .= "<label for=\"lastName_input\">Last Name</label><input type=\"text\" id=\"lastName_input\" name=\"lastName_input\" autocomplete=\"off\" ";
-	if(isset($errors["lastName_input"])) {
+	if(isset($validator->errors["lastName_input"])) {
 		$userForm .= "class=\"error\" ";
 	}
 	if($editUser == TRUE) {
@@ -100,12 +100,12 @@
 	}
 	$userForm .= "/><br />";
 	$userForm .= "<label for=\"password_input\">Password</label><input type=\"password\" id=\"password_input\" name=\"password_input\" ";
-	if(isset($errors["password_input"])) {
+	if(isset($validator->errors["password_input"])) {
 		$userForm .= "class=\"error\" ";
 	}
 	$userForm .= "/><br />";
 	$userForm .= "<label for=\"confPassword_input\">Confirm Password</label><input type=\"password\" id=\"confPassword_input\" name=\"confPassword_input\"  ";
-	if(isset($errors["confPassword_input"])) {
+	if(isset($validator->errors["confPassword_input"])) {
 		$userForm .= "class=\"error\" ";
 	}
 	$userForm .= "/><br />";
@@ -118,7 +118,7 @@
 			$userSched_array = get_sch_for_user($user_array["id"], strtolower($weekday));
 		}
 		$userForm .= "<tr><td>{$weekday}</td><td><input type=\"text\" name=\"{$weekday}Begin_input\" ";
-		if(isset($errors["{$weekday}Begin_input"])) {
+		if(isset($validator->errors["{$weekday}Begin_input"])) {
 			$userForm .= "class=\"error\" ";
 		}
 		if($editUser == TRUE) {
@@ -128,7 +128,7 @@
 			$userForm .= "value=\"" . format_time($userSched_array["start_time"], "html") . "\" ";
 		}
 		$userForm .= "/></td><td><input type=\"text\" name=\"{$weekday}End_input\" ";
-		if(isset($errors["{$weekday}End_input"])) {
+		if(isset($validator->errors["{$weekday}End_input"])) {
 			$userForm .= "class=\"error\" ";
 		}
 		if($editUser == TRUE) {

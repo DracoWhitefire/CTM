@@ -309,41 +309,39 @@
 
 //form validation functions
 	class validator {
+		public $errors;
+		
 		public function required($val_req_array) {
-			global $errors;
 			foreach($val_req_array as $fieldName) {
 				if(!isset($_POST[$fieldName]) || ((empty($_POST[$fieldName])) && !(is_numeric($_POST[$fieldName])))) {
-					$errors[$fieldName] = "error_req";
+					$this->errors[$fieldName] = "error_req";
 				}
 			}
 			
 		}								
 		public function length($val_len_array) {
-			global $errors;
 			foreach($val_len_array as $fieldName => $minmax) {
 				$string_array = explode("-", $minmax);
 				$min = $string_array["0"];
 				$max = $string_array["1"];
 				if((strlen(trim($_POST[$fieldName])) < $min) || (strlen(trim($_POST[$fieldName])) > $max)) {
-					if(!isset($errors[$fieldName])) {
-						$errors[$fieldName] = "error_len";
+					if(!isset($this->errors[$fieldName])) {
+						$this->errors[$fieldName] = "error_len";
 					}
 				}
 			}
 		}												
 		public function numeric($checkNum_array) {
-			global $errors;
 			foreach($checkNum_array as $fieldName) {
 				if(!is_numeric($_POST[$fieldName])) {
-					if(!isset($errors[$fieldName])) {
-						$errors[$fieldName] = "error_num";	
+					if(!isset($this->errors[$fieldName])) {
+						$this->errors[$fieldName] = "error_num";	
 					}
 				}
 			}
 		}									
 		public function unique($val_uniq_array) {
 			global $connection;
-			global $errors;
 			$user_query  = "SELECT `user_name`, `id` ";
 			$user_query .= "FROM `users` ";
 			$user_set = mysqli_query($connection, $user_query);
@@ -359,16 +357,16 @@
 					if($name == $_POST[$fieldName]) {
 						if(is_numeric($fieldName_array[2])) {
 							if($fieldName_array[2] != $id) {
-								if(!isset($errors[$fieldName])) {
-									$errors[$fieldName] = "error_unique";	
+								if(!isset($this->errors[$fieldName])) {
+									$this->errors[$fieldName] = "error_unique";	
 								}
 								break 1;
 							}
 						} elseif($fieldName_array[2] == "input") {
 							if(isset($_POST["userId_input"])) {
 								if($_POST["userId_input"] != $id) {
-									if(!isset($errors[$fieldName])) {
-										$errors[$fieldName] = "error_unique";	
+									if(!isset($this->errors[$fieldName])) {
+										$this->errors[$fieldName] = "error_unique";	
 									}
 									break 1;
 								}
@@ -379,47 +377,43 @@
 			}
 		}
 		public function time($val_time_array) {
-			global $errors;
 			foreach($val_time_array as $fieldName) {
 				if(preg_match("/^([0](?=[0-9])|1(?=[0-9])|2(?=[0-3]))?[0-9]:[0-5][0-9](:[0-5][0-9])?$/", $_POST[$fieldName]) == 0) {
-					if(!isset($errors[$fieldName])) {
-						$errors[$fieldName] = "error_time";	
+					if(!isset($this->errors[$fieldName])) {
+						$this->errors[$fieldName] = "error_time";	
 					}
 				}
 			}
 		}									
 		public function timediff($val_timediff_array) {
 			//requires the function format_time()
-			global $errors;
 			foreach($val_timediff_array as $startTime_fieldname => $endTime_fieldname) {
 				$startTime = (float) strtotime(format_time($_POST[$startTime_fieldname], "db"));
 				$endTime = (float) strtotime(format_time($_POST[$endTime_fieldname], "db"));
 				if(($endTime - $startTime) < 0) {
-					if(!isset($errors[$startTime_fieldname]) && (!isset($errors[$endTime_fieldname]))) {
-						$errors[$startTime_fieldname] = "error_timediff";	
-						$errors[$endTime_fieldname] = "error_timediff";
+					if(!isset($this->errors[$startTime_fieldname]) && (!isset($this->errors[$endTime_fieldname]))) {
+						$this->errors[$startTime_fieldname] = "error_timediff";	
+						$this->errors[$endTime_fieldname] = "error_timediff";
 					}
 				}
 			}
 		}													
 		public function password($val_pw_array) {
-			global $errors;
 			foreach($val_pw_array as $pw_field) {
 				$success = preg_match("/^(?=.*\d)(?=.*[a-zA-Z])(?=.*[^a-zA-Z\d\s]).{8,20}$/", trim($_POST[$pw_field])); 
 				if(!$success) {
-					if(!isset($errors[$pw_field])) {
-						$errors[$pw_field] = "error_pw";
+					if(!isset($this->errors[$pw_field])) {
+						$this->errors[$pw_field] = "error_pw";
 					}
 				}
 			}
 		}										
 		public function compare($val_compare_array) {
-			global $errors;
 			foreach($val_compare_array as $firstField => $secondField) {
 				if($_POST[$firstField] !== $_POST[$secondField]) {
-					if(!isset($errors[$firstField]) && !isset($errors[$secondField])) {
-						$errors[$firstField] = "error_compare";
-						$errors[$secondField] = "error_compare";
+					if(!isset($this->errors[$firstField]) && !isset($this->errors[$secondField])) {
+						$this->errors[$firstField] = "error_compare";
+						$this->errors[$secondField] = "error_compare";
 					}
 				}
 			}
