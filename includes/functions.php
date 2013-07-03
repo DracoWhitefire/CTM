@@ -107,63 +107,92 @@
 	}
 	
 //user functions
-	function get_sch_for_user($selected_user, $day) {
-	//function get_sch_for_user($selected_user, $day = "Wednesday") {
-		global $connection;
-		$selected_user = mysqli_prep($selected_user);
-		$day = mysqli_prep($day);
-		$sch_query  = "SELECT `start_time`, `end_time` ";
-		$sch_query .= "FROM `schedules` ";
-		$sch_query .= "WHERE `weekday` = '{$day}' ";
-		$sch_query .= "AND `id` = '{$selected_user}' ";
-		$sch_set = mysqli_query($connection, $sch_query);
-		mysqli_confirm($sch_set);
-		$result = mysqli_fetch_array($sch_set, MYSQL_ASSOC);
-		mysqli_free_result($sch_set);
-		return $result;
-	}
-	function get_users($selection = "all") {
-		global $connection;
-		$user_query  = "SELECT `id`, 
-								`user_name`, 
-								`forum_name`, 
-								`first_name`, 
-								`last_name`, 
-								`rank`, 
-								`active` ";
-		$user_query .= "FROM `users` ";
-		if(is_numeric($selection)) {
-			$user_query .= "WHERE `id` = '{$selection}' ";
-		} elseif($selection == "active") {
-			$user_query .= "WHERE `active` = '1' ";
-		} elseif ($selection == "inactive") {
-			$user_query .= "WHERE `active` = '0' ";
+	class user {
+		public $id;
+		public $userName;
+		public $forumName;
+		public $firstName;
+		public $lastName;
+		public $rank;
+		public $active;
+		public $password;
+		
+		private static function instantiate(array $row) {
+			$object = new self;
+			foreach($row as $attribute => $value) {
+				$converted_attribute = preg_replace("/^(\w+?)_(\w+?)$/e", "\"$1\" . ucfirst(\"$2\")", $attribute);
+				if($object->has_attribute($converted_attribute)) {
+					$object->$converted_attribute = $value;
+				}
+			}
+			return $object;
+		}
+		public static function get($selection = "all") {
+			global $connection;
+			$object_array = array();
+			$user_query  = "SELECT 	`id`, 
+									`user_name`, 
+									`forum_name`, 
+									`first_name`, 
+									`last_name`, 
+									`rank`, 
+									`active` ";
+			$user_query .= "FROM `users` ";
+			if(is_numeric($selection)) {
+				$user_query .= "WHERE `id` = '{$selection}' ";
+			} elseif($selection == "active") {
+				$user_query .= "WHERE `active` = '1' ";
+			} elseif ($selection == "inactive") {
+				$user_query .= "WHERE `active` = '0' ";
+			}		
+			$user_query .= "ORDER BY `id` ASC";
+			$user_set = mysqli_query($connection, $user_query);
+			mysqli_confirm($user_set);
+			while($row = mysqli_fetch_assoc($user_set)) {
+				$object_array[] = self::instantiate($row);
+			}
+			mysqli_free_result($user_set);
+			return $object_array;
+		}
+		private function has_attribute($attribute) {
+			$vars = get_object_vars($this);
+			return array_key_exists($attribute, $vars);
+		}
+		public function get_sch($day) {
+			global $connection;
+			$selected_user = mysqli_prep($this->id);
+			$day = mysqli_prep($day);
+			$sch_query  = "SELECT `start_time`, `end_time` ";
+			$sch_query .= "FROM `schedules` ";
+			$sch_query .= "WHERE `weekday` = '{$day}' ";
+			$sch_query .= "AND `id` = '{$selected_user}' ";
+			$sch_set = mysqli_query($connection, $sch_query);
+			mysqli_confirm($sch_set);
+			$result_array = mysqli_fetch_array($sch_set, MYSQL_ASSOC);
+			mysqli_free_result($sch_set);
+			return $result_array;
 		}		
-		$user_query .= "ORDER BY `id` ASC";
-		$user_set =mysqli_query($connection, $user_query);
-		mysqli_confirm($user_set);
-		return $user_set;
-	}
-	function pw_encrypt($pw_string) {
-		$hashFormat = "$2y$10$";
-		$saltLength = 22;
-		$hashSalt = generate_salt($saltLength);
-		$hashFormatSalt = $hashFormat . $hashSalt;
-		$hashPw = crypt(trim($pw_string), $hashFormatSalt);
-		return $hashPw;
-	}
-	function generate_salt($length) {
-		return substr(str_replace("+", ".", base64_encode(md5(uniqid(mt_rand(), TRUE)))),0, $length);
-	}
-	function pw_check($pw_string, $existing_hash) {
-		$hash = crypt($pw_string, $existing_hash);
-		if($hash === $existing_hash) {
-			return TRUE;
-		} else {
-			return FALSE;
+		
+		private static function generate_salt($length) {
+			return substr(str_replace("+", ".", base64_encode(md5(uniqid(mt_rand(), TRUE)))),0, $length);
+		}
+		public static function pw_encrypt($pw_string) {
+			$hashFormat = "$2y$10$";
+			$saltLength = 22;
+			$hashSalt = self::generate_salt($saltLength);
+			$hashFormatSalt = $hashFormat . $hashSalt;
+			$hashPw = crypt(trim($pw_string), $hashFormatSalt);
+			return $hashPw;
+		}
+		public static function pw_check($pw_string, $existing_hash) {
+			$hash = crypt($pw_string, $existing_hash);
+			if($hash === $existing_hash) {
+				return TRUE;
+			} else {
+				return FALSE;
+			}
 		}
 	}
-	
 //date functions
 	function get_selected_date() {
 		$date_array = array();

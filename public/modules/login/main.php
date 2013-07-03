@@ -11,7 +11,7 @@
 			$user_set = mysqli_query($connection, $query);
 			while($user_row = mysqli_fetch_assoc($user_set)) {
 				if($user_row["user_name"] == $username) {
-					if(pw_check($password, $user_row["passwordhash"])) {
+					if(user::pw_check($password, $user_row["passwordhash"])) {
 						$_SESSION["firstname"] = $user_row["first_name"];
 						$_SESSION["rank"] = $user_row["rank"];
 						$_SESSION["id"] = $user_row["id"];

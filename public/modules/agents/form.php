@@ -2,16 +2,17 @@
 // New User Form
 	if($editUser == TRUE) {
 		if(isset($_POST["singleEditList"])) {
-			$user_set = get_users($_POST["singleEditList"]);
+			$users = user::get($_POST["singleEditList"]);
+			$user = $users[0];
 		} elseif(isset($_POST["userId_input"])) {
-			$user_set = get_users($_POST["userId_input"]);
+			$users = user::get($_POST["userId_input"]);
+			$user = $users[0];
 		}
-		$user_array = mysqli_fetch_array($user_set);
 	}
 	
 	$userForm = "<div id=\"userForm_div\"><form id=\"userForm_form\" method=\"POST\" action=\"index.php" . htmlspecialchars("?id={$current_id}") . "\">";
 	if($editUser == TRUE) {
-		$userForm .= "<input type=\"hidden\" name=\"userId_input\" value=\"" . htmlspecialchars($user_array['id']) . "\" />";
+		$userForm .= "<input type=\"hidden\" name=\"userId_input\" value=\"" . htmlspecialchars($user->id) . "\" />";
 	}
 	$userForm .= "<div id=\"userFormPersonal_div\"><label for=\"userName_input\">CTM Username</label><input type=\"text\" id=\"userName_input\" name=\"userName_input\" ";
 	if(isset($validator->errors["userName_input"])) {
@@ -22,7 +23,7 @@
 		if(isset($_POST["userName_input"])) {
 			$userForm .= htmlspecialchars($_POST["userName_input"]);
 		} else {
-			$userForm .=  htmlspecialchars($user_array['user_name']);	
+			$userForm .= htmlspecialchars($user->userName);	
 		}
 		$userForm .= "\" ";
 	}
@@ -36,7 +37,7 @@
 		if(isset($_POST["forumName_input"])) {
 			$userForm .= htmlspecialchars($_POST["forumName_input"]);
 		} else {
-			$userForm .=  htmlspecialchars($user_array['forum_name']);	
+			$userForm .= htmlspecialchars($user->forumName);	
 		}
 		$userForm .= "\" ";
 	}
@@ -50,7 +51,7 @@
 		if(isset($_POST["firstName_input"])) {
 			$userForm .= htmlspecialchars($_POST["firstName_input"]);
 		} else {
-			$userForm .=  htmlspecialchars($user_array['first_name']);	
+			$userForm .= htmlspecialchars($user->firstName);	
 		}
 		$userForm .= "\" ";
 	}
@@ -64,7 +65,7 @@
 		if(isset($_POST["lastName_input"])) {
 			$userForm .= htmlspecialchars($_POST["lastName_input"]);
 		} else {
-			$userForm .=  htmlspecialchars($user_array["last_name"]);	
+			$userForm .= htmlspecialchars($user->lastName);	
 		}
 		$userForm .= "\" ";
 	}
@@ -79,7 +80,7 @@
 					$userForm .= "selected=\"selected\" ";
 				}
 			} else {
-				if($user_array["rank"] == $rankValue) {
+				if($user->rank == $rankValue) {
 					$userForm .= "selected=\"selected\" ";
 				}
 			}
@@ -94,7 +95,7 @@
 				$userForm .=  "checked=\"checked\" ";	
 			}
 		}
-		if($user_array["active"] == TRUE) {
+		if($user->active == TRUE) {
 			$userForm .=  "checked=\"checked\" ";	
 		}
 	}
@@ -115,7 +116,7 @@
 	$userForm .= "<thead><tr><th>Weekday</th><th>Begin Shift</th><th>End Shift</th></tr></thead><tbody>";
 	foreach($weekdays_array as $weekday) {
 		if($editUser == TRUE) {
-			$userSched_array = get_sch_for_user($user_array["id"], strtolower($weekday));
+			$userSched_array = $user->get_sch(strtolower($weekday));
 		}
 		$userForm .= "<tr><td>{$weekday}</td><td><input type=\"text\" name=\"{$weekday}Begin_input\" ";
 		if(isset($validator->errors["{$weekday}Begin_input"])) {
@@ -148,6 +149,4 @@
 	$userForm .= "<input type=\"reset\" value=\"Reset\" />";
 	$userForm .= "<input type=\"submit\" value=\"Cancel\" name=\"cancelSubmitForm\" />";
 	$userForm .= "</form></div>";
-	
-	mysqli_free_result($user_set);
 ?>

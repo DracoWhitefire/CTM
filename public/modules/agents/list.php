@@ -5,8 +5,8 @@
 	$userList .= "<tr><th></th><th>CTM Username</th><th>First Name</th><th>Last Name</th><th>Forum Name</th><th>CTM Rank</th><th>Active</th><th></th></tr>";
 	$userList .= "</thead>";
 	$userList .= "<tbody>";
-	while($user_row = mysqli_fetch_array($user_set)) {
-		$id = $user_row["id"];
+	foreach($users_array as $user) {
+		$id = $user->id;
 		$fieldname = "edit_{$id}";
 		$editRow = FALSE;
 		if((isset($_POST["$fieldname"]))) {
@@ -34,7 +34,7 @@
 		if(isset($_POST["user_name_{$id}"])) {
 			$userList .= htmlspecialchars($_POST["user_name_{$id}"]);
 		} else {
-			$userList .= htmlspecialchars($user_row["user_name"]);
+			$userList .= htmlspecialchars($user->userName);
 		}		
 		if($editRow == TRUE) {
 			$userList .= "\" />";
@@ -53,7 +53,7 @@
 		if(isset($_POST["first_name_{$id}"])) {
 			$userList .= htmlspecialchars($_POST["first_name_{$id}"]);
 		} else {
-			$userList .= htmlspecialchars($user_row["first_name"]);
+			$userList .= htmlspecialchars($user->firstName);
 		}		
 		if($editRow == TRUE) {
 			$userList .= "\" />";
@@ -72,7 +72,7 @@
 		if(isset($_POST["last_name_{$id}"])) {
 			$userList .= htmlspecialchars($_POST["last_name_{$id}"]);
 		} else {
-			$userList .= htmlspecialchars($user_row["last_name"]);
+			$userList .= htmlspecialchars($user->lastName);
 		}
 		if($editRow == TRUE) {
 			$userList .= "\" />";
@@ -91,7 +91,7 @@
 		if(isset($_POST["forum_name_{$id}"])) {
 			$userList .= htmlspecialchars($_POST["forum_name_{$id}"]);
 		} else {
-			$userList .= htmlspecialchars($user_row["forum_name"]);
+			$userList .= htmlspecialchars($user->forumName);
 		}
 		if($editRow == TRUE) {
 			$userList .= "\" />";
@@ -100,35 +100,35 @@
 		if($editRow == TRUE) {
 			$userList .= "<select id=\"" . htmlspecialchars("rank_select_{$id}") . "\" name=\"" . htmlspecialchars("rank_select_{$id}") . "\">";
 			$userList .= "<option value=\"1\" ";
-			if($user_row["rank"] == 1) {
+			if($user->rank == 1) {
 				$userList .= "selected=\"selected\" ";
 			}
 			$userList .= ">Guest</option>";
 			$userList .= "<option value=\"10\" ";
-			if($user_row["rank"] == 10) {
+			if($user->rank == 10) {
 				$userList .= "selected=\"selected\" ";
 			}
 			$userList .= ">User</option>";
 			$userList .= "<option value=\"50\" ";
-			if($user_row["rank"] == 50) {
+			if($user->rank == 50) {
 				$userList .= "selected=\"selected\" ";
 			}
 			$userList .= ">Admin</option>";
 			$userList .= "<option value=\"100\" ";
-			if($user_row["rank"] == 100) {
+			if($user->rank == 100) {
 				$userList .= "selected=\"selected\" ";
 			}
 			$userList .= ">Superadmin</option>";
 			$userList .= "</select>";
 		} else {
-			$userList .= htmlspecialchars(convert_rank($user_row["rank"]));
+			$userList .= htmlspecialchars(convert_rank($user->rank));
 		}
 		$userList .= "</td>"; 
 		$userList .= "<td><input type=\"checkbox\" name=\"" . htmlspecialchars("active_check_{$id}") . "\" ";
 		if($editRow == FALSE) {
 			$userList .= "disabled=\"disabled\" ";
 		}
-		if($user_row["active"] == TRUE) {
+		if($user->active == TRUE) {
 			$userList .= "checked=\"checked\" ";
 		}
 		$userList .= "/>";
@@ -150,6 +150,4 @@
 		$userList .= "<input type=\"submit\" value=\"Add\" name=\"addList\" />";
 	}
 	$userList .= "</form></div>";
-	
-	mysqli_free_result($user_set);
 ?>
