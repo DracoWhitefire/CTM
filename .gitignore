@@ -1,3 +1,2 @@
 *.clpprj
-includes/constants.php
-css/uncommon.css
+includes/config.php

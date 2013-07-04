@@ -1,5 +1,5 @@
 <?php
-	require_once("constants.php");
+	require_once("config.php");
 	
 //database functions
 	function db_connect() {
