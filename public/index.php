@@ -1,18 +1,15 @@
 <?php
-	session_start();
-	if((!isset($_SESSION["id"])) && ($_GET["id"] != "7")) {
-	header("location:index.php?id=7");
-}
-?>
-<!DOCTYPE HTML>
-<?php
 	require_once("../includes/functions.php");
+	$session = new Session;
+	if((!$session->is_loggedIn()) && ($_GET["id"] != "7")) {
+		header("location:index.php?id=7");
+	}
 	$db = new MySqlDatabase;
 	$subject_set = get_all_subjects();
 	$current_id = get_selected_id();
 	$current_subject = get_subject_by_id($current_id);
 ?>
-
+<!DOCTYPE HTML>
 <html>
 	<head>
 		<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
