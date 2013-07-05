@@ -10,7 +10,7 @@
 			$users = User::get("all");
 			foreach($users as $user) {
 				if($user->userName == $username) {
-					if(User::pw_check($password, $user->passwordhash)) {
+					if($user->pw_check($password)) {
 						$session->login($user);
 						header("location: index.php");
 					} else {

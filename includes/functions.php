@@ -220,9 +220,9 @@
 			$hashPw = crypt(trim($pw_string), $hashFormatSalt);
 			return $hashPw;
 		}
-		public static function pw_check($pw_string, $existing_hash) {
-			$hash = crypt($pw_string, $existing_hash);
-			if($hash === $existing_hash) {
+		public function pw_check($pw_string) {
+			$hash = crypt($pw_string, $this->passwordhash);
+			if($hash === $this->passwordhash) {
 				return TRUE;
 			} else {
 				return FALSE;
