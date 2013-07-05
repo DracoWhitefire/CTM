@@ -7,14 +7,11 @@
 		$validator = new Validator;
 		$validator->required($checkReq_array);
 		if(empty($validator->errors)) {
-			$query = "SELECT `id`, `user_name`, `passwordhash`, `rank`, `first_name` FROM `users`";
-			$user_set = $db->query($query);
-			while($user_row = $db->fetch_assoc($user_set)) {
-				if($user_row["user_name"] == $username) {
-					if(User::pw_check($password, $user_row["passwordhash"])) {
-						$_SESSION["firstname"] = $user_row["first_name"];
-						$_SESSION["rank"] = $user_row["rank"];
-						$_SESSION["id"] = $user_row["id"];
+			$users = User::get("all");
+			foreach($users as $user) {
+				if($user->userName == $username) {
+					if(User::pw_check($password, $user->passwordhash)) {
+						$session->login($user);
 						header("location: index.php");
 					} else {
 						$message = "Login Failed!";
@@ -24,7 +21,6 @@
 					$message = "User not found";
 				}
 			}
-			mysqli_free_result($user_set);
 		} else {
 			$message = "Some fields are not filled in";
 		}

@@ -179,16 +179,10 @@
 		public $lastName;
 		public $rank;
 		public $active;
-		public $password;
+		public $passwordhash;
 		
 		public static function get($selection = "all") {
-			$user_query  = "SELECT 	`id`, 
-									`user_name`, 
-									`forum_name`, 
-									`first_name`, 
-									`last_name`, 
-									`rank`, 
-									`active` ";
+			$user_query  = "SELECT * ";
 			$user_query .= "FROM `users` ";
 			if(is_numeric($selection)) {
 				$user_query .= "WHERE `id` = '{$selection}' ";
@@ -238,10 +232,14 @@
 	class Session {
 		private $loggedIn;
 		public $userId;
+		public $firstName;
+		public $rank;
+		
 		function __construct() {
 			session_start();
 			$this->check_login();
 		}
+		
 		private function check_login() {
 			if(isset($_SESSION["id"])) {
 				$this->userId = $_SESSION["id"];
@@ -251,8 +249,22 @@
 				$this->loggedIn = FALSE;
 			}
 		}
+		
 		public function is_loggedIn() {
 			return $this->loggedIn;
+		}
+		public function login(User $user) {
+			if($user) {
+				$this->userId = $_SESSION["id"] = $user->id;
+				$this->firstName = $_SESSION["firstname"] = $user->firstName;
+				$this->rank = $_SESSION["rank"] = $user->rank;
+				$this->loggedIn = TRUE;
+			}
+		}
+		public function logout() {
+			unset($_SESSION["id"]);
+			unset($this->userId);
+			$this->loggedIn = FALSE;
 		}
 	}
 
