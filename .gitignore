@@ -1,2 +1,3 @@
 *.clpprj
 includes/config.php
+plugins/tp/docs/
