@@ -13,13 +13,13 @@
 <html>
 	<head>
 		<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
-		<title><?php echo SITE_TILE; ?></title>
+		<title><?php echo SITE_TITLE; ?></title>
 		<link rel="stylesheet" type="text/css" href="css/common.css" />
 	</head>
 	<body>
 		<div id="site_div">
 			<div id="siteTitle_div">
-				<h1><?php echo SITE_TILE; ?></h1>
+				<h1><?php echo SITE_TITLE; ?></h1>
 			</div>
 			<div id="body_div">
 				<div id="nav_div">
