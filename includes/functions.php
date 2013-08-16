@@ -180,6 +180,8 @@
 		public $rank;
 		public $active;
 		public $passwordhash;
+		public $team;
+		public $employeeNr;
 		
 		public static function get($selection = "all") {
 			$user_query  = "SELECT * ";
@@ -191,6 +193,17 @@
 			} elseif ($selection == "inactive") {
 				$user_query .= "WHERE `active` = '0' ";
 			}
+			$user_query .= "ORDER BY `id` ASC";
+			return self::get_by_query($user_query);
+		}
+		
+		public static function get_by_team($team) {
+			global $db;
+			$team = $db->query_prep($team);
+			$user_query  = "SELECT * ";
+			$user_query .= "FROM `users` ";
+			$user_query .= "WHERE `team` = '{$team}' ";
+			$user_query .= "AND `active` = '1' ";
 			$user_query .= "ORDER BY `id` ASC";
 			return self::get_by_query($user_query);
 		}
