@@ -12,7 +12,7 @@
 </div>
 <?php
 	$output = "<div id=\"scheduleSelected_div\"><form id=\"scheduleSelected_form\" action=\"index.php" . htmlspecialchars("?id={$current_id}") . "\" method=\"POST\" ><table id = \"scheduleSelected_table\"><thead><tr><th>Forum Name</th><th>Start Time</th><th>End Time</th><th>Working Hours</th></tr></thead><tbody>";
-	$users_array = User::get("active");
+	$users_array = User::get_by_team("3");
 	$selectedDay = date("l", strtotime($date["d"] . "-" . $date["m"] . "-" . $date["y"]));
 	foreach($users_array as $user) {
 		$output .= "<tr>";
