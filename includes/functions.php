@@ -98,6 +98,50 @@
 	}
 
 //navigation functions
+	Class Subject extends Dao
+	{
+		public function get($selection = "all") {
+			global $db;
+			if($selection == "all") {
+				$query  = "SELECT * ";
+				$query .= "FROM `subjects` ";
+				$query .= "WHERE `visible` = 1 ";
+				$query .= "ORDER BY `position` ASC ";
+				self::get_by_query($query);
+			} elseif(is_numeric($selection)) {
+				if(isset($session->rank))
+					$query  = "SELECT * ";
+					$query .= "FROM `subjects` ";
+					$set = $db->query($query);
+					$subj_total = $db->num_rows($set);
+					mysqli_free_result($set);
+					if(!((1 <= $selection) && ($selection <= $subj_total))) {
+						$selection = 1;
+					}
+					$query  = "SELECT * ";
+					$query .= "FROM `subjects` ";
+					$query .= "WHERE `id` = '" . $db->query_prep($selection) . "' ";
+					$query .= "LIMIT 1";
+					self::get_by_query($query);
+					}
+				} else {
+					$query  = "SELECT * ";
+					$query .= "FROM `subjects` ";
+					$query .= "WHERE `id` = '7' ";
+					$query .= "LIMIT 1";
+					self::get_by_query($query);
+				}
+			}
+		}
+		public static function get_id() {
+			if(isset($_GET["id"])) {
+				(integer) $current_id = (int) $_GET["id"];
+			} else {
+				(integer) $current_id = (int) 1;
+			}
+			return $current_id;
+		}
+	}
 	function get_all_subjects() {
 		global $db;
 		$query  = "SELECT * ";
