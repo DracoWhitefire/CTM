@@ -207,15 +207,18 @@
 		//requires the function get_selected_id()
 		global $current_id;
 		global $db;
-		if(isset($_SESSION["id"])) {
+		global $session;
+		
+		if($session->is_loggedIn()) {
 			$output = "<ul>";
-			While($row = $db->fetch_assoc($subject_set)) {
-				if($row["visible"] == TRUE && $row["min_rank"] <= $_SESSION["rank"]) {
+			$subjects_array = Subject::get();
+			foreach($subjects_array as $subject) {
+				if($subject->visible == 1 && $subject->minRank <= $session->rank) {
 					$output .= "<li";
-					if($row["id"] == $current_id) {
+					if($subject->id == $current_id) {
 						$output .= " class=\"selected\"";
 					}
-					$output .= "><a href=\"" . htmlspecialchars("index.php?id=" . urlencode($row["id"])) . "\" >" . htmlspecialchars($row["menu_name"]) . "</a></li>";
+					$output .= "><a href=\"" . htmlspecialchars("index.php?id=" . urlencode($subject->id)) . "\" >" . htmlspecialchars($subject->menuName) . "</a></li>";
 				}
 			}
 			$output .= "</ul>";
@@ -224,7 +227,6 @@
 			return NULL;
 		}
 	}
-	
 //user functions
 	class User extends Dao {
 		public $id;
