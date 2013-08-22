@@ -96,6 +96,7 @@
 		if($editRow == TRUE) {
 			$userList .= "\" />";
 		}
+		$userList .= "</td>";
 		$userList .= "<td class=\"rank\" >";
 		if($editRow == TRUE) {
 			$userList .= "<select id=\"" . htmlspecialchars("rank_select_{$id}") . "\" name=\"" . htmlspecialchars("rank_select_{$id}") . "\">";
