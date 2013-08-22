@@ -1,8 +1,8 @@
 <?php
-	require_once("config.php");
-	
+require_once("config.php");
+
 //database functions
-	class MySqlDatabase {
+class MySqlDatabase {
 		private $connection;
 		private $magic_quotes_active;
 		private $mysqli_real_escape_string_exists;
@@ -69,98 +69,99 @@
 			
 			return $result;
 		}
-	}	
-	class Dao {
-		private static function instantiate(array $row) {
-			$object = new static;
-			foreach($row as $attribute => $value) {
-				$converted_attribute = preg_replace("/^(\w+?)_(\w+?)$/e", "\"$1\" . ucfirst(\"$2\")", $attribute);
-				if($object->has_attribute($converted_attribute)) {
-					$object->$converted_attribute = $value;
-				}
+	}
+class Dao
+{
+	private static function instantiate(array $row) {
+		$object = new static;
+		foreach($row as $attribute => $value) {
+			$converted_attribute = preg_replace("/^(\w+?)_(\w+?)$/e", "\"$1\" . ucfirst(\"$2\")", $attribute);
+			if($object->has_attribute($converted_attribute)) {
+				$object->$converted_attribute = $value;
 			}
-			return $object;
 		}
-		private function has_attribute($attribute) {
-			$vars = get_object_vars($this);
-			return array_key_exists($attribute, $vars);
+		return $object;
+	}
+	private function has_attribute($attribute) {
+		$vars = get_object_vars($this);
+		return array_key_exists($attribute, $vars);
+	}
+	public static function get_by_query($query) {
+		global $db;
+		$object_array = array();
+		$result_set = $db->query($query);
+		while($row = $db->fetch_assoc($result_set)) {
+			$object_array[] = static::instantiate($row);
 		}
-		public static function get_by_query($query) {
-			global $db;
-			$object_array = array();
-			$result_set = $db->query($query);
-			while($row = $db->fetch_assoc($result_set)) {
-				$object_array[] = static::instantiate($row);
-			}
-			mysqli_free_result($result_set);
-			if(count($object_array) == 1) {
-				return $object_array[0];
-			} else {
-				return $object_array;
-			}
+		mysqli_free_result($result_set);
+		if(count($object_array) == 1) {
+			return $object_array[0];
+		} else {
+			return $object_array;
 		}
 	}
+}
 
 //navigation functions
-	Class Subject extends Dao
-	{
-		public $id;
-		public $minRank;
-		public $visible;
-		public $menuName;
-		
-		
+Class Subject extends Dao
+{
+	public $id;
+	public $minRank;
+	public $visible;
+	public $menuName;
+	
+	
 
-		public static function get($selection = "all") {
-			global $db;
-			global $session;
-			$loginId = 7;
-			if($selection == "all") {
+	public static function get($selection = "all") {
+		global $db;
+		global $session;
+		$loginId = 7;
+		if($selection == "all") {
+			$query  = "SELECT * ";
+			$query .= "FROM `subjects` ";
+			$query .= "WHERE `visible` = 1 ";
+			$query .= "ORDER BY `position` ASC ";
+			return self::get_by_query($query);
+		} elseif(is_numeric($selection)) {
+			if(isset($session->rank)) {
 				$query  = "SELECT * ";
 				$query .= "FROM `subjects` ";
-				$query .= "WHERE `visible` = 1 ";
-				$query .= "ORDER BY `position` ASC ";
-				return self::get_by_query($query);
-			} elseif(is_numeric($selection)) {
-				if(isset($session->rank)) {
-					$query  = "SELECT * ";
-					$query .= "FROM `subjects` ";
-					$set = $db->query($query);
-					$subj_total = $db->num_rows($set);
-					mysqli_free_result($set);
-					if(!((1 <= $selection) && ($selection <= $subj_total))) {
-						$selection = 1;
-					}
-					$query  = "SELECT * ";
-					$query .= "FROM `subjects` ";
-					$query .= "WHERE `id` = '" . $db->query_prep($selection) . "' ";
-					$query .= "LIMIT 1";
-					$object = self::get_by_query($query);
-					if($object->minRank <= $session->rank) {
-						return $object;
-					} else {
-						return "error";
-					}
-				} else {
-					$query  = "SELECT * ";
-					$query .= "FROM `subjects` ";
-					$query .= "WHERE `id` = '{$loginId}' ";
-					$query .= "LIMIT 1";
-					$object = self::get_by_query($query);
-					return $object;
+				$set = $db->query($query);
+				$subj_total = $db->num_rows($set);
+				mysqli_free_result($set);
+				if(!((1 <= $selection) && ($selection <= $subj_total))) {
+					$selection = 1;
 				}
-			}
-		}
-		public static function get_id() {
-			if(isset($_GET["id"])) {
-				(integer) $current_id = (int) $_GET["id"];
+				$query  = "SELECT * ";
+				$query .= "FROM `subjects` ";
+				$query .= "WHERE `id` = '" . $db->query_prep($selection) . "' ";
+				$query .= "LIMIT 1";
+				$object = self::get_by_query($query);
+				if($object->minRank <= $session->rank) {
+					return $object;
+				} else {
+					return "error";
+				}
 			} else {
-				(integer) $current_id = (int) 1;
+				$query  = "SELECT * ";
+				$query .= "FROM `subjects` ";
+				$query .= "WHERE `id` = '{$loginId}' ";
+				$query .= "LIMIT 1";
+				$object = self::get_by_query($query);
+				return $object;
 			}
-			return $current_id;
 		}
 	}
-	function navigation() {
+	public static function get_id() {
+		if(isset($_GET["id"])) {
+			(integer) $current_id = (int) $_GET["id"];
+		} else {
+			(integer) $current_id = (int) 1;
+		}
+		return $current_id;
+	}
+}
+function navigation() {
 		//requires the (result of the) function get_all_subjects()
 		//requires the function get_selected_id()
 		global $current_id;
@@ -186,7 +187,8 @@
 		}
 	}
 //user functions
-	class User extends Dao {
+class User extends Dao
+{
 		public $id;
 		public $userName;
 		public $forumName;
@@ -257,7 +259,8 @@
 			}
 		}
 	}
-	class Session {
+class Session
+{
 		private $loggedIn;
 		public $userId;
 		public $firstName;
@@ -300,7 +303,7 @@
 	}
 
 //date functions
-	function get_selected_date() {
+function get_selected_date() {
 		$date_array = array();
 		if(!isset($_GET["y"])) {
 			$date_array["y"] = date("Y");
@@ -327,7 +330,7 @@
 		}
 		return $date_array;
 	}
-	function date_to_url($year = "", $month = "", $day = "") {
+function date_to_url($year = "", $month = "", $day = "") {
 		$urlQueries_array = array();
 		$urlQueries = explode("&", $_SERVER["QUERY_STRING"]);
 		foreach($urlQueries as $urlQuery) {
@@ -352,232 +355,233 @@
 		$url = $_SERVER["PHP_SELF"] . "?" . http_build_query($urlQueries_array);
 		return $url;
 	}
-	function calendar($date = ""){
-		//requires the function date_to_url()
-		$selectedYear = isset($date["y"]) ? $date["y"] : date("Y");
-		$selectedMonth = isset($date["m"]) ? $date["m"] : date("n");
-		$selectedDay = isset($date["d"]) ? $date["d"] : date("j");
-		if($selectedMonth == 1) {
-			$prevMonth = 12;
-			$prevYear = $selectedYear - 1;
-		} else {
-			$prevMonth = $selectedMonth - 1;
-			$prevYear = $selectedYear;
-		}
-		if($selectedMonth == 12) {
-			$nextMonth = 1;
-			$nextYear = $selectedYear + 1;
-		} else {
-			$nextMonth = $selectedMonth + 1;
-			$nextYear = $selectedYear;
-		}
-		$firstDay = jddayofweek(cal_to_jd(CAL_GREGORIAN, $selectedMonth, 1, $selectedYear));
-		$numberOfDays = cal_days_in_month(CAL_GREGORIAN, $selectedMonth, $selectedYear);
-		$prevNumberOfDays = cal_days_in_month(CAL_GREGORIAN, $prevMonth, $prevYear);
-		$numberOfWeeks = ceil(($numberOfDays + $firstDay)/7);
-		$daysLastMonthFirstWeek = cal_days_in_month(CAL_GREGORIAN, $prevMonth, $prevYear)-$firstDay+1;
-		$remainingLastMonth = cal_days_in_month(CAL_GREGORIAN, $prevMonth, $prevYear)-$daysLastMonthFirstWeek;
-		$daysNextMonthLastWeek = cal_days_in_month(CAL_GREGORIAN, $nextMonth, $selectedYear);
-		$output = "<div id=\"calendar_div\"><div id=\"month_select\">";
-		//$prevMonthNav = "index.php" . "?id=" . urlencode($_GET["id"]) . "&m=" . urlencode($prevMonth) . "&y=" . urlencode($prevYear);
-		$prevMonthNav = date_to_url($prevYear, $prevMonth);
-		$navLinks = "<div id=\"calPrev_div\"><a href=\"" . htmlspecialchars($prevMonthNav) . "\">Prev</a></div>";
-		
-		//$nextMonthNav = "index.php" . "?id=" . urlencode($_GET["id"]) . "&m=" . urlencode($nextMonth) . "&y=" . urlencode($nextYear);
-		$nextMonthNav = date_to_url($nextYear, $nextMonth);
-		$navLinks .= "<div id=\"calNext_div\"><a href=\"" . htmlspecialchars($nextMonthNav) . "\">Next</a></div>";
-		
-		$navLinks .= "<div id=\"calCur_div\">" . htmlspecialchars(date("F Y",strtotime($selectedDay . "-" . $selectedMonth . "-" . $selectedYear))) . "</div>";
-		$output .= $navLinks . "</div>"; 
-		// Beginning of the Table
-		$output .= "<table id=\"calendar_table\">";
-		$output .= "<thead><tr><th>S</th><th>M</th><th>T</th><th>W</th><th>T</th><th>F</th><th>S</th></tr></thead>";
-		$dayNo = $daysLastMonthFirstWeek;
-		$output .= "<tbody>";
-		for($weekNo = 1; $weekNo <= $numberOfWeeks; $weekNo++) {
-			$output .= "<tr>";
-			for($wDayNo = 1; $wDayNo <= 7; $wDayNo++) {
-				$tdOutput1 = "<td class=\"";
-				if(1 < $wDayNo && $wDayNo < 7) {
-					$tdOutput1 .= "weekDay";
-				}
-				if($dayNo <= $prevNumberOfDays) {
-					$urlMonth = $prevMonth;
-					$urlYear = $prevYear;
-					$tdOutput1 .= " prevMonth\">";
-					$tdOutput2 = $dayNo;
-				} elseif (($dayNo - $prevNumberOfDays) <= $numberOfDays) {
-					$urlMonth = $selectedMonth;
-					$urlYear = $selectedYear;
-					if ($dayNo - $prevNumberOfDays == $selectedDay) {
-						$tdOutput1 .= " selectedDay";
-					}
-					$tdOutput1 .= "\">";
-					$tdOutput2 = ($dayNo - $prevNumberOfDays);
-				} else {
-					$urlMonth = $nextMonth;
-					$urlYear = $nextYear;
-					$tdOutput1 .= " nextMonth\">";
-					$tdOutput2 = ($dayNo - $prevNumberOfDays - $numberOfDays);
-				}
-				$tdOutput3 = "</a></td>";
-				$dateUrl = date_to_url($urlYear, $urlMonth, $tdOutput2);
-				$output .= $tdOutput1 . "<a href=\"" . htmlspecialchars($dateUrl) . "\" >" . $tdOutput2 . $tdOutput3;
-				$dayNo++;
-			}
-			$output .= "</tr>";
-		}
-		$output .= "</tbody></table></div>";
-		return $output;	
+function calendar($date = ""){
+	//requires the function date_to_url()
+	$selectedYear = isset($date["y"]) ? $date["y"] : date("Y");
+	$selectedMonth = isset($date["m"]) ? $date["m"] : date("n");
+	$selectedDay = isset($date["d"]) ? $date["d"] : date("j");
+	if($selectedMonth == 1) {
+		$prevMonth = 12;
+		$prevYear = $selectedYear - 1;
+	} else {
+		$prevMonth = $selectedMonth - 1;
+		$prevYear = $selectedYear;
 	}
+	if($selectedMonth == 12) {
+		$nextMonth = 1;
+		$nextYear = $selectedYear + 1;
+	} else {
+		$nextMonth = $selectedMonth + 1;
+		$nextYear = $selectedYear;
+	}
+	$firstDay = jddayofweek(cal_to_jd(CAL_GREGORIAN, $selectedMonth, 1, $selectedYear));
+	$numberOfDays = cal_days_in_month(CAL_GREGORIAN, $selectedMonth, $selectedYear);
+	$prevNumberOfDays = cal_days_in_month(CAL_GREGORIAN, $prevMonth, $prevYear);
+	$numberOfWeeks = ceil(($numberOfDays + $firstDay)/7);
+	$daysLastMonthFirstWeek = cal_days_in_month(CAL_GREGORIAN, $prevMonth, $prevYear)-$firstDay+1;
+	$remainingLastMonth = cal_days_in_month(CAL_GREGORIAN, $prevMonth, $prevYear)-$daysLastMonthFirstWeek;
+	$daysNextMonthLastWeek = cal_days_in_month(CAL_GREGORIAN, $nextMonth, $selectedYear);
+	$output = "<div id=\"calendar_div\"><div id=\"month_select\">";
+	//$prevMonthNav = "index.php" . "?id=" . urlencode($_GET["id"]) . "&m=" . urlencode($prevMonth) . "&y=" . urlencode($prevYear);
+	$prevMonthNav = date_to_url($prevYear, $prevMonth);
+	$navLinks = "<div id=\"calPrev_div\"><a href=\"" . htmlspecialchars($prevMonthNav) . "\">Prev</a></div>";
 	
-//time functions
-	function format_time($time_string, $target) {
-		if($target == "db") {
-			$tempresult = preg_replace("/^([0-9]:[0-9]{2})(:[0-9]{2})?$/", "0\\1\\2", $time_string);
-			$result = preg_replace("/^([0-9]{2}:[0-9]{2})$/", "\\1:00", $tempresult);
-		} elseif ($target == "html") {
-			$result = preg_replace("/^(0)?([1-9]?[0-9]:[0-9]{2})(:[0-9]{2})$/", "\\2", $time_string);			
+	//$nextMonthNav = "index.php" . "?id=" . urlencode($_GET["id"]) . "&m=" . urlencode($nextMonth) . "&y=" . urlencode($nextYear);
+	$nextMonthNav = date_to_url($nextYear, $nextMonth);
+	$navLinks .= "<div id=\"calNext_div\"><a href=\"" . htmlspecialchars($nextMonthNav) . "\">Next</a></div>";
+	
+	$navLinks .= "<div id=\"calCur_div\">" . htmlspecialchars(date("F Y",strtotime($selectedDay . "-" . $selectedMonth . "-" . $selectedYear))) . "</div>";
+	$output .= $navLinks . "</div>"; 
+	// Beginning of the Table
+	$output .= "<table id=\"calendar_table\">";
+	$output .= "<thead><tr><th>S</th><th>M</th><th>T</th><th>W</th><th>T</th><th>F</th><th>S</th></tr></thead>";
+	$dayNo = $daysLastMonthFirstWeek;
+	$output .= "<tbody>";
+	for($weekNo = 1; $weekNo <= $numberOfWeeks; $weekNo++) {
+		$output .= "<tr>";
+		for($wDayNo = 1; $wDayNo <= 7; $wDayNo++) {
+			$tdOutput1 = "<td class=\"";
+			if(1 < $wDayNo && $wDayNo < 7) {
+				$tdOutput1 .= "weekDay";
+			}
+			if($dayNo <= $prevNumberOfDays) {
+				$urlMonth = $prevMonth;
+				$urlYear = $prevYear;
+				$tdOutput1 .= " prevMonth\">";
+				$tdOutput2 = $dayNo;
+			} elseif (($dayNo - $prevNumberOfDays) <= $numberOfDays) {
+				$urlMonth = $selectedMonth;
+				$urlYear = $selectedYear;
+				if ($dayNo - $prevNumberOfDays == $selectedDay) {
+					$tdOutput1 .= " selectedDay";
+				}
+				$tdOutput1 .= "\">";
+				$tdOutput2 = ($dayNo - $prevNumberOfDays);
+			} else {
+				$urlMonth = $nextMonth;
+				$urlYear = $nextYear;
+				$tdOutput1 .= " nextMonth\">";
+				$tdOutput2 = ($dayNo - $prevNumberOfDays - $numberOfDays);
+			}
+			$tdOutput3 = "</a></td>";
+			$dateUrl = date_to_url($urlYear, $urlMonth, $tdOutput2);
+			$output .= $tdOutput1 . "<a href=\"" . htmlspecialchars($dateUrl) . "\" >" . $tdOutput2 . $tdOutput3;
+			$dayNo++;
 		}
-		return htmlspecialchars($result);
+		$output .= "</tr>";
 	}
+	$output .= "</tbody></table></div>";
+	return $output;	
+}
+
+//time functions
+function format_time($time_string, $target) {
+	if($target == "db") {
+		$tempresult = preg_replace("/^([0-9]:[0-9]{2})(:[0-9]{2})?$/", "0\\1\\2", $time_string);
+		$result = preg_replace("/^([0-9]{2}:[0-9]{2})$/", "\\1:00", $tempresult);
+	} elseif ($target == "html") {
+		$result = preg_replace("/^(0)?([1-9]?[0-9]:[0-9]{2})(:[0-9]{2})$/", "\\2", $time_string);			
+	}
+	return htmlspecialchars($result);
+}
 
 //form validation functions
-	class Validator {
-		public $errors;
+class Validator
+{
+	public $errors;
+	
+	public function required($val_req_array) {
+		foreach($val_req_array as $fieldName) {
+			if(!isset($_POST[$fieldName]) || ((empty($_POST[$fieldName])) && !(is_numeric($_POST[$fieldName])))) {
+				$this->errors[$fieldName] = "error_req";
+			}
+		}
 		
-		public function required($val_req_array) {
-			foreach($val_req_array as $fieldName) {
-				if(!isset($_POST[$fieldName]) || ((empty($_POST[$fieldName])) && !(is_numeric($_POST[$fieldName])))) {
-					$this->errors[$fieldName] = "error_req";
+	}								
+	public function length($val_len_array) {
+		foreach($val_len_array as $fieldName => $minmax) {
+			$string_array = explode("-", $minmax);
+			$min = $string_array["0"];
+			$max = $string_array["1"];
+			if((strlen(trim($_POST[$fieldName])) < $min) || (strlen(trim($_POST[$fieldName])) > $max)) {
+				if(!isset($this->errors[$fieldName])) {
+					$this->errors[$fieldName] = "error_len";
 				}
 			}
-			
-		}								
-		public function length($val_len_array) {
-			foreach($val_len_array as $fieldName => $minmax) {
-				$string_array = explode("-", $minmax);
-				$min = $string_array["0"];
-				$max = $string_array["1"];
-				if((strlen(trim($_POST[$fieldName])) < $min) || (strlen(trim($_POST[$fieldName])) > $max)) {
-					if(!isset($this->errors[$fieldName])) {
-						$this->errors[$fieldName] = "error_len";
-					}
+		}
+	}												
+	public function numeric($checkNum_array) {
+		foreach($checkNum_array as $fieldName) {
+			if(!is_numeric($_POST[$fieldName])) {
+				if(!isset($this->errors[$fieldName])) {
+					$this->errors[$fieldName] = "error_num";	
 				}
 			}
-		}												
-		public function numeric($checkNum_array) {
-			foreach($checkNum_array as $fieldName) {
-				if(!is_numeric($_POST[$fieldName])) {
-					if(!isset($this->errors[$fieldName])) {
-						$this->errors[$fieldName] = "error_num";	
-					}
-				}
-			}
-		}									
-		public function unique($val_uniq_array) {
-			global $db;
-			$user_query  = "SELECT `user_name`, `id` ";
-			$user_query .= "FROM `users` ";
-			$user_set = $db->query($user_query);
-			while($user_row = $db->fetch_assoc($user_set)) {
-				$id = (int) $user_row["id"];
-				$user_array[$id] = $user_row["user_name"];
-			}
-			mysqli_free_result($user_set);
-			foreach($val_uniq_array as $fieldName) {
-				$fieldName_array = preg_split("/([A-Z][a-z]+)|_/", $fieldName, -1, PREG_SPLIT_DELIM_CAPTURE|PREG_SPLIT_NO_EMPTY);
-				foreach($user_array as $id => $name) {
-					if($name == $_POST[$fieldName]) {
-						if(is_numeric($fieldName_array[2])) {
-							if($fieldName_array[2] != $id) {
+		}
+	}									
+	public function unique($val_uniq_array) {
+		global $db;
+		$user_query  = "SELECT `user_name`, `id` ";
+		$user_query .= "FROM `users` ";
+		$user_set = $db->query($user_query);
+		while($user_row = $db->fetch_assoc($user_set)) {
+			$id = (int) $user_row["id"];
+			$user_array[$id] = $user_row["user_name"];
+		}
+		mysqli_free_result($user_set);
+		foreach($val_uniq_array as $fieldName) {
+			$fieldName_array = preg_split("/([A-Z][a-z]+)|_/", $fieldName, -1, PREG_SPLIT_DELIM_CAPTURE|PREG_SPLIT_NO_EMPTY);
+			foreach($user_array as $id => $name) {
+				if($name == $_POST[$fieldName]) {
+					if(is_numeric($fieldName_array[2])) {
+						if($fieldName_array[2] != $id) {
+							if(!isset($this->errors[$fieldName])) {
+								$this->errors[$fieldName] = "error_unique";	
+							}
+							break 1;
+						}
+					} elseif($fieldName_array[2] == "input") {
+						if(isset($_POST["userId_input"])) {
+							if($_POST["userId_input"] != $id) {
 								if(!isset($this->errors[$fieldName])) {
 									$this->errors[$fieldName] = "error_unique";	
 								}
 								break 1;
-							}
-						} elseif($fieldName_array[2] == "input") {
-							if(isset($_POST["userId_input"])) {
-								if($_POST["userId_input"] != $id) {
-									if(!isset($this->errors[$fieldName])) {
-										$this->errors[$fieldName] = "error_unique";	
-									}
-									break 1;
-								}
 							}
 						}
 					}
 				}
 			}
 		}
-		public function time($val_time_array) {
-			foreach($val_time_array as $fieldName) {
-				if(preg_match("/^([0](?=[0-9])|1(?=[0-9])|2(?=[0-3]))?[0-9]:[0-5][0-9](:[0-5][0-9])?$/", $_POST[$fieldName]) == 0) {
-					if(!isset($this->errors[$fieldName])) {
-						$this->errors[$fieldName] = "error_time";	
-					}
-				}
-			}
-		}									
-		public function timediff($val_timediff_array) {
-			//requires the function format_time()
-			foreach($val_timediff_array as $startTime_fieldname => $endTime_fieldname) {
-				$startTime = (float) strtotime(format_time($_POST[$startTime_fieldname], "db"));
-				$endTime = (float) strtotime(format_time($_POST[$endTime_fieldname], "db"));
-				if(($endTime - $startTime) < 0) {
-					if(!isset($this->errors[$startTime_fieldname]) && (!isset($this->errors[$endTime_fieldname]))) {
-						$this->errors[$startTime_fieldname] = "error_timediff";	
-						$this->errors[$endTime_fieldname] = "error_timediff";
-					}
-				}
-			}
-		}													
-		public function password($val_pw_array) {
-			foreach($val_pw_array as $pw_field) {
-				$success = preg_match("/^(?=.*\d)(?=.*[a-zA-Z])(?=.*[^a-zA-Z\d\s]).{8,20}$/", trim($_POST[$pw_field])); 
-				if(!$success) {
-					if(!isset($this->errors[$pw_field])) {
-						$this->errors[$pw_field] = "error_pw";
-					}
-				}
-			}
-		}										
-		public function compare($val_compare_array) {
-			foreach($val_compare_array as $firstField => $secondField) {
-				if($_POST[$firstField] !== $_POST[$secondField]) {
-					if(!isset($this->errors[$firstField]) && !isset($this->errors[$secondField])) {
-						$this->errors[$firstField] = "error_compare";
-						$this->errors[$secondField] = "error_compare";
-					}
-				}
-			}
-		}										
 	}
-
-//general functions
-	function convert_rank($rank) {
-		$convRank = "";
-		if(is_numeric($rank)) {
-			if((1 <= $rank) && ($rank < 10)) {
-				$convRank = "Guest";
-			} elseif ((10 <= $rank) && ($rank < 50)) {
-				$convRank = "User";
-			} elseif ((50 <= $rank) && ($rank < 100)) {
-				$convRank = "Admin";
-			} elseif ($rank == 100) {
-				$convRank = "Superadmin";
-			}
-		} else {
-			if ($rank == "Guest") {
-				$convRank = 1;
-			} elseif ($rank == "User") {
-				$convRank = 10;
-			} elseif ($rank == "Admin") {
-				$convRank = 50;
-			} elseif ($rank == "Superdmin") {
-				$convRank = 50;
+	public function time($val_time_array) {
+		foreach($val_time_array as $fieldName) {
+			if(preg_match("/^([0](?=[0-9])|1(?=[0-9])|2(?=[0-3]))?[0-9]:[0-5][0-9](:[0-5][0-9])?$/", $_POST[$fieldName]) == 0) {
+				if(!isset($this->errors[$fieldName])) {
+					$this->errors[$fieldName] = "error_time";	
+				}
 			}
 		}
-		return $convRank;
+	}									
+	public function timediff($val_timediff_array) {
+		//requires the function format_time()
+		foreach($val_timediff_array as $startTime_fieldname => $endTime_fieldname) {
+			$startTime = (float) strtotime(format_time($_POST[$startTime_fieldname], "db"));
+			$endTime = (float) strtotime(format_time($_POST[$endTime_fieldname], "db"));
+			if(($endTime - $startTime) < 0) {
+				if(!isset($this->errors[$startTime_fieldname]) && (!isset($this->errors[$endTime_fieldname]))) {
+					$this->errors[$startTime_fieldname] = "error_timediff";	
+					$this->errors[$endTime_fieldname] = "error_timediff";
+				}
+			}
+		}
+	}													
+	public function password($val_pw_array) {
+		foreach($val_pw_array as $pw_field) {
+			$success = preg_match("/^(?=.*\d)(?=.*[a-zA-Z])(?=.*[^a-zA-Z\d\s]).{8,20}$/", trim($_POST[$pw_field])); 
+			if(!$success) {
+				if(!isset($this->errors[$pw_field])) {
+					$this->errors[$pw_field] = "error_pw";
+				}
+			}
+		}
+	}										
+	public function compare($val_compare_array) {
+		foreach($val_compare_array as $firstField => $secondField) {
+			if($_POST[$firstField] !== $_POST[$secondField]) {
+				if(!isset($this->errors[$firstField]) && !isset($this->errors[$secondField])) {
+					$this->errors[$firstField] = "error_compare";
+					$this->errors[$secondField] = "error_compare";
+				}
+			}
+		}
+	}										
+}
+
+//general functions
+function convert_rank($rank) {
+	$convRank = "";
+	if(is_numeric($rank)) {
+		if((1 <= $rank) && ($rank < 10)) {
+			$convRank = "Guest";
+		} elseif ((10 <= $rank) && ($rank < 50)) {
+			$convRank = "User";
+		} elseif ((50 <= $rank) && ($rank < 100)) {
+			$convRank = "Admin";
+		} elseif ($rank == 100) {
+			$convRank = "Superadmin";
+		}
+	} else {
+		if ($rank == "Guest") {
+			$convRank = 1;
+		} elseif ($rank == "User") {
+			$convRank = 10;
+		} elseif ($rank == "Admin") {
+			$convRank = 50;
+		} elseif ($rank == "Superdmin") {
+			$convRank = 50;
+		}
 	}
+	return $convRank;
+}
 ?>
