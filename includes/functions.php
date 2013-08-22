@@ -93,7 +93,11 @@
 				$object_array[] = static::instantiate($row);
 			}
 			mysqli_free_result($result_set);
-			return $object_array;
+			if(count($object_array) == 1) {
+				return $object_array[0];
+			} else {
+				return $object_array;
+			}
 		}
 	}
 
@@ -105,8 +109,11 @@
 		public $visible;
 		public $menuName;
 		
+		
+
 		public static function get($selection = "all") {
 			global $db;
+			global $session;
 			$loginId = 7;
 			if($selection == "all") {
 				$query  = "SELECT * ";
@@ -128,9 +135,9 @@
 					$query .= "FROM `subjects` ";
 					$query .= "WHERE `id` = '" . $db->query_prep($selection) . "' ";
 					$query .= "LIMIT 1";
-					self::get_by_query($query);
-					if($this->min_rank <= $session->rank) {
-						return $this;
+					$object = self::get_by_query($query);
+					if($object->minRank <= $session->rank) {
+						return $object;
 					} else {
 						return "error";
 					}
@@ -139,8 +146,8 @@
 					$query .= "FROM `subjects` ";
 					$query .= "WHERE `id` = '{$loginId}' ";
 					$query .= "LIMIT 1";
-					self::get_by_query($query);
-					return $this;
+					$object = self::get_by_query($query);
+					return $object;
 				}
 			}
 		}

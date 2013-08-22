@@ -5,9 +5,9 @@
 		header("location:index.php?id=7");
 	}
 	$db = new MySqlDatabase;
-	$subject_set = get_all_subjects();
-	$current_id = get_selected_id();
-	$current_subject = get_subject_by_id($current_id);
+//	$subject_set = get_all_subjects();
+	$current_id = Subject::get_id();
+	$current_subject = Subject::get($current_id);
 ?>
 <!DOCTYPE HTML>
 <html>
@@ -23,15 +23,15 @@
 			</div>
 			<div id="body_div">
 				<div id="nav_div">
-					<?php echo navigation($subject_set); ?>
+					<?php echo navigation(); ?>
 				</div>
 				<div id="main_div">
 					<div id="pageTitle_div">
-						<h2><?php echo $current_subject["menu_name"]; ?></h2>
+						<h2><?php echo $current_subject->menuName; ?></h2>
 					</div>
 					<div id="content_div">
 						<?php
-							$includefile = strtolower("modules/{$current_subject["menu_name"]}/main.php");
+							$includefile = strtolower("modules/{$current_subject->menuName}/main.php");
 							include($includefile);
 							
 						?>
