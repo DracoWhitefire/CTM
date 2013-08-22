@@ -186,6 +186,7 @@ function navigation() {
 			return NULL;
 		}
 	}
+
 //user functions
 class User extends Dao
 {
@@ -257,6 +258,31 @@ class User extends Dao
 			} else {
 				return FALSE;
 			}
+		}
+		public static function convert_rank($rank) {
+			$convRank = "";
+			if(is_numeric($rank)) {
+				if((1 <= $rank) && ($rank < 10)) {
+					$convRank = "Guest";
+				} elseif ((10 <= $rank) && ($rank < 50)) {
+					$convRank = "User";
+				} elseif ((50 <= $rank) && ($rank < 100)) {
+					$convRank = "Admin";
+				} elseif ($rank == 100) {
+					$convRank = "Superadmin";
+				}
+			} else {
+				if ($rank == "Guest") {
+					$convRank = 1;
+				} elseif ($rank == "User") {
+					$convRank = 10;
+				} elseif ($rank == "Admin") {
+					$convRank = 50;
+				} elseif ($rank == "Superdmin") {
+					$convRank = 50;
+				}
+			}
+			return $convRank;
 		}
 	}
 class Session
@@ -559,29 +585,5 @@ class Validator
 }
 
 //general functions
-function convert_rank($rank) {
-	$convRank = "";
-	if(is_numeric($rank)) {
-		if((1 <= $rank) && ($rank < 10)) {
-			$convRank = "Guest";
-		} elseif ((10 <= $rank) && ($rank < 50)) {
-			$convRank = "User";
-		} elseif ((50 <= $rank) && ($rank < 100)) {
-			$convRank = "Admin";
-		} elseif ($rank == 100) {
-			$convRank = "Superadmin";
-		}
-	} else {
-		if ($rank == "Guest") {
-			$convRank = 1;
-		} elseif ($rank == "User") {
-			$convRank = 10;
-		} elseif ($rank == "Admin") {
-			$convRank = 50;
-		} elseif ($rank == "Superdmin") {
-			$convRank = 50;
-		}
-	}
-	return $convRank;
-}
+
 ?>

@@ -121,7 +121,7 @@
 			$userList .= ">Superadmin</option>";
 			$userList .= "</select>";
 		} else {
-			$userList .= htmlspecialchars(convert_rank($user->rank));
+			$userList .= htmlspecialchars(User::convert_rank($user->rank));
 		}
 		$userList .= "</td>"; 
 		$userList .= "<td><input type=\"checkbox\" name=\"" . htmlspecialchars("active_check_{$id}") . "\" ";
