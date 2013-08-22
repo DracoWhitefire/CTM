@@ -153,56 +153,7 @@
 			return $current_id;
 		}
 	}
-	function get_all_subjects() {
-		global $db;
-		$query  = "SELECT * ";
-		$query .= "FROM `subjects` ";
-		$query .= "WHERE `visible` = 1 ";
-		$query .= "ORDER BY `position` ASC ";
-		$nav_set = $db->query($query);
-		return $nav_set;
-	}
-	function get_selected_id() {
-		if(isset($_GET["id"])) {
-			(integer) $current_id = (int) $_GET["id"];
-		} else {
-			(integer) $current_id = (int) 1;
-		}
-		return $current_id;
-	}
-	function get_subject_by_id($id) {
-		global $db;
-		if(isset($_SESSION["rank"])) {
-			$query  = "SELECT * ";
-			$query .= "FROM `subjects` ";
-			$set = $db->query($query);
-			$subj_total = $db->num_rows($set);
-			mysqli_free_result($set);
-			if(!((1 <= $id) && ($id <= $subj_total))) {
-				$id = 1;
-			}
-			$query  = "SELECT * ";
-			$query .= "FROM `subjects` ";
-			$query .= "WHERE `id` = '" . $db->query_prep($id) . "' ";
-			$query .= "LIMIT 1";
-			$set = $db->query($query);
-			$result = $db->fetch_assoc($set);
-			mysqli_free_result($set);
-			if($result["min_rank"] <= $_SESSION["rank"]) {
-				return $result;
-			}
-		} else {
-			$query  = "SELECT * ";
-			$query .= "FROM `subjects` ";
-			$query .= "WHERE `id` = '7' ";
-			$query .= "LIMIT 1";
-			$set = $db->query($query);
-			$result = $db->fetch_assoc($set);
-			mysqli_free_result($set);
-			return $result;
-		}
-	}
-	function navigation($subject_set) {
+	function navigation() {
 		//requires the (result of the) function get_all_subjects()
 		//requires the function get_selected_id()
 		global $current_id;
