@@ -100,16 +100,22 @@
 //navigation functions
 	Class Subject extends Dao
 	{
-		public function get($selection = "all") {
+		public $id;
+		public $minRank;
+		public $visible;
+		public $menuName;
+		
+		public static function get($selection = "all") {
 			global $db;
+			$loginId = 7;
 			if($selection == "all") {
 				$query  = "SELECT * ";
 				$query .= "FROM `subjects` ";
 				$query .= "WHERE `visible` = 1 ";
 				$query .= "ORDER BY `position` ASC ";
-				self::get_by_query($query);
+				return self::get_by_query($query);
 			} elseif(is_numeric($selection)) {
-				if(isset($session->rank))
+				if(isset($session->rank)) {
 					$query  = "SELECT * ";
 					$query .= "FROM `subjects` ";
 					$set = $db->query($query);
@@ -123,13 +129,18 @@
 					$query .= "WHERE `id` = '" . $db->query_prep($selection) . "' ";
 					$query .= "LIMIT 1";
 					self::get_by_query($query);
+					if($this->min_rank <= $session->rank) {
+						return $this;
+					} else {
+						return "error";
 					}
 				} else {
 					$query  = "SELECT * ";
 					$query .= "FROM `subjects` ";
-					$query .= "WHERE `id` = '7' ";
+					$query .= "WHERE `id` = '{$loginId}' ";
 					$query .= "LIMIT 1";
 					self::get_by_query($query);
+					return $this;
 				}
 			}
 		}
