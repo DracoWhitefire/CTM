@@ -6,7 +6,7 @@
 	}
 	$db = new MySqlDatabase;
 //	$subject_set = get_all_subjects();
-	$current_id = Subject::get_id();
+	$current_id = Subject::get_current_id();
 	$current_subject = Subject::get($current_id);
 ?>
 <!DOCTYPE HTML>

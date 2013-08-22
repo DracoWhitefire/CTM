@@ -152,7 +152,7 @@ Class Subject extends Dao
 			}
 		}
 	}
-	public static function get_id() {
+	public static function get_current_id() {
 		if(isset($_GET["id"])) {
 			(integer) $current_id = (int) $_GET["id"];
 		} else {
