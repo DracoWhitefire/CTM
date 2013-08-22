@@ -5,14 +5,36 @@
 		$editing = FALSE;
 	}
 	$date = get_selected_date();
-	echo calendar($date);
 ?>
-<div>
-		
+<div id="scheduleSelector_div">
+	<div id="dateSelector_div">
+		<?php echo calendar($date);?>
+	</div>
+	<div id="teamSelector_div">
+		<?php
+			$urlQueries_array = array();
+			$urlQueries = explode("&", $_SERVER["QUERY_STRING"]);
+			foreach($urlQueries as $urlQuery) {
+				$query_array = explode("=", $urlQuery);
+				$urlQueries_array[$query_array[0]] = $query_array[1];
+			}
+			$url = $_SERVER["PHP_SELF"] . "?" . http_build_query($urlQueries_array);
+			$selectedTeam = isset($_POST["teamSelect"])? $_POST["teamSelect"] : 1;
+		?>
+		<form id="teamSelector_form" method="POST" action="<?php echo $url?>">
+			Team: <select id="teamSelect" name="teamSelect" >
+				<option>1</option>
+				<option>2</option>
+				<option>3</option>
+			</select>
+			<input type="submit" name="Submit" value="Submit"/>
+			
+		</form>
+	</div>
 </div>
 <?php
 	$output = "<div id=\"scheduleSelected_div\"><form id=\"scheduleSelected_form\" action=\"index.php" . htmlspecialchars("?id={$current_id}") . "\" method=\"POST\" ><table id = \"scheduleSelected_table\"><thead><tr><th>Name</th><th>Start Time</th><th>End Time</th><th>Working Hours</th></tr></thead><tbody>";
-	$users_array = User::get_by_team("3");
+	$users_array = User::get_by_team($selectedTeam);
 	$selectedDay = date("l", strtotime($date["d"] . "-" . $date["m"] . "-" . $date["y"]));
 	foreach($users_array as $user) {
 		$output .= "<tr>";

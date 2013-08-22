@@ -112,6 +112,10 @@
 	text-align: center;
 }
 
+#scheduleSelector_div {
+	float: left;
+}
+
 #scheduleSelected_div {
 	float: right;
 	border: solid 1px white;
