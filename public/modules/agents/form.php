@@ -2,11 +2,9 @@
 // New User Form
 	if($editUser == TRUE) {
 		if(isset($_POST["singleEditList"])) {
-			$users = User::get($_POST["singleEditList"]);
-			$user = $users[0];
+			$user = User::get($_POST["singleEditList"]);
 		} elseif(isset($_POST["userId_input"])) {
-			$users = User::get($_POST["userId_input"]);
-			$user = $users[0];
+			$user = User::get($_POST["userId_input"]);
 		}
 	}
 	
