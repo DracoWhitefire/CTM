@@ -312,6 +312,9 @@
 			if(isset($_SESSION["id"])) {
 				$this->userId = $_SESSION["id"];
 				$this->loggedIn = TRUE;
+				$this->firstName = $_SESSION["firstname"];
+				$this->rank = $_SESSION["rank"];
+
 			} else {
 				unset($this->userId);
 				$this->loggedIn = FALSE;
