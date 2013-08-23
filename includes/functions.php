@@ -635,7 +635,7 @@ class Validator
 	}
 	public function time($val_time_array) {
 		foreach($val_time_array as $fieldName) {
-			if(preg_match("/^([0](?=[0-9])|1(?=[0-9])|2(?=[0-3]))?[0-9]:[0-5][0-9](:[0-5][0-9])?$/", $_POST[$fieldName]) == 0) {
+			if(preg_match("/^(0(?=\d)|1(?=\d)|2(?=[0-3]))?\d:[0-5]\d(:[0-5]\d)?$/", $_POST[$fieldName]) == 0) {
 				if(!isset($this->errors[$fieldName])) {
 					$this->errors[$fieldName] = "error_time";	
 				}
