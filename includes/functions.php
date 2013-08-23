@@ -2,7 +2,8 @@
 require_once("config.php");
 
 //database functions
-class MySqlDatabase {
+class MySqlDatabase
+{
 		private $connection;
 		private $magic_quotes_active;
 		private $mysqli_real_escape_string_exists;
