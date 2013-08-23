@@ -123,16 +123,16 @@
 	padding: 9px;
 }
 
-#scheduleSelected_div td {
+#scheduleSelected_div th {
 	width: 150px;
 	height: 22px;
 }
 
-#scheduleSelected_div td.time {
+#scheduleSelected_div th.time {
 	text-align: center;
 }
 
-#scheduleSelected_div td.time input[type=text] {
+#scheduleSelected_div th.time input[type=text] {
 	width: 126px;
 }
 
