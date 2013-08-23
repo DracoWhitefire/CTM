@@ -20,12 +20,24 @@
 			}
 			$url = $_SERVER["PHP_SELF"] . "?" . http_build_query($urlQueries_array);
 			$selectedTeam = isset($_POST["teamSelect"])? $_POST["teamSelect"] : 1;
+			
+			
 		?>
 		<form id="teamSelector_form" method="POST" action="<?php echo $url?>">
-			Team: <select id="teamSelect" name="teamSelect" >
-				<option>1</option>
-				<option>2</option>
-				<option>3</option>
+			Team: 
+				<?php
+					
+					$teams_array = Team::get();
+					$output = "<select id=\"teamSelect\" name=\"teamSelect\" >";
+					foreach($teams_array as $team) {
+						$output .= "<option value=\"" . $team->id . "\" ";
+						if($team->id == $selectedTeam) {
+							$output .= "selected=\"selected\" ";
+						}
+						$output .= "\">" . $team->name . "</option>";
+					}
+					echo $output;
+				?>
 			</select>
 			<input type="submit" name="Submit" value="Submit"/>
 			
