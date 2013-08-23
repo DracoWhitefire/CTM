@@ -24,7 +24,7 @@
 			
 		?>
 		<form id="teamSelector_form" method="POST" action="<?php echo $url?>">
-			Team: 
+			<label for="team_selector">Team: </label> 
 				<?php echo Team::selector($selectedTeam) ?>					
 			<input type="submit" name="Submit" value="Submit"/>
 			
