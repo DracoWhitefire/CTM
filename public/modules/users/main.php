@@ -39,8 +39,10 @@
 			$valFieldString_array = preg_split("/([A-Z][a-z]+)|_/", $valField, -1, PREG_SPLIT_DELIM_CAPTURE|PREG_SPLIT_NO_EMPTY);
 			if(count($valFieldString_array) > 1){
 				if(strtolower($valFieldString_array[1]) == "name") {					
-					$checkLen_array[$valField] = "1-32";
-					$checkReq_array[] = $valField;
+					if(strtolower($valFieldString_array[0]) != "forum") {
+						$checkReq_array[] = $valField;
+						$checkLen_array[$valField] = "1-32";
+					}
 					if($valFieldString_array[0] == "user") {
 						$checkUniq_array[] = $valField;
 					}
