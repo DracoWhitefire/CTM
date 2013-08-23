@@ -191,7 +191,7 @@
 							"`forum_name`='" . 	$db->query_prep($_POST["forumName_input"]) . "', " . 
 							"`first_name`='" . 	$db->query_prep($_POST["firstName_input"]) . "', " .  
 							"`last_name`='" . 	$db->query_prep($_POST["lastName_input"]) . "', " .  
-							"`rank`='" . 		$db->query_prep($_POST["rank_select"]);
+							"`rank`='" . 		$db->query_prep($_POST["rank_select_" . $_POST["userId_input"]]);
 				if(isset($hashPw)) {
 					$query .= "', `passwordhash`='" . $db->query_prep($hashPw);
 				}

@@ -99,28 +99,7 @@
 		$userList .= "</td>";
 		$userList .= "<td class=\"rank\" >";
 		if($editRow == TRUE) {
-			$userList .= "<select id=\"" . htmlspecialchars("rank_select_{$id}") . "\" name=\"" . htmlspecialchars("rank_select_{$id}") . "\">";
-			$userList .= "<option value=\"1\" ";
-			if($user->rank == 1) {
-				$userList .= "selected=\"selected\" ";
-			}
-			$userList .= ">Guest</option>";
-			$userList .= "<option value=\"10\" ";
-			if($user->rank == 10) {
-				$userList .= "selected=\"selected\" ";
-			}
-			$userList .= ">User</option>";
-			$userList .= "<option value=\"50\" ";
-			if($user->rank == 50) {
-				$userList .= "selected=\"selected\" ";
-			}
-			$userList .= ">Admin</option>";
-			$userList .= "<option value=\"100\" ";
-			if($user->rank == 100) {
-				$userList .= "selected=\"selected\" ";
-			}
-			$userList .= ">Superadmin</option>";
-			$userList .= "</select>";
+			$userList .= Rank::selector($user);
 		} else {
 			$userList .= htmlspecialchars(User::convert_rank($user->rank));
 		}

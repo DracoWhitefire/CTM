@@ -69,23 +69,9 @@
 	}
 	$userForm .= "/><br />";
 	$rank_array = array("Guest" => 1, "User" => 10, "Admin" => 50, "Superadmin" => 100);
-	$userForm .= "<label for=\"rank_select\">Rank</label><select id=\"rank_select\" name=\"rank_select\">";
-	foreach($rank_array as $rankName => $rankValue) {
-		$userForm .= "<option value=\"" . htmlspecialchars($rankValue) . "\" ";
-		if($editUser == TRUE) {
-			if(isset($_POST["rank_select"])) {
-				if($_POST["rank_select"] == $rankValue) {
-					$userForm .= "selected=\"selected\" ";
-				}
-			} else {
-				if($user->rank == $rankValue) {
-					$userForm .= "selected=\"selected\" ";
-				}
-			}
-		}
-		$userForm .= ">" . htmlspecialchars($rankName) . "</option>";
-	}
-	$userForm .= "</select><br />";
+	$userForm .= "<label for=\"rank_select\">Rank</label>";
+	$userForm .= Rank::selector($user);
+	$userForm .= "<br />";
 	$userForm .= "<label for=\"active_input\" class=\"check\">Active</label><input type=\"checkbox\" id=\"active_input\" name=\"active_input\" ";
 	if($editUser == TRUE) {
 		if(isset($_POST["active_input"])) {
