@@ -420,6 +420,7 @@ class Team extends Dao
 		return $output;
 	}
 }
+
 //date functions
 function get_selected_date() {
 		$date_array = array();
