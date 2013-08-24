@@ -292,7 +292,8 @@ class Session
 		public $userId;
 		public $firstName;
 		public $rank;
-		
+		public $team;
+				
 		function __construct() {
 			session_start();
 			$this->check_login();
@@ -304,7 +305,7 @@ class Session
 				$this->loggedIn = TRUE;
 				$this->firstName = $_SESSION["firstname"];
 				$this->rank = $_SESSION["rank"];
-
+				$this->team = $_SESSION["team"];
 			} else {
 				unset($this->userId);
 				$this->loggedIn = FALSE;
@@ -319,6 +320,7 @@ class Session
 				$this->userId = $_SESSION["id"] = $user->id;
 				$this->firstName = $_SESSION["firstname"] = $user->firstName;
 				$this->rank = $_SESSION["rank"] = $user->rank;
+				$this->team = $_SESSION["team"] = $user->team;
 				$this->loggedIn = TRUE;
 			}
 		}
