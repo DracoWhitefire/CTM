@@ -261,50 +261,6 @@ class User extends Dao
 			}
 		}
 	}
-class Session
-{
-		private $loggedIn;
-		public $userId;
-		public $firstName;
-		public $rank;
-		public $team;
-				
-		function __construct() {
-			session_start();
-			$this->check_login();
-		}
-		
-		private function check_login() {
-			if(isset($_SESSION["id"])) {
-				$this->userId = $_SESSION["id"];
-				$this->loggedIn = TRUE;
-				$this->firstName = $_SESSION["firstname"];
-				$this->rank = $_SESSION["rank"];
-				$this->team = $_SESSION["team"];
-			} else {
-				unset($this->userId);
-				$this->loggedIn = FALSE;
-			}
-		}
-		
-		public function is_loggedIn() {
-			return $this->loggedIn;
-		}
-		public function login(User $user) {
-			if($user) {
-				$this->userId = $_SESSION["id"] = $user->id;
-				$this->firstName = $_SESSION["firstname"] = $user->firstName;
-				$this->rank = $_SESSION["rank"] = $user->rank;
-				$this->team = $_SESSION["team"] = $user->team;
-				$this->loggedIn = TRUE;
-			}
-		}
-		public function logout() {
-			unset($_SESSION["id"]);
-			unset($this->userId);
-			$this->loggedIn = FALSE;
-		}
-	}
 class Rank extends Dao
 {
 	public $id;
@@ -397,6 +353,48 @@ class Team extends Dao
 		}
 		$output .= "</select>";
 		return $output;
+	}
+}
+class Session
+{
+	private $loggedIn;
+	public $userId;
+	public $firstName;
+	public $rank;
+	public $team;
+			
+	function __construct() {
+		session_start();
+		$this->check_login();
+	}
+	private function check_login() {
+		if(isset($_SESSION["id"])) {
+			$this->userId = $_SESSION["id"];
+			$this->loggedIn = TRUE;
+			$this->firstName = $_SESSION["firstname"];
+			$this->rank = $_SESSION["rank"];
+			$this->team = $_SESSION["team"];
+		} else {
+			unset($this->userId);
+			$this->loggedIn = FALSE;
+		}
+	}	
+	public function is_loggedIn() {
+		return $this->loggedIn;
+	}
+	public function login(User $user) {
+		if($user) {
+			$this->userId = $_SESSION["id"] = $user->id;
+			$this->firstName = $_SESSION["firstname"] = $user->firstName;
+			$this->rank = $_SESSION["rank"] = $user->rank;
+			$this->team = $_SESSION["team"] = $user->team;
+			$this->loggedIn = TRUE;
+		}
+	}
+	public function logout() {
+		unset($_SESSION["id"]);
+		unset($this->userId);
+		$this->loggedIn = FALSE;
 	}
 }
 
