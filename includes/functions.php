@@ -260,31 +260,6 @@ class User extends Dao
 				return FALSE;
 			}
 		}
-		public static function convert_rank($rank) {
-			$convRank = "";
-			if(is_numeric($rank)) {
-				if((1 <= $rank) && ($rank < 10)) {
-					$convRank = "Guest";
-				} elseif ((10 <= $rank) && ($rank < 50)) {
-					$convRank = "User";
-				} elseif ((50 <= $rank) && ($rank < 100)) {
-					$convRank = "Admin";
-				} elseif ($rank == 100) {
-					$convRank = "Superadmin";
-				}
-			} else {
-				if ($rank == "Guest") {
-					$convRank = 1;
-				} elseif ($rank == "User") {
-					$convRank = 10;
-				} elseif ($rank == "Admin") {
-					$convRank = 50;
-				} elseif ($rank == "Superdmin") {
-					$convRank = 50;
-				}
-			}
-			return $convRank;
-		}
 	}
 class Session
 {
@@ -338,21 +313,23 @@ class Rank extends Dao
 	
 	public static function get($selection = "all") {
 		global $db;
-		$query  = "SELECT * ";
+		$query  = "SELECT MAX(`value`) ";
 		$query .= "FROM `ranks` ";
 		$result = $db->query($query);
-		$numRows = $db->num_rows($result);
+		$maxValue = $db->fetch_assoc($result)["MAX(`value`)"];
 		mysqli_free_result($result);
+		$query  = "SELECT * ";
+		$query .= "FROM `ranks` ";
 		if($selection == "all") {
 			return self::get_by_query($query);
-		} elseif(is_numeric($selection)) {
-			if((1 <= $selection) && ($selection <= $numRows)) {
+		} elseif(is_numeric($selection)) {	
+			if((1 <= $selection) && ($selection <= $maxValue)) {
 				$selection = $db->query_prep($selection);
 			} else {
 				$selection = 1;
 			}
-			$query .= "WHERE `value` <= {$selection} ";
-			$query .= "ORDER BY `value` ";
+			$query .= "WHERE `value` = {$selection} ";
+			$query .= "LIMIT 1 ";
 			return self::get_by_query($query);
 		}
 	}
@@ -367,7 +344,7 @@ class Rank extends Dao
 			$output .= htmlspecialchars("_" . $user->id);
 		}
 		$output .= "\">";
-		$ranks_array = Rank::get();
+		$ranks_array = self::get();
 		foreach($ranks_array as $rank) {
 			$output .= "<option value=\"" . htmlspecialchars($rank->value) . "\" ";
 				if($user!="") {

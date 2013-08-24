@@ -101,7 +101,8 @@
 		if($editRow == TRUE) {
 			$userList .= Rank::selector($user);
 		} else {
-			$userList .= htmlspecialchars(User::convert_rank($user->rank));
+			$rank = Rank::get($user->rank);
+			$userList .= htmlspecialchars($rank->name);
 		}
 		$userList .= "</td>"; 
 		$userList .= "<td><input type=\"checkbox\" name=\"" . htmlspecialchars("active_check_{$id}") . "\" ";
