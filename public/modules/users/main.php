@@ -59,7 +59,7 @@
 					}
 				}
 				if(strtolower($valFieldString_array[0]) == "password") {
-					$checkSame_array[$valField] = "conf" . ucfirst($valFieldString_array[0]) . "_" . $valFieldString_array[1];
+					$checkSame_array[$valField] = "conf" . ucfirst($valFieldString_array[0]) . "_" . $valFieldString_array[1] . "_" . $valFieldString_array[2];
 					if(!empty($_POST[$valField])) {
 						$checkPw_array[] = $valField;
 					}
@@ -183,22 +183,23 @@
 				$insert_success = $db->query($query);
 			} elseif($_POST["submitForm"] == "Submit User") {
 				//Update existing user
+				$userId = $_POST["userId_input"];
 				if(isset($_POST["active_input"])) {
 					$active = 1;
 				} else {
 					$active = 0;
 				}
 				$query  = 	"UPDATE `users` SET ";
-				$query .= 	"`user_name`='" . 	$db->query_prep($_POST["userName_input"]) . "', " . 
-							"`forum_name`='" . 	$db->query_prep($_POST["forumName_input"]) . "', " . 
-							"`first_name`='" . 	$db->query_prep($_POST["firstName_input"]) . "', " .  
-							"`last_name`='" . 	$db->query_prep($_POST["lastName_input"]) . "', " .  
-							"`rank`='" . 		$db->query_prep($_POST["rank_select_" . $_POST["userId_input"]]);
+				$query .= 	"`user_name`='" . 	$db->query_prep($_POST["userName_input_" . $userId]) . "', " . 
+							"`forum_name`='" . 	$db->query_prep($_POST["forumName_input_" . $userId]) . "', " . 
+							"`first_name`='" . 	$db->query_prep($_POST["firstName_input_" . $userId]) . "', " .  
+							"`last_name`='" . 	$db->query_prep($_POST["lastName_input_" . $userId]) . "', " .  
+							"`rank`='" . 		$db->query_prep($_POST["rank_select_" . $userId]);
 				if(isset($hashPw)) {
 					$query .= "', `passwordhash`='" . $db->query_prep($hashPw);
 				}
 				$query .= "', `active`='" . $db->query_prep($active) . "' ";
-				$query .= "WHERE `id`=" . $db->query_prep($_POST["userId_input"]) . " ";
+				$query .= "WHERE `id`=" . $db->query_prep($userId) . " ";
 				$query .= "LIMIT 1" ;
 				$query .= ";";
 				$update_success = $db->query($query);
