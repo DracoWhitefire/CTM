@@ -12,23 +12,23 @@
 	</div>
 	<div id="teamSelector_div">
 		<?php
-			$urlQueries_array = array();
-			$urlQueries = explode("&", $_SERVER["QUERY_STRING"]);
-			foreach($urlQueries as $urlQuery) {
-				$query_array = explode("=", $urlQuery);
-				$urlQueries_array[$query_array[0]] = $query_array[1];
+			if(($session->rank)>=50) {
+				$urlQueries_array = array();
+				$urlQueries = explode("&", $_SERVER["QUERY_STRING"]);
+				foreach($urlQueries as $urlQuery) {
+					$query_array = explode("=", $urlQuery);
+					$urlQueries_array[$query_array[0]] = $query_array[1];
+				}
+				$url = $_SERVER["PHP_SELF"] . "?" . http_build_query($urlQueries_array);
+				$selectedTeam = isset($_POST["teamSelect"])? $_POST["teamSelect"] : 1;
+				$output = "<form id=\"teamSelector_form\" method=\"POST\" action=\"" . $url . "\"><label for=\"team_selector\">Team: </label>";
+				$output .= Team::selector($selectedTeam);
+				$output .= "<input type=\"submit\" name=\"Submit\" value=\"Submit\"/></form>";
+				echo $output;
+			} else {
+				$selectedTeam = $session->team;
 			}
-			$url = $_SERVER["PHP_SELF"] . "?" . http_build_query($urlQueries_array);
-			$selectedTeam = isset($_POST["teamSelect"])? $_POST["teamSelect"] : 1;
-			
-			
 		?>
-		<form id="teamSelector_form" method="POST" action="<?php echo $url?>">
-			<label for="team_selector">Team: </label> 
-				<?php echo Team::selector($selectedTeam) ?>					
-			<input type="submit" name="Submit" value="Submit"/>
-			
-		</form>
 	</div>
 </div>
 <?php
