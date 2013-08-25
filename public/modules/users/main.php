@@ -204,19 +204,41 @@
 				$query .= ";";
 				$update_success = $db->query($query);
 				
+				$query  = "SELECT * ";
+				$query .= "FROM `schedules` ";
+				$query .= "WHERE `id` =  {$userId} ";
+				
 				$weekdays_array = array("monday", "tuesday", "wednesday", "thursday", "friday");
-				foreach($weekdays_array as $weekday) {
-					$beginFieldname = ucfirst($weekday) . "Begin_input";
-					$endFieldname = ucfirst($weekday) . "End_input";
-					$query  = "UPDATE `schedules` SET ";
-					$query .= "`start_time`='" . $db->query_prep($_POST[$beginFieldname]) . "', `end_time`='" . $db->query_prep($_POST[$endFieldname]) . "' ";
-					$query .= "WHERE `id` = '" . $db->query_prep($_POST["userId_input"]) . "' ";
-					$query .= "AND `weekday` = '{$weekday}' ";
-					$query .= "LIMIT 1 ";
+				$result_array = $db->fetch_assoc($db->query($query));
+				if(count($result_array) >= 1) {
+					foreach($weekdays_array as $weekday) {
+						$beginFieldname = ucfirst($weekday) . "Begin_input";
+						$endFieldname = ucfirst($weekday) . "End_input";
+						$query  = "UPDATE `schedules` SET ";
+						$query .= "`start_time`='" . $db->query_prep($_POST[$beginFieldname]) . "', `end_time`='" . $db->query_prep($_POST[$endFieldname]) . "' ";
+						$query .= "WHERE `id` = '" . $db->query_prep($userId) . "' ";
+						$query .= "AND `weekday` = '{$weekday}' ";
+						$query .= "LIMIT 1 ";
+						$query .= ";";
+						$insert_success = $db->query($query);
+					}
+				} else {
+					$query  = "INSERT INTO `schedules` ";
+					$query .= "(`id`, `weekday`, `start_time`, `end_time`) VALUES ";
+					foreach ($weekdays_array as $weekday) {
+						$beginFieldname = ucfirst($weekday) . "Begin_input";
+						$endFieldname = ucfirst($weekday) . "End_input";
+						$startTime = $db->query_prep($_POST[$beginFieldname]);
+						$endTime = $db->query_prep($_POST[$endFieldname]);
+						$query .= "('" . $db->query_prep($userId) . "', '{$weekday}', '{$startTime}', '{$endTime}')";
+						if($weekday != "friday") {
+							$query .= ", ";
+						}
+					}
 					$query .= ";";
+					//echo $query;
 					$insert_success = $db->query($query);
 				}
-				
 			}
 		} else {
 			if($_POST["submitForm"] == "Add User") {
