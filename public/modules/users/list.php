@@ -1,5 +1,28 @@
 <?php
-	$userList = "<div id=\"userlist_div\"><form id=\"userlist_form\"  action=\"index.php?id=" . urlencode($current_id) . "\" method=\"POST\" >";
+	print_r($_POST);
+	if(isset($_POST["userNameVis_check"])) {
+		setcookie("userNameVis", TRUE, 60*60*24*31);
+		$userNameVis = TRUE;
+	} else {
+		unset($_COOKIE["userNameVis"]);
+		$userNameVis = FALSE;
+	}
+	$userList = "<div id=\"userListFilter_div\" ><form id=\"userlistFilter_form\"  action=\"index.php?id=" . urlencode($current_id) . "\" method=\"POST\" >";
+	$userList .= "<div id=\"listColumnFilter_div\" >";
+	$userList .= "<label for \"userNameVis_check\" >User Name</label><input type=\"checkbox\" id=\"userNameVis_check\" name=\"userNameVis_check\" ";
+	if($userNameVis) {
+		$userList .= "active=\"actove\" ";
+	}
+	$userList .= ">";
+	$userList .= "<label for \"firstNameVis_check\" >First Name</label><input type=\"checkbox\" id=\"firstNameVis_check\" name=\"firstNameVis_check\" >";
+	$userList .= "<label for \"lastNameVis_check\" >Last Name</label><input type=\"checkbox\" id=\"lastNameVis_check\" name=\"lastNameVis_check\" >";
+	$userList .= "<label for \"forumNameVis_check\" >Forum Name</label><input type=\"checkbox\" id=\"forumNameVis_check\" name=\"forumNameVis_check\" >";
+	$userList .= "<label for \"rankVis_check\" >Rank</label><input type=\"checkbox\" id=\"rankVis_check\" name=\"rankVis_check\" >";
+	$userList .= "<label for \"activeVis_check\" >Active</label><input type=\"checkbox\" id=\"activeVis_check\" name=\"activeVis_check\" >";
+	$userList .= "</div>";
+	$userList .= "<input type=\"submit\" id=\"userListFilter_submit\" value=\"Filter\" >";
+	$userList .= "</div>";
+	$userList .= "<div id=\"userlist_div\"><form id=\"userlist_form\"  action=\"index.php?id=" . urlencode($current_id) . "\" method=\"POST\" >";
 	$userList .= "<table id=\"userlist_table\">";
 	$userList .= "<thead>";
 	$userList .= "<tr><th></th><th>CTM Username</th><th>First Name</th><th>Last Name</th><th>Forum Name</th><th>CTM Rank</th><th>Active</th><th></th></tr>";
