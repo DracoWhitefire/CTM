@@ -34,36 +34,19 @@
 	$columnFilter_array = listFilter($columnName_array);
 	$userList = "<div id=\"userListFilter_div\" ><form id=\"userlistFilter_form\"  action=\"index.php?id=" . urlencode($current_id) . "\" method=\"POST\" >";
 	$userList .= "<div id=\"listColumnFilter_div\" >";
-	$userList .= "<label for \"userNameVis_check\" >User Name</label><input type=\"checkbox\" id=\"userNameVis_check\" name=\"userNameVis_check\" ";
-	if($columnFilter_array["userName"]) {
-		$userList .= "checked=\"checked\" ";
+	foreach($columnName_array as $columnName) {
+		$columnNameSplit_array = preg_split("/([A-Z][a-z]+)/", $columnName, 0, PREG_SPLIT_DELIM_CAPTURE|PREG_SPLIT_NO_EMPTY);
+		if(count($columnNameSplit_array) > 1) {
+			$columnNameOutput = ucfirst($columnNameSplit_array[0]) . " " . ucfirst($columnNameSplit_array[1]);
+		} else {
+			$columnNameOutput = ucfirst($columnName);
+		}
+		$userList .= "<label for \"{$columnName}Vis_check\" >" . $columnNameOutput . "</label><input type=\"checkbox\" id=\"" . $columnName . "Vis_check\" name=\"" . $columnName . "Vis_check\" ";
+		if($columnFilter_array[$columnName]) {
+			$userList .= "checked=\"checked\" ";
+		}
+		$userList .= ">";
 	}
-	$userList .= ">";
-	$userList .= "<label for \"firstNameVis_check\" >First Name</label><input type=\"checkbox\" id=\"firstNameVis_check\" name=\"firstNameVis_check\" ";
-	if($columnFilter_array["firstName"]) {
-		$userList .= "checked=\"checked\" ";
-	}
-	$userList .= ">";
-	$userList .= "<label for \"lastNameVis_check\" >Last Name</label><input type=\"checkbox\" id=\"lastNameVis_check\" name=\"lastNameVis_check\" ";
-	if($columnFilter_array["lastName"]) {
-		$userList .= "checked=\"checked\" ";
-	}
-	$userList .= ">";
-	$userList .= "<label for \"forumNameVis_check\" >Forum Name</label><input type=\"checkbox\" id=\"forumNameVis_check\" name=\"forumNameVis_check\" ";
-	if($columnFilter_array["forumName"]) {
-		$userList .= "checked=\"checked\" ";
-	}
-	$userList .= ">";
-	$userList .= "<label for \"rankVis_check\" >Rank</label><input type=\"checkbox\" id=\"rankVis_check\" name=\"rankVis_check\" ";
-	if($columnFilter_array["rank"]) {
-		$userList .= "checked=\"checked\" ";
-	}
-	$userList .= ">";
-	$userList .= "<label for \"activeVis_check\" >Active</label><input type=\"checkbox\" id=\"activeVis_check\" name=\"activeVis_check\" ";
-	if($columnFilter_array["active"]) {
-		$userList .= "checked=\"checked\" ";
-	}
-	$userList .= ">";
 	$userList .= "</div>";
 	$userList .= "<input type=\"submit\" id=\"userListFilter_submit\" name=\"userListFilter_submit\" value=\"Filter\" >";
 	$userList .= "</div>";
