@@ -1,5 +1,4 @@
 <?php
-	
 	//print_r($_POST);
 	//print_r($_COOKIE);
 	$columnName_array = array("userName", "firstName", "lastName", "forumName", "rank", "active");
@@ -14,9 +13,13 @@
 					if($_POST[$columnName . "Vis_check"] == "on") {
 						setcookie($columnName, TRUE, $expiration);
 						$columnFilter_array[$columnName] = TRUE;
+					} else {
+						unset($_COOKIE[$columnName]);
+						setcookie($columnName, FALSE, $expiration);
 					}
 				} else {
 					unset($_COOKIE[$columnName]);
+					setcookie($columnName, FALSE, $expiration);
 				}
 			} else {
 				if(isset($_COOKIE[$columnName])) {
@@ -70,7 +73,7 @@
 	$userList .= "<thead>";
 	$userList .= "<tr><th></th>";
 	if($columnFilter_array["userName"]) {
-		$userList .= "<th>CTM Username</th>";
+		$userList .= "<th>Username</th>";
 	}
 	if($columnFilter_array["firstName"]) {
 		$userList .= "<th>First Name</th>";
@@ -82,7 +85,7 @@
 		$userList .= "<th>Forum Name</th>";
 	}
 	if($columnFilter_array["rank"]) {
-		$userList .= "<th>CTM Rank</th>";
+		$userList .= "<th>Rank</th>";
 	}
 	if($columnFilter_array["active"]) {
 		$userList .= "<th>Active</th>";
