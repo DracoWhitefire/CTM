@@ -30,4 +30,4 @@ Thumbs.db
 
 *.clpprj
 includes/config.php
-public/plugins/tp/modules/agents/docs/*
+public/plugins/*
