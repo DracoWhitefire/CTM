@@ -7,10 +7,10 @@
 		$validator = new Validator;
 		$validator->required($checkReq_array);
 		if(empty($validator->errors)) {
-			$users = User::get("all");
-			foreach($users as $user) {
+			$users = Model_User::get("all");
+                        foreach($users as $user) {
 				if($user->userName == $username) {
-					if($user->pw_check($password)) {
+					if($user->passwordhash == $password) {
 						$session->login($user);
 						header("location: index.php");
 					} else {
@@ -20,7 +20,7 @@
 				} else {
 					$message = "User not found";
 				}
-			}
+                        } 
 		} else {
 			$message = "Some fields are not filled in";
 		}
@@ -38,7 +38,7 @@
 
 <div id="login_div">
 	<?php echo $message; ?>
-	<form id="login_form" method="POST" action="index.php?id=<?php echo $current_id; ?>">
+	<form id="login_form" method="POST" action="index.php?id=<?php echo $currentId; ?>">
 		<label for="username_input">Username</label> <input type="text" name="username_input" id="username_input" maxlength="30" value="<?php echo htmlentities($username); ?>" /><br />
 		<label for="password_input">Password</label> <input type="password" name="password_input" id="password_input" maxlength="30" value="<?php echo htmlentities($password); ?>" /><br />
 		<div id="loginButtons_div">

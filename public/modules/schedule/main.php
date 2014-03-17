@@ -4,11 +4,14 @@
 	} else {
 		$editing = FALSE;
 	}
-	$date = get_selected_date();
+	print_r($date = Date::get_selected());
 ?>
 <div id="scheduleSelector_div">
 	<div id="dateSelector_div">
-		<?php echo calendar($date);?>
+		<?php 
+                    $calendar = new View_Calendar;
+                    echo $calendar->view();
+                ?>
 	</div>
 	<div id="teamSelector_div">
 		<?php
@@ -22,7 +25,7 @@
 				$url = $_SERVER["PHP_SELF"] . "?" . http_build_query($urlQueries_array);
 				$selectedTeam = isset($_POST["teamSelect"])? $_POST["teamSelect"] : 1;
 				$output = "<form id=\"teamSelector_form\" method=\"POST\" action=\"" . $url . "\"><label for=\"team_selector\">Team: </label>";
-				$output .= Team::selector($selectedTeam);
+				$output .= Model_Team::selector($selectedTeam);
 				$output .= "<input type=\"submit\" name=\"Submit\" value=\"Submit\"/></form>";
 				echo $output;
 			} else {
@@ -33,7 +36,7 @@
 </div>
 <?php
 	$output = "<div id=\"scheduleSelected_div\"><form id=\"scheduleSelected_form\" action=\"index.php" . htmlspecialchars("?id={$current_id}") . "\" method=\"POST\" ><table id = \"scheduleSelected_table\"><thead><tr><th>Name</th><th>Start Time</th><th>End Time</th><th>Working Hours</th></tr></thead><tbody>";
-	$users_array = User::get_by_team($selectedTeam);
+	$users_array = Model_User::get_by_team($selectedTeam);
 	$selectedDay = date("l", strtotime($date["d"] . "-" . $date["m"] . "-" . $date["y"]));
 	foreach($users_array as $user) {
 		$output .= "<tr>";

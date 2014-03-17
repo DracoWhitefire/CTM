@@ -141,7 +141,7 @@
 		if(empty($validator->errors)) {
 			//Password Hashing
 			if(!empty($_POST["password_input"])) {
-				$hashPw = User::pw_encrypt($_POST["password_input"]);
+				$hashPw = Model_User::pw_encrypt($_POST["password_input"]);
 			}
 			if($_POST["submitForm"] == "Add User") {
 				//create user
@@ -261,7 +261,7 @@
 			}
 		}
 	}
-	$users_array = User::get("all");
+	$users_array = Model_User::get("all");
 	if(($addUser == TRUE) || ($editUser == TRUE)) {
 		include("form.php");
 		$output = $userForm;
