@@ -4,7 +4,6 @@
 	} else {
 		$editing = FALSE;
 	}
-	print_r($date = Date::get_selected());
 ?>
 <div id="scheduleSelector_div">
 	<div id="dateSelector_div">
@@ -35,8 +34,9 @@
 	</div>
 </div>
 <?php
-	$output = "<div id=\"scheduleSelected_div\"><form id=\"scheduleSelected_form\" action=\"index.php" . htmlspecialchars("?id={$current_id}") . "\" method=\"POST\" ><table id = \"scheduleSelected_table\"><thead><tr><th>Name</th><th>Start Time</th><th>End Time</th><th>Working Hours</th></tr></thead><tbody>";
+	$output = "<div id=\"scheduleSelected_div\"><form id=\"scheduleSelected_form\" action=\"index.php" . htmlspecialchars("?id={$currentId}") . "\" method=\"POST\" ><table id = \"scheduleSelected_table\"><thead><tr><th>Name</th><th>Start Time</th><th>End Time</th><th>Working Hours</th></tr></thead><tbody>";
 	$users_array = Model_User::get_by_team($selectedTeam);
+        $date = Controller_Date::from_get() ;
 	$selectedDay = date("l", strtotime($date["d"] . "-" . $date["m"] . "-" . $date["y"]));
 	foreach($users_array as $user) {
 		$output .= "<tr>";

@@ -32,7 +32,7 @@
 		return $columnFilter_array;
 	}
 	$columnFilter_array = listFilter($columnName_array);
-	$userList = "<div id=\"userListFilter_div\" ><form id=\"userlistFilter_form\"  action=\"index.php?id=" . urlencode($current_id) . "\" method=\"POST\" >";
+	$userList = "<div id=\"userListFilter_div\" ><form id=\"userlistFilter_form\"  action=\"index.php?id=" . urlencode($currentId) . "\" method=\"POST\" >";
 	$userList .= "<div id=\"listColumnFilter_div\" >";
 	foreach($columnName_array as $columnName) {
 		$columnNameSplit_array = preg_split("/([A-Z][a-z]+)/", $columnName, 0, PREG_SPLIT_DELIM_CAPTURE|PREG_SPLIT_NO_EMPTY);
@@ -51,7 +51,7 @@
 	$userList .= "<input type=\"submit\" id=\"userListFilter_submit\" name=\"userListFilter_submit\" value=\"Filter\" >";
 	$userList .= "</div>";
 	
-	$userList .= "<div id=\"userlist_div\"><form id=\"userlist_form\"  action=\"index.php?id=" . urlencode($current_id) . "\" method=\"POST\" >";
+	$userList .= "<div id=\"userlist_div\"><form id=\"userlist_form\"  action=\"index.php?id=" . urlencode($currentId) . "\" method=\"POST\" >";
 	$userList .= "<table id=\"userlist_table\">";
 	$userList .= "<thead>";
 	$userList .= "<tr><th></th>";

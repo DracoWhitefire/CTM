@@ -1,11 +1,10 @@
 <?php
 	require_once("../includes/functions.php");
-	$session = new Session;
+	$session = new Controller_Session;
 	if((!$session->is_loggedIn()) && ($_GET["id"] != "7")) {
 		header("location:index.php?id=7");
 	}
 	$db = new Model_MySqlDb;
-//	$subject_set = get_all_subjects();
 	$currentId = Model_Module::get_current_id();
 	$currentModule = Model_Module::get($currentId);
 ?>
