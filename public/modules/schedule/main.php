@@ -54,7 +54,7 @@
         if($editing == TRUE) {
             $output .= "<input type=\"text\" name=\"starttime_" . htmlspecialchars($user->id) . "\" value=\"";
         }		
-        $output .= format_time($schedule["start_time"], "html");
+        $output .= Controller_Time::format($schedule["start_time"], "html");
         if($editing == TRUE) {
             $output .= "\" />";
         }
@@ -62,7 +62,7 @@
         if($editing == TRUE) {
             $output .= "<input type=\"text\" name=\"endtime_" . htmlspecialchars($user->id) . "\" value=\"";
         }	
-        $output .= format_time($schedule["end_time"], "html");
+        $output .= Controller_Time::format($schedule["end_time"], "html");
         if($editing == TRUE) {
             $output .= "\" />";
         }
