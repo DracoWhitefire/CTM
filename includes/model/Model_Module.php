@@ -25,7 +25,7 @@ Class Model_Module extends Model_Dao
         $loginId = LOGIN_MODULE_ID;
         if($selection == "all") {
             $query  = "SELECT * ";
-            $query .= "FROM `subjects` ";
+            $query .= "FROM `modules` ";
             $query .= "WHERE `visible` = 1 ";
             $query .= "ORDER BY `position` ASC ";
             return self::get_by_query($query);
@@ -33,7 +33,7 @@ Class Model_Module extends Model_Dao
             //Check whether user session exists
             if(isset($session->rank)) {
                 $query  = "SELECT * ";
-                $query .= "FROM `subjects` ";
+                $query .= "FROM `modules` ";
                 $set = $db->query($query);
                 $moduleTotal = $db->num_rows($set);
                 mysqli_free_result($set);
@@ -42,7 +42,7 @@ Class Model_Module extends Model_Dao
                     $selection = 1;
                 }
                 $query  = "SELECT * ";
-                $query .= "FROM `subjects` ";
+                $query .= "FROM `modules` ";
                 $query .= "WHERE `id` = '" . $db->query_prep($selection) . "' ";
                 $query .= "LIMIT 1";
                 $object = self::get_by_query($query);
@@ -54,7 +54,7 @@ Class Model_Module extends Model_Dao
             // If no user session exists redirect to login module
             } else {
                 $query  = "SELECT * ";
-                $query .= "FROM `subjects` ";
+                $query .= "FROM `modules` ";
                 $query .= "WHERE `id` = '{$loginId}' ";
                 $query .= "LIMIT 1";
                 $object = self::get_by_query($query);
