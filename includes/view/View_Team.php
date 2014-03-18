@@ -14,8 +14,8 @@
 class View_Team {
     public static function selector($selectedTeam) {
         $output = "<select id=\"teamSelect\" name=\"teamSelect\" >";
-        $teams_array = Model_Team::get();
-        foreach($teams_array as $team) {
+        $teamsArray = Model_Team::get();
+        foreach($teamsArray as $team) {
             $output .= "<option value=\"" . $team->id . "\" ";
             if($team->id == $selectedTeam) {
                 $output .= "selected=\"selected\" ";
