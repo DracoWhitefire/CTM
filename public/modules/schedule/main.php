@@ -15,13 +15,7 @@
     <div id="teamSelector_div">
         <?php
             if(($session->rank)>=50) {
-                $urlQueries_array = array();
-                $urlQueries = explode("&", $_SERVER["QUERY_STRING"]);
-                foreach($urlQueries as $urlQuery) {
-                    $query_array = explode("=", $urlQuery);
-                    $urlQueries_array[$query_array[0]] = $query_array[1];
-                }
-                $url = $_SERVER["PHP_SELF"] . "?" . http_build_query($urlQueries_array);
+                $url = new Controller_Url();
                 $selectedTeam = isset($_POST["teamSelect"])? $_POST["teamSelect"] : 1;
                 $output = "<form id=\"teamSelector_form\" method=\"POST\" action=\"" . $url . "\"><label for=\"team_selector\">Team: </label>";
                 $output .= View_Team::selector($selectedTeam);
