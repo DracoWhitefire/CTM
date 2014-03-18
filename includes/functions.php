@@ -7,4 +7,5 @@ function __autoload($className) {
     include($classPath);
 }
 
+$debug = TRUE;
 ?>
