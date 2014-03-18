@@ -4,13 +4,13 @@
 		$username = trim($db->query_prep($_POST["username_input"]));
 		$password = trim($db->query_prep($_POST["password_input"]));
 		$checkReq_array = array("username_input", "password_input");
-		$validator = new Validator;
+		$validator = new Controller_Validator;
 		$validator->required($checkReq_array);
 		if(empty($validator->errors)) {
 			$users = Model_User::get("all");
                         foreach($users as $user) {
 				if($user->userName == $username) {
-					if($user->passwordhash == $password) {
+					if($user->pw_check($password)) {
 						$session->login($user);
 						header("location: index.php");
 					} else {
