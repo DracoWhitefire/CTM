@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Description of Model_Team
+ * Model_Team
  */
 class Model_Team extends Model_Dao
 {
@@ -29,5 +29,22 @@ class Model_Team extends Model_Dao
 			return self::get_by_query($query);
 		}		
 	}
+        
+        /**
+         * get_selected
+         * Returns the currently selected team;
+         * @return int - the currently selected team
+         */
+        public static function get_selected() {
+            if(isset($_POST["teamSelect"])) {
+                return (int) $_POST["teamSelect"];
+            } elseif(isset($_GET["teamSelect"])) {
+                return (int) $_GET["teamSelect"];
+            } elseif (isset ($_SESSION["teamSelect"])) {    
+                return (int) $_SESSION["teamSelect"];
+            } else {
+                return 1;
+            }
+        }
 }
 ?>
