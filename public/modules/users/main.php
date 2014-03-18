@@ -66,7 +66,7 @@
 				}
 			}
 		}
-		$validator = new Validator;
+		$validator = new Controller_Validator;
 		$validator->unique($checkUniq_array);
 		$validator->required($checkReq_array);
 		$validator->length($checkLen_array);
