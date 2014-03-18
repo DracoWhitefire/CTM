@@ -9,8 +9,8 @@ function listFilter($columnName_array) {
         $columnName;
         $columnFilter_array[$columnName] = FALSE;
         if(isset($_POST["userListFilter_submit"])) {
-            if(isset($_POST[$columnName . "Vis_check"])) {
-                if($_POST[$columnName . "Vis_check"] == "on") {
+            if(isset($_POST["filter_" . $columnName . "Vis_check"])) {
+                if($_POST["filter_" . $columnName . "Vis_check"] == "on") {
                     setcookie($columnName, TRUE, $expiration);
                     $columnFilter_array[$columnName] = TRUE;
                 } else {
@@ -41,7 +41,7 @@ foreach($columnName_array as $columnName) {
     } else {
         $columnNameOutput = ucfirst($columnName);
     }
-    $userList .= "<label for \"{$columnName}Vis_check\" >" . $columnNameOutput . "</label><input type=\"checkbox\" id=\"" . $columnName . "Vis_check\" name=\"" . $columnName . "Vis_check\" ";
+    $userList .= "<label for \"filter_{$columnName}Vis_check\" >" . $columnNameOutput . "</label><input type=\"checkbox\" id=\"filter_" . $columnName . "Vis_check\" name=\"filter_" . $columnName . "Vis_check\" ";
     if($columnFilter_array[$columnName]) {
         $userList .= "checked=\"checked\" ";
     }
