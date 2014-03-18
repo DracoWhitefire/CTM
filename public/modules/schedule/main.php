@@ -24,7 +24,7 @@
                 $url = $_SERVER["PHP_SELF"] . "?" . http_build_query($urlQueries_array);
                 $selectedTeam = isset($_POST["teamSelect"])? $_POST["teamSelect"] : 1;
                 $output = "<form id=\"teamSelector_form\" method=\"POST\" action=\"" . $url . "\"><label for=\"team_selector\">Team: </label>";
-                $output .= Model_Team::selector($selectedTeam);
+                $output .= View_Team::selector($selectedTeam);
                 $output .= "<input type=\"submit\" name=\"Submit\" value=\"Submit\"/></form>";
                 echo $output;
             } else {

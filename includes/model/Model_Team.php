@@ -29,19 +29,5 @@ class Model_Team extends Model_Dao
 			return self::get_by_query($query);
 		}		
 	}
-
-	public static function selector($selectedTeam) {
-		$output = "<select id=\"teamSelect\" name=\"teamSelect\" >";
-		$teams_array = self::get();
-		foreach($teams_array as $team) {
-			$output .= "<option value=\"" . $team->id . "\" ";
-			if($team->id == $selectedTeam) {
-				$output .= "selected=\"selected\" ";
-			}
-			$output .= "\">" . $team->name . "</option>";
-		}
-		$output .= "</select>";
-		return $output;
-	}
 }
 ?>
