@@ -9,7 +9,7 @@
     <div id="dateSelector_div">
         <?php 
             $calendar = new View_Calendar;
-            echo $calendar->view();
+            echo $calendar->selector();
         ?>
     </div>
     <div id="teamSelector_div">

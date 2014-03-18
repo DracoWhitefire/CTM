@@ -15,7 +15,7 @@ Class View_Calendar
         $this->_date["selectedDay"] = isset($dateArray["d"]) ? $dateArray["d"] : date("j");
     }
     
-    public function view(){
+    public function selector(){
         //requires the function date_to_url()
         
         if($this->_date["selectedMonth"] == 1) {
