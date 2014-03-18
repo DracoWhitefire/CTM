@@ -1,13 +1,12 @@
 <?php
 	require_once("../includes/functions.php");
-	$session = new Session;
+	$session = new Controller_Session;
 	if((!$session->is_loggedIn()) && ($_GET["id"] != "7")) {
 		header("location:index.php?id=7");
 	}
-	$db = new MySqlDatabase;
-//	$subject_set = get_all_subjects();
-	$current_id = Subject::get_current_id();
-	$current_subject = Subject::get($current_id);
+	$db = new Model_MySqlDb;
+	$currentId = Model_Module::get_current_id();
+	$currentModule = Model_Module::get($currentId);
 ?>
 <!DOCTYPE HTML>
 <html>
@@ -23,15 +22,15 @@
 			</div>
 			<div id="body_div">
 				<div id="nav_div">
-					<?php echo navigation(); ?>
+					<?php echo View_Navigation::menu(); ?>
 				</div>
 				<div id="main_div">
 					<div id="pageTitle_div">
-						<h2><?php echo $current_subject->menuName; ?></h2>
+						<h2><?php echo $currentModule->menuName; ?></h2>
 					</div>
 					<div id="content_div">
 						<?php
-							$includefile = strtolower("modules/{$current_subject->menuName}/main.php");
+							$includefile = strtolower("modules/{$currentModule->menuName}/main.php");
 							include($includefile);
 							
 						?>
