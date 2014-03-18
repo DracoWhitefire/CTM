@@ -16,8 +16,6 @@ Class View_Calendar
     }
     
     public function selector(){
-        //requires the function date_to_url()
-        
         if($this->_date["selectedMonth"] == 1) {
                 $prevMonth = 12;
                 $prevYear = $this->_date["selectedYear"] - 1;
