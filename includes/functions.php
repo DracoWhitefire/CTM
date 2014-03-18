@@ -1,5 +1,6 @@
 <?php
 require_once("config.php");
+include("FirePHPCore/FirePHP.class.php");
 
 function __autoload($className) {
     $classArray = explode("_", $className);
