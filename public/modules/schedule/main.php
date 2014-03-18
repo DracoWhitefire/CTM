@@ -4,6 +4,7 @@
     } else {
         $editing = FALSE;
     }
+    print_r($_POST);
 ?>
 <div id="scheduleSelector_div">
     <div id="dateSelector_div">
@@ -16,7 +17,7 @@
         <?php
             if(($session->rank)>=50) {
                 $url = new Controller_Url();
-                $selectedTeam = isset($_POST["teamSelect"])? $_POST["teamSelect"] : 1;
+                $selectedTeam = Model_Team::get_selected();
                 $output = "<form id=\"teamSelector_form\" method=\"POST\" action=\"" . $url . "\"><label for=\"team_selector\">Team: </label>";
                 $output .= View_Team::selector($selectedTeam);
                 $output .= "<input type=\"submit\" name=\"Submit\" value=\"Submit\"/></form>";
