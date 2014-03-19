@@ -1,10 +1,10 @@
 <?php
 
 /**
- * Description of View_Calendar
+ * Description of View_Date
  * Requires the class Controller_Date
  */
-Class View_Calendar
+Class View_Date
 {
     private $_date = array();
     

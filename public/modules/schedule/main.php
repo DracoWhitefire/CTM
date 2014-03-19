@@ -4,13 +4,12 @@
     } else {
         $editing = FALSE;
     }
-    print_r($_POST);
 ?>
 <div id="scheduleSelector_div">
     <div id="dateSelector_div">
         <?php 
-            $calendar = new View_Calendar;
-            echo $calendar->selector();
+            $date = new View_Date;
+            echo $date->selector();
         ?>
     </div>
     <div id="teamSelector_div">
