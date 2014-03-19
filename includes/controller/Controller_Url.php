@@ -55,7 +55,7 @@ class Controller_Url {
      * @return NULL
      */
     public function add(array $params) {
-        array_merge($this->_array, $params);
-        $this->_string = $_SERVER["PHP_SELF"] . "?" . http_build_query($urlQueries_array);
+        $this->_array = array_merge($this->_array, $params);
+        $this->_string = $_SERVER["PHP_SELF"] . "?" . http_build_query($this->_array);
     }
 }
