@@ -20,7 +20,7 @@ class View_Team {
             if($team->id == $selectedTeam) {
                 $output .= "selected=\"selected\" ";
             }
-            $output .= "\">" . $team->name . "</option>";
+            $output .= " >" . $team->name . "</option>";
         }
         $output .= "</select>";
         return $output;
