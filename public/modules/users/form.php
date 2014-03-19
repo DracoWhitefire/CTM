@@ -2,13 +2,13 @@
 // New User Form
 	if($editUser == TRUE) {
 		if(isset($_POST["singleEditList"])) {
-			$user = User::get($_POST["singleEditList"]);
+			$user = Model_User::get($_POST["singleEditList"]);
 		} elseif(isset($_POST["userId_input"])) {
-			$user = User::get($_POST["userId_input"]);
+			$user = Model_User::get($_POST["userId_input"]);
 		}
 	}
 	
-	$userForm = "<div id=\"userForm_div\"><form id=\"userForm_form\" method=\"POST\" action=\"index.php" . htmlspecialchars("?id={$current_id}") . "\">";
+	$userForm = "<div id=\"userForm_div\"><form id=\"userForm_form\" method=\"POST\" action=\"index.php" . htmlspecialchars("?id={$currentId}") . "\">";
 	if($editUser == TRUE) {
 		$userForm .= "<input type=\"hidden\" name=\"userId_input\" value=\"" . htmlspecialchars($user->id) . "\" />";
 	}
@@ -69,7 +69,7 @@
 	}
 	$userForm .= "/><br />";
 	$userForm .= "<label for=\"rank_select_" . $user->id . "\">Rank</label>";
-	$userForm .= Rank::selector($user);
+	$userForm .= View_Rank::selector($user);
 	$userForm .= "<br />";
 	$userForm .= "<label for=\"active_input_" . $user->id . "\" class=\"check\">Active</label><input type=\"checkbox\" id=\"active_input_" . $user->id . "\" name=\"active_input_" . $user->id . "\" ";
 	if($editUser == TRUE) {
@@ -107,9 +107,9 @@
 		}
 		if($editUser == TRUE) {
 			if(isset($_POST["{$weekday}Begin_input"])) {
-				$userForm .= "value=\"" . format_time($_POST["{$weekday}Begin_input"], "html") . "\" ";
+				$userForm .= "value=\"" . Controller_Time::format($_POST["{$weekday}Begin_input"], "html") . "\" ";
 			}
-			$userForm .= "value=\"" . format_time($userSched_array["start_time"], "html") . "\" ";
+			$userForm .= "value=\"" . Controller_Time::format($userSched_array["start_time"], "html") . "\" ";
 		}
 		$userForm .= "/></td><td><input type=\"text\" name=\"{$weekday}End_input\" ";
 		if(isset($validator->errors["{$weekday}End_input"])) {
@@ -117,9 +117,9 @@
 		}
 		if($editUser == TRUE) {
 			if(isset($_POST["{$weekday}End_input"])) {
-				$userForm .= "value=\"" . format_time($_POST["{$weekday}End_input"], "html") . "\" ";
+				$userForm .= "value=\"" . Controller_Time::format($_POST["{$weekday}End_input"], "html") . "\" ";
 			}
-			$userForm .= "value=\"" . format_time($userSched_array["end_time"], "html") . "\" ";
+			$userForm .= "value=\"" . Controller_Time::format($userSched_array["end_time"], "html") . "\" ";
 		}
 		$userForm .= "/></td></tr>";
 	}

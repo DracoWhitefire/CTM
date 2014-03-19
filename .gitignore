@@ -31,4 +31,4 @@ Thumbs.db
 *.clpprj
 includes/config.php
 public/plugins/*
-nbproject/*
+/nbproject/private/

@@ -5,23 +5,74 @@
  */
 Class Controller_Date
 {
-    public static function from_get() {
-        if(isset($_GET["d"]) || isset($_GET["m"]) || isset($_GET["y"])) {
-            
+    /**
+     * _from_get
+     * Gets selected date from GET request
+     * @return array $getDateArray - array with selected date
+     */
+    private static function _from_get() {
+        $getDateArray = array();
+        if(!isset($_GET["y"])) {
+            $getDateArray["y"] = date("Y");
+        } else {
+            $getDateArray["y"] = urldecode($_GET["y"]);
         }
+        if(!isset($_GET["m"])) {
+            $getDateArray["m"] = date("m");
+        } else {
+            if((1 <= $_GET["m"]) && ($_GET["m"] <= 12)) {
+                $getDateArray["m"] = urldecode($_GET["m"]);
+            } else {
+                $getDateArray["m"] = date("m");
+            }
+        }
+        if(isset($_GET["d"])) {
+            if((1<=$_GET["d"])&&($_GET["d"]<=cal_days_in_month(CAL_GREGORIAN, $getDateArray["m"], $getDateArray["y"]))) {
+                $getDateArray["d"] = urldecode($_GET["d"]);
+            } else {
+                $getDateArray["d"] = date("d");
+            }
+        } else {
+            $getDateArray["d"] = date("d");				
+        }
+        return (array) $getDateArray;
+    }
+
+    /**
+     * _from_post
+     * Gets selected date from POST request 
+     * @return array $postDateArray - array with selected date
+     */
+    private static function _from_post() {
+        $postDateArray = $_POST["selectedDate"];
+        return (array) $postDateArray;
     }
     
-    public static function from_post() {
-        
+    /**
+     * _from_session
+     * Gets selected date from SESSION 
+     * @return array $sessionDateArray - array with selected date
+     */
+    private static function _from_session() {
+        $sessionDateArray = $_SESSION["date"];
+        return (array) $sessionDateArray;
     }
     
+    /**
+     * to_get
+     * Creates a url for GET request anchors
+     * @param string $year
+     * @param string $month
+     * @param string $day
+     * @return string $url - URL for GET request
+     */
     public static function to_get($year = "", $month = "", $day = "") {
         $urlQueries_array = array();
-        $urlQueries = explode("&", $_SERVER["QUERY_STRING"]);
-        foreach($urlQueries as $urlQuery) {
-            $query_array = explode("=", $urlQuery);
-            $urlQueries_array[$query_array[0]] = $query_array[1];
-        }
+//        $urlQueries = explode("&", $_SERVER["QUERY_STRING"]);
+//        foreach($urlQueries as $urlQuery) {
+//            $query_array = explode("=", $urlQuery);
+//            $urlQueries_array[$query_array[0]] = $query_array[1];
+//        }
         $urlQueries_array["y"] =    !empty($year) 
                                     ? urlencode($year) 
                                     :  (isset($urlQueries_array["y"]) 
@@ -37,41 +88,42 @@ Class Controller_Date
                                     :  (isset($urlQueries_array["d"]) 
                                        ? $urlQueries_array["d"]
                                        : date("j"));
-        $url = $_SERVER["PHP_SELF"] . "?" . http_build_query($urlQueries_array);
-        return $url;
-        
+//        $url = $_SERVER["PHP_SELF"] . "?" . http_build_query($urlQueries_array);
+        $url = new Controller_Url();
+        $url->add($urlQueries_array);
+        //print_r($url->get_array());
+        return (string) $url;
     }
     
     public static function to_post() {
         
     }
     
+    public static function to_session($year = "", $month = "", $day = "") {
+        unset($_SESSION["date"]);
+        $dateArray = array("y" => $year, "m" => $month, "d" => $day);
+        $_SESSION["selectedDate"] = $dateArray;
+    }
+    
+    /**
+     * get_selected
+     * Gets selected date
+     * @return array $dateArray - array with selected date
+     */
     public static function get_selected() {
         $dateArray = array();
-        if(!isset($_GET["y"])) {
+        if(isset($_POST["selectedDate"])) {
+            $dateArray = self::_from_post();
+        } elseif(isset($_SESSION["selectedDate"])) {
+            $dateArray = self::_from_session();
+        } elseif(isset($_GET["d"]) || isset($_GET["m"]) || isset($_GET["y"])) {
+            $dateArray = self::_from_get();
+        } else {
             $dateArray["y"] = date("Y");
-        } else {
-            $dateArray["y"] = urldecode($_GET["y"]);
+            $dateArray["m"] = date("n");
+            $dateArray["d"] = date("j");
         }
-        if(!isset($_GET["m"])) {
-            $dateArray["m"] = date("m");
-        } else {
-            if((1 <= $_GET["m"]) && ($_GET["m"] <= 12)) {
-                $dateArray["m"] = urldecode($_GET["m"]);
-            } else {
-                $dateArray["m"] = date("m");
-            }
-        }
-        if(isset($_GET["d"])) {
-            if((1<=$_GET["d"])&&($_GET["d"]<=cal_days_in_month(CAL_GREGORIAN, $dateArray["m"], $dateArray["y"]))) {
-                $dateArray["d"] = urldecode($_GET["d"]);
-            } else {
-                $dateArray["d"] = date("d");
-            }
-        } else {
-            $dateArray["d"] = date("d");				
-        }
-        return $dateArray;        
+        return (array) $dateArray;        
     }
 }
 

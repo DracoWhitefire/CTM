@@ -1,10 +1,10 @@
 <?php
 
 /**
- * Description of View_Calendar
+ * Description of View_Date
  * Requires the class Controller_Date
  */
-Class View_Calendar
+Class View_Date
 {
     private $_date = array();
     
@@ -15,7 +15,7 @@ Class View_Calendar
         $this->_date["selectedDay"] = isset($dateArray["d"]) ? $dateArray["d"] : date("j");
     }
     
-    public function selector(){
+    public function selector($type = "GET"){
         if($this->_date["selectedMonth"] == 1) {
                 $prevMonth = 12;
                 $prevYear = $this->_date["selectedYear"] - 1;
@@ -64,7 +64,7 @@ Class View_Calendar
                     $urlMonth = $prevMonth;
                     $urlYear = $prevYear;
                     $tdOutput1 .= " prevMonth\">";
-                    $tdOutput2 = $dayNo;
+                    $urlDay = $tdOutput2 = $dayNo;
                 } elseif (($dayNo - $prevNumberOfDays) <= $numberOfDays) {
                     $urlMonth = $this->_date["selectedMonth"];
                     $urlYear = $this->_date["selectedYear"];
@@ -72,15 +72,21 @@ Class View_Calendar
                         $tdOutput1 .= " selectedDay";
                     }
                     $tdOutput1 .= "\">";
-                    $tdOutput2 = ($dayNo - $prevNumberOfDays);
+                    $urlDay = $tdOutput2 = ($dayNo - $prevNumberOfDays);
                 } else {
                     $urlMonth = $nextMonth;
                     $urlYear = $nextYear;
                     $tdOutput1 .= " nextMonth\">";
-                    $tdOutput2 = ($dayNo - $prevNumberOfDays - $numberOfDays);
+                    $urlDay = $tdOutput2 = ($dayNo - $prevNumberOfDays - $numberOfDays);
                 }
                 $tdOutput3 = "</a></td>";
-                $dateUrl = Controller_Date::to_get($urlYear, $urlMonth, $tdOutput2);
+                if($type == "GET") {
+                    $dateUrl = Controller_Date::to_get($urlYear, $urlMonth, $urlDay);
+                } elseif($type == "SESSION") {
+                    $url = new Controller_Url;
+                    $dateUrl = $url->get_string();
+                }
+                
                 $output .= $tdOutput1 . "<a href=\"" . htmlspecialchars($dateUrl) . "\" >" . $tdOutput2 . $tdOutput3;
                 $dayNo++;
             }
