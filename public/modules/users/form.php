@@ -2,9 +2,9 @@
 // New User Form
 	if($editUser == TRUE) {
 		if(isset($_POST["singleEditList"])) {
-			$user = User::get($_POST["singleEditList"]);
+			$user = Model_User::get($_POST["singleEditList"]);
 		} elseif(isset($_POST["userId_input"])) {
-			$user = User::get($_POST["userId_input"]);
+			$user = Model_User::get($_POST["userId_input"]);
 		}
 	}
 	
