@@ -78,10 +78,10 @@ class Controller_Validator
         }
     }
     public function timediff($val_timediff_array) {
-        //requires the function format_time()
+        //requires the function Controller_Time::format()
         foreach($val_timediff_array as $startTime_fieldname => $endTime_fieldname) {
-            $startTime = (float) strtotime(format_time($_POST[$startTime_fieldname], "db"));
-            $endTime = (float) strtotime(format_time($_POST[$endTime_fieldname], "db"));
+            $startTime = (float) strtotime(Controller_Time::format($_POST[$startTime_fieldname], "db"));
+            $endTime = (float) strtotime(Controller_Time::format($_POST[$endTime_fieldname], "db"));
             if(($endTime - $startTime) < 0) {
                 if(!isset($this->errors[$startTime_fieldname]) && (!isset($this->errors[$endTime_fieldname]))) {
                     $this->errors[$startTime_fieldname] = "error_timediff";
