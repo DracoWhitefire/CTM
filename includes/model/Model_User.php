@@ -47,7 +47,7 @@ class Model_User extends Model_Dao
 		$sch_query  = "SELECT `start_time`, `end_time` ";
 		$sch_query .= "FROM `schedules` ";
 		$sch_query .= "WHERE `weekday` = '{$day}' ";
-		$sch_query .= "AND `id` = '{$selected_user}' ";
+		$sch_query .= "AND `user_id` = '{$selected_user}' ";
 		$sch_set = $db->query($sch_query);
 		$result_array = $db->fetch_assoc($sch_set);
 		mysqli_free_result($sch_set);
