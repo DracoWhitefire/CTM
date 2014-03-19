@@ -112,6 +112,10 @@ Class Controller_Date
             $dateArray = self::_from_session();
         } elseif(isset($_GET["d"]) || isset($_GET["m"]) || isset($_GET["y"])) {
             $dateArray = self::_from_get();
+        } else {
+            $dateArray["y"] = date("Y");
+            $dateArray["m"] = date("n");
+            $dateArray["d"] = date("j");
         }
         return (array) $dateArray;        
     }
