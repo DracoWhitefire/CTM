@@ -14,7 +14,7 @@ Class View_Rank {
             $output .= htmlspecialchars("_" . $user->id);
         }
         $output .= "\">";
-        $ranks_array = self::get();
+        $ranks_array = Model_Rank::get();
         foreach($ranks_array as $rank) {
             $output .= "<option value=\"" . htmlspecialchars($rank->value) . "\" ";
                 if($user!="") {
