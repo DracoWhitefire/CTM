@@ -179,7 +179,7 @@ foreach($users_array as $user) {
     if($columnFilter_array["rank"]) {
         $userList .= "<td class=\"rank\" >";
         if($editRow == TRUE) {
-            $userList .= Model_Rank::selector($user);
+            $userList .= View_Rank::selector($user);
         } else {
             $rank = Model_Rank::get($user->rank);
             $userList .= htmlspecialchars($rank->name);
