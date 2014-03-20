@@ -8,13 +8,13 @@ Class Model_Schedule extends Model_Dao
     public $id;
     public $userId;
     public $weekday;
-    private $_startTime;
-    private $_endTime;
-    private $_timeFormat;
-    private $_intFormat;
-    private $_unpaidBreakInterval;
-    private $_minimumBeforeUnpaid;
-    private $_scheduledHours;
+    protected $_startTime;
+    protected $_endTime;
+    protected $_timeFormat;
+    protected $_intFormat;
+    protected $_unpaidBreakInterval;
+    protected $_minimumBeforeUnpaid;
+    protected $_scheduledHours;
     
     public function __construct() {
         $this->_timeFormat = "G:i";
@@ -49,7 +49,7 @@ Class Model_Schedule extends Model_Dao
      * @param integer $minutes
      * @return string $breakIntString - String for constructing new DateInterval
      */
-    private function _minutes_to_intervalstring($minutes) {
+    protected function _minutes_to_intervalstring($minutes) {
         $breakIntString  = "PT";
         $breakIntString .= intval($this->_unpaidBreakInterval / 60) . "H";
         $breakIntString .= $this->_unpaidBreakInterval % 60 . "M";
