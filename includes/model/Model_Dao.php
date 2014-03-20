@@ -16,7 +16,12 @@ abstract class Model_Dao
         foreach($row as $attribute => $value) {
             //SQL table names and columns are separated by underscore.
             //Object attributes are camelCase instead.
-            $converted_attribute = preg_replace("/^(\w+?)_(\w+?)$/e", "\"$1\" . ucfirst(\"$2\")", $attribute);
+            if(!function_exists("rename_attribute")) { 
+                function rename_attribute(array $strings) {
+                    return $strings[1] . ucfirst($strings[2]);
+                }
+            }
+            $converted_attribute = preg_replace_callback("/^(\w+?)_(\w+?)$/", "rename_attribute", $attribute);
             if($object->_has_attribute($converted_attribute)) {
                 $object->$converted_attribute = $value;
             }
