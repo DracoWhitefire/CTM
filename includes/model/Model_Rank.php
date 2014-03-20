@@ -32,4 +32,3 @@ class Model_Rank extends Model_Dao
         }
     }
 }
-?>

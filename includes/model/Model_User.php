@@ -114,4 +114,3 @@ class Model_User extends Model_Dao
         }
     }
 }
-?>

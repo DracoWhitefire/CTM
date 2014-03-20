@@ -77,4 +77,3 @@ Class Model_Module extends Model_Dao
         return $currentId;
     }
 }
-?>

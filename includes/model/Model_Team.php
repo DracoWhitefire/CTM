@@ -47,4 +47,3 @@ class Model_Team extends Model_Dao
             }
         }
 }
-?>

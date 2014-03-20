@@ -100,4 +100,3 @@ abstract class Model_Dao
             global $db;
     }
 }
-?>

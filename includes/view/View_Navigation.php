@@ -31,4 +31,3 @@ Class View_Navigation
         return $output;
     }
 }
-?>

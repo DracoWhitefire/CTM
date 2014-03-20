@@ -96,5 +96,3 @@ Class View_Date
         return $output;	
     }
 }
-
-?>

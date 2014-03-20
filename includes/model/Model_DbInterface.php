@@ -54,4 +54,3 @@ interface Model_DbInterface
      */
     public function query($query);
 }
-?>

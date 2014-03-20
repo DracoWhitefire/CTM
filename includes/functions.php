@@ -9,4 +9,3 @@ function __autoload($className) {
 }
 
 $debug = TRUE;
-?>
