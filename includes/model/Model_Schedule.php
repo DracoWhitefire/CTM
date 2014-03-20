@@ -35,9 +35,9 @@ Class Model_Schedule extends Model_Dao
         global $db;
         $query  = "SELECT * ";
         $query .= "FROM `schedules` ";
-        $query .= "WHERE `user_id` = " . (int) $userId;
-        $query .= "AND `user_id` = " . $db->query_prep($weekday);
-        $query .= "ORDER BY `id` ASC";
+        $query .= "WHERE `user_id` = " . (int) $userId . " ";
+        $query .= "AND `weekday` = '" . $db->query_prep($weekday) . "' ";
+        $query .= "ORDER BY `id` ASC ";
         $query .= "LIMIT 1";
         $object = self::get_by_query($query);
         return $object;
