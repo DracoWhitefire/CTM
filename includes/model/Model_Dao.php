@@ -24,6 +24,9 @@ abstract class Model_Dao
             $converted_attribute = preg_replace_callback("/^(\w+?)_(\w+?)$/", "rename_attribute", $attribute);
             if($object->_has_attribute($converted_attribute)) {
                 $object->$converted_attribute = $value;
+            } elseif($object->_has_attribute("_" . $converted_attribute)) {
+                $attributeName = "_" . $converted_attribute;
+                $object->$attributeName = $value;
             }
         }
         return $object;
