@@ -24,6 +24,26 @@ Class Model_Schedule extends Model_Dao
     }
     
     /**
+     * get_by_user_day
+     * Returns a Schedule object for $userId and $weekday;
+     * @global db object $db
+     * @param int $userId
+     * @param string $weekday
+     * @return object - instance of Schedule
+     */
+    public function get_by_user_day($userId, $weekday) {
+        global $db;
+        $query  = "SELECT * ";
+        $query .= "FROM `schedules` ";
+        $query .= "WHERE `user_id` = " . (int) $userId;
+        $query .= "AND `user_id` = " . $db->query_prep($weekday);
+        $query .= "ORDER BY `id` ASC";
+        $query .= "LIMIT 1";
+        $object = self::get_by_query($query);
+        return $object;
+    }
+    
+    /**
      * _minutes_to_intervalstring
      * Converts an amount of minutes to a string for constructing new DateInterval
      * @param integer $minutes
