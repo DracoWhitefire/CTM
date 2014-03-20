@@ -4,7 +4,7 @@ include("FirePHPCore/FirePHP.class.php");
 
 function __autoload($className) {
     $classArray = explode("_", $className);
-    $classPath = $classArray[0] . "/" . $className . ".php";
+    $classPath = strtolower($classArray[0]) . "/" . $className . ".php";
     include($classPath);
 }
 
