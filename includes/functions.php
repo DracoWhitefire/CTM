@@ -12,4 +12,4 @@ if(!defined("DEBUGMODE") || (DEBUGMODE == TRUE)) {
     error_reporting(E_ALL);
     ini_set('display_errors', '1');
 }
-$debug = TRUE;
+date_default_timezone_set(DEFAULT_TIMEZONE);
