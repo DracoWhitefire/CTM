@@ -69,12 +69,6 @@
 	padding: 9px;
 }
 
-#calendar_div td {
-	min-width: 30px;
-	text-align: center;
-	border: solid 1px white;
-}
-
 #calendar_div a {
 	display: block;
 	text-decoration: none;
@@ -84,16 +78,36 @@
 	background: #103A96;
 }
 
-#calendar_div td.prevMonth a, td.nextMonth a {
-	color: #274077;
+#calendar_div {
+    text-align: center;
+}        
+
+#calendar_div a {
+    display: block;
 }
 
-#calendar_div td.selectedDay a {
-	color: red;
+#calPrev_div {
+    float: left;
 }
 
-#calendar_div td.weekDay {
-	font-weight: bold;
+#calNext_div {
+    float: right;
+}
+
+.day {
+    float: left; width: 2em;
+}
+
+.weekrow {
+    clear: both;
+}
+
+.selectedDay a {
+    color: red;
+}
+
+#calendar_div .day.weekDay a {
+    text-decoration: bold;
 }
 
 #calPrev_div {
