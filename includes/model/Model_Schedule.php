@@ -10,6 +10,8 @@ Class Model_Schedule extends Model_Dao
     public $weekday;
     protected $_startTime;
     protected $_endTime;
+    protected $_starTimeObject;
+    protected $_endTimeObject;
     protected $_timeFormat;
     protected $_intFormat;
     protected $_unpaidBreakInterval;
@@ -64,12 +66,12 @@ Class Model_Schedule extends Model_Dao
     public function get_scheduledhours() {
         if($this->_scheduledHours == NULL) {
             $breakInt = new DateInterval($this->_minutes_to_intervalstring($this->_unpaidBreakInterval));
-            $workingInterval = $this->_startTime->diff($this->_endTime);
+            $workingInterval = $this->_startTimeObject->diff($this->_endTimeObject);
             $intervalMinutes = $workingInterval->m + ($workingInterval->h * 60);
             if($intervalMinutes <= $this->_minimumBeforeUnpaid) {
                 $this->_scheduledHours = $workingInterval->format($this->_intFormat);
             } else {
-                $realInterval = $this->_startTime->diff($this->_endTime->sub($breakInt));
+                $realInterval = $this->_startTimeObject->diff($this->_endTimeObject->sub($breakInt));
                 $this->_scheduledHours = $realInterval->format($this->_intFormat);
             }
         }
@@ -82,7 +84,10 @@ Class Model_Schedule extends Model_Dao
      * @return string - Start time formatted as H:MM
      */
     public function get_starttime() {
-        return $this->_startTime->format($this->_timeFormat);
+        if(!isset($this->_startTimeObject) || is_null($this->_startTimeObject)) {
+            $this->_startTimeObject = new DateTime($this->_startTime);
+        }
+        return $this->_startTimeObject->format($this->_timeFormat);
     }
     
     /**
@@ -91,6 +96,9 @@ Class Model_Schedule extends Model_Dao
      * @return string - End time formatted as H:MM
      */
     public function get_endtime() {
-        return $this->_endTime->format($this->_timeFormat);
+        if(!isset($this->_endTimeObject) || is_null($this->_endTimeObject)) {
+            $this->_endTimeObject = new DateTime($this->_endTime);
+        }
+        return $this->_endTimeObject->format($this->_timeFormat);
     }
 }
