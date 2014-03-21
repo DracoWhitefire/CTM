@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Description of View_Date
- * Requires the class Controller_Date
+ * View_Date
+ * Requires the classes Controller_Date and Controller_Url
  */
 Class View_Date
 {
@@ -15,6 +15,20 @@ Class View_Date
         $this->_date["selectedDay"] = isset($dateArray["d"]) ? $dateArray["d"] : date("j");
     }
     
+    /**
+     * selector
+     * Returns an HTML-ready string with a calendar;
+     * @param string $type - defines the return type for the selector
+     * @return string - HTML-ready calendar string
+     * 
+     * Required CSS:
+     * #calendar_div        { text-align: center; }        
+     * #calendar_div a      { display: block; }
+     * #calPrev_div         { float: left; }
+     * #calNext_div         { float: right; }
+     * .day                 { float: left; width: 2em; }
+     * .weekrow             { clear: both; }
+     */
     public function selector($type = "GET"){
         if($this->_date["selectedMonth"] == 1) {
                 $prevMonth = 12;
@@ -38,25 +52,17 @@ Class View_Date
         $remainingLastMonth = cal_days_in_month(CAL_GREGORIAN, $prevMonth, $prevYear)-$daysLastMonthFirstWeek;
         $daysNextMonthLastWeek = cal_days_in_month(CAL_GREGORIAN, $nextMonth, $this->_date["selectedYear"]);
         $output = "<div id=\"calendar_div\"><div id=\"month_select\">";
-        //$prevMonthNav = "index.php" . "?id=" . urlencode($_GET["id"]) . "&m=" . urlencode($prevMonth) . "&y=" . urlencode($prevYear);
         $prevMonthNav = Controller_Date::to_get($prevYear, $prevMonth);
         $navLinks = "<div id=\"calPrev_div\"><a href=\"" . htmlspecialchars($prevMonthNav) . "\">Prev</a></div>";
-
-        //$nextMonthNav = "index.php" . "?id=" . urlencode($_GET["id"]) . "&m=" . urlencode($nextMonth) . "&y=" . urlencode($nextYear);
         $nextMonthNav = Controller_Date::to_get($nextYear, $nextMonth);
         $navLinks .= "<div id=\"calNext_div\"><a href=\"" . htmlspecialchars($nextMonthNav) . "\">Next</a></div>";
-
         $navLinks .= "<div id=\"calCur_div\">" . htmlspecialchars(date("F Y",strtotime($this->_date["selectedDay"] . "-" . $this->_date["selectedMonth"] . "-" . $this->_date["selectedYear"]))) . "</div>";
         $output .= $navLinks . "</div>"; 
-        // Beginning of the Table
-        $output .= "<table id=\"calendar_table\">";
-        $output .= "<thead><tr><th>S</th><th>M</th><th>T</th><th>W</th><th>T</th><th>F</th><th>S</th></tr></thead>";
         $dayNo = $daysLastMonthFirstWeek;
-        $output .= "<tbody>";
         for($weekNo = 1; $weekNo <= $numberOfWeeks; $weekNo++) {
-            $output .= "<tr>";
+            $output .= "<div class=\"weekrow\" >";
             for($wDayNo = 1; $wDayNo <= 7; $wDayNo++) {
-                $tdOutput1 = "<td class=\"";
+                $tdOutput1 = "<div class=\"day ";
                 if(1 < $wDayNo && $wDayNo < 7) {
                     $tdOutput1 .= "weekDay";
                 }
@@ -79,20 +85,19 @@ Class View_Date
                     $tdOutput1 .= " nextMonth\">";
                     $urlDay = $tdOutput2 = ($dayNo - $prevNumberOfDays - $numberOfDays);
                 }
-                $tdOutput3 = "</a></td>";
+                $tdOutput3 = "</a></div>";
                 if($type == "GET") {
                     $dateUrl = Controller_Date::to_get($urlYear, $urlMonth, $urlDay);
                 } elseif($type == "SESSION") {
                     $url = new Controller_Url;
                     $dateUrl = $url->get_string();
                 }
-                
                 $output .= $tdOutput1 . "<a href=\"" . htmlspecialchars($dateUrl) . "\" >" . $tdOutput2 . $tdOutput3;
                 $dayNo++;
             }
-            $output .= "</tr>";
+            $output .= "</div>";
         }
-        $output .= "</tbody></table></div>";
+        $output .= "</div>";
         return $output;	
     }
 }
