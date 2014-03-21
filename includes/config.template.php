@@ -5,5 +5,5 @@
 !defined("DB_NAME")             ? define("DB_NAME", "")             : NULL;
 
 !defined("SITE_TITLE")          ? define("SITE_TITLE", "")          : NULL;
-!defined("LOGIN_MODULE_ID")     ? define("LOGIN_MODULE_ID", )       : NULL;
+!defined("LOGIN_MODULE_ID")     ? define("LOGIN_MODULE_ID", "")     : NULL;
 !defined("DEFAULT_TIMEZONE")    ? define("DEFAULT_TIMEZONE", "")    : NULL;
