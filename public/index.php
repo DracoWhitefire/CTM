@@ -64,4 +64,3 @@
 </html>
 <?php
     $db->disconnect();
-?>

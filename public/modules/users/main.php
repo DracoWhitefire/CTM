@@ -274,4 +274,3 @@ if(($addUser == TRUE) || ($editUser == TRUE)) {
     $output = $userList;
 }
 echo $output;
-?>

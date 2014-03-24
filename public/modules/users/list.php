@@ -214,4 +214,3 @@ if($editList == TRUE) {
     $userList .= "<input type=\"submit\" value=\"Add\" name=\"addList\" />";
 }
 $userList .= "</form></div>";
-?>

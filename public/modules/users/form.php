@@ -132,4 +132,3 @@
 	$userForm .= "<input type=\"reset\" value=\"Reset\" />";
 	$userForm .= "<input type=\"submit\" value=\"Cancel\" name=\"cancelSubmitForm\" />";
 	$userForm .= "</form></div>";
-?>
