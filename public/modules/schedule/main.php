@@ -31,55 +31,63 @@
     </div>
 </div>
 <?php
-    $users_array = Model_User::get_by_team($selectedTeam);
+    $users = Model_User::get_by_team($selectedTeam);
+    if(count($users) == 1) {
+        $usersArray[] = $users;
+    } else {
+        $usersArray = $users;
+    }
     $team = Model_Team::get($selectedTeam);
     $schedCount = 0;
-    $output = "<div id=\"scheduleSelected_div\">";
-    $schedOutput = "<form id=\"scheduleSelected_form\" action=\"index.php" . htmlspecialchars("?id={$currentId}") . "\" method=\"POST\" ><table id = \"scheduleSelected_table\"><thead><tr><th>Name</th><th>Start Time</th><th>End Time</th><th>Working Hours</th></tr></thead><tbody>";
-    $date = Controller_Date::get_selected();
-    $selectedDay = date("l", strtotime($date["d"] . "-" . $date["m"] . "-" . $date["y"]));
-    foreach($users_array as $user) {
-        $schedule = $user->get_sch($selectedDay);
-        if(!is_object($schedule)) {
-            continue;
+    $output = "<div id=\"scheduleSelected_div\">";    
+    if(count($usersArray) > 0) {
+        $schedOutput = "<form id=\"scheduleSelected_form\" action=\"index.php" . htmlspecialchars("?id={$currentId}") . "\" method=\"POST\" ><table id = \"scheduleSelected_table\"><thead><tr><th>Name</th><th>Start Time</th><th>End Time</th><th>Working Hours</th></tr></thead><tbody>";
+        $date = Controller_Date::get_selected();
+        $selectedDay = date("l", strtotime($date["d"] . "-" . $date["m"] . "-" . $date["y"]));
+        foreach($usersArray as $user) {
+            $schedule = $user->get_sch($selectedDay);
+            if(count($schedule) == 0) {
+                continue;
+            } else {
+                $schedCount++;
+            }
+            $schedOutput .= "<tr>";
+            $schedOutput .= "<td>" . htmlspecialchars($user->firstName) . " " . htmlspecialchars($user->lastName) . "</td><td class=\"time\" >";
+            $startTime = $schedule->get_starttime();
+            $endTime = $schedule->get_endtime();
+            if($editing == TRUE) {
+                $schedOutput .= "<input type=\"text\" name=\"starttime_" . htmlspecialchars($user->id) . "\" value=\"";
+            }		
+            $schedOutput .= $startTime;
+            if($editing == TRUE) {
+                $schedOutput .= "\" />";
+            }
+            $schedOutput .= "</td><td class=\"time\" >";
+            if($editing == TRUE) {
+                $schedOutput .= "<input type=\"text\" name=\"endtime_" . htmlspecialchars($user->id) . "\" value=\"";
+            }
+            $schedOutput .= $endTime;
+            if($editing == TRUE) {
+                $schedOutput .= "\" />";
+            }
+            $schedOutput .= "</td><td class=\"time\" >";
+            $schedOutput .= $schedule->get_scheduledhours();
+            $schedOutput .= "</tr>";
+        }
+        $schedOutput .= "</tbody></table>";
+        if($editing == TRUE) {
+            $schedOutput .= "<input type=\"submit\" value=\"Submit\" name=\"submit\" />";
+            $schedOutput .= "<input type=\"submit\" value=\"Cancel\" name=\"cancel\" />";
         } else {
-            $schedCount++;
+            $schedOutput .= "<input type=\"submit\" value=\"Edit\" name=\"edit\" />";
         }
-        $startTime = $schedule->get_starttime();
-        $endTime = $schedule->get_endtime();
-        $schedOutput .= "<tr>";
-        $schedOutput .= "<td>" . htmlspecialchars($user->firstName) . " " . htmlspecialchars($user->lastName) . "</td><td class=\"time\" >";
-        if($editing == TRUE) {
-            $schedOutput .= "<input type=\"text\" name=\"starttime_" . htmlspecialchars($user->id) . "\" value=\"";
-        }		
-        $schedOutput .= $startTime;
-        if($editing == TRUE) {
-            $schedOutput .= "\" />";
-        }
-        $schedOutput .= "</td><td class=\"time\" >";
-        if($editing == TRUE) {
-            $schedOutput .= "<input type=\"text\" name=\"endtime_" . htmlspecialchars($user->id) . "\" value=\"";
-        }	
-        $schedOutput .= $endTime;
-        if($editing == TRUE) {
-            $schedOutput .= "\" />";
-        }
-        $schedOutput .= "</td><td class=\"time\" >";
-        $schedOutput .= $schedule->get_scheduledhours();
-        $schedOutput .= "</tr>";
+        $schedOutput .= "</form>";
     }
-    $schedOutput .= "</tbody></table>";
-    if($editing == TRUE) {
-        $schedOutput .= "<input type=\"submit\" value=\"Submit\" name=\"submit\" />";
-        $schedOutput .= "<input type=\"submit\" value=\"Cancel\" name=\"cancel\" />";
+    if($schedCount > 0) {
+        $output .= $schedOutput;
     } else {
-        $schedOutput .= "<input type=\"submit\" value=\"Edit\" name=\"edit\" />";
+        $output .= "There is no active user scheduled for {$team->name} today.";
     }
-    $schedOutput .= "</form>";
-    if($schedCount == 0) {
-        $schedOutput = "There is no active user scheduled for {$team->name} today.";
-    }
-    $output .= $schedOutput;    
     $output .= "</div>";
     echo $output;
 ?>
