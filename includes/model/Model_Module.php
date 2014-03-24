@@ -10,6 +10,7 @@ Class Model_Module extends Model_Dao
     public $visible;
     public $menuName;
     public $rank;
+    public $position;
     
     /**
      * get
