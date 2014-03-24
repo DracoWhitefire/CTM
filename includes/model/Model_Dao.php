@@ -8,6 +8,12 @@ abstract class Model_Dao
     protected $_tableName;
     protected $_columns;
     
+    /**
+     * _get_columns
+     * Populates and returns $this->_columns with db column names and converted object var names
+     * @global dbObject $db
+     * @return array - this object's column names and respective var names
+     */
     public function _get_columns() {
         global $db;
         if(is_null($this->_columns)) {
@@ -25,7 +31,13 @@ abstract class Model_Dao
         return $this->_columns;
     }
     
-    private function _column_to_var($var) {
+    /**
+     * _column_to_var
+     * Turns db column name into object var name;
+     * @param type $column - the column name to be converted
+     * @return string - the converted attribute name
+     */
+    private function _column_to_var($column) {
         //SQL table names and columns are separated by underscore.
         //Object attributes are camelCase instead.
         if(!function_exists("rename_attribute")) { 
@@ -33,7 +45,7 @@ abstract class Model_Dao
                 return $strings[1] . ucfirst($strings[2]);
             }
         }
-        $convertedAttribute = preg_replace_callback("/^(\w+?)_(\w+?)$/", "rename_attribute", $var);
+        $convertedAttribute = preg_replace_callback("/^(\w+?)_(\w+?)$/", "rename_attribute", $column);
         if($this->_has_attribute($convertedAttribute)) {
             return $convertedAttribute;
         } elseif($this->_has_attribute("_" . $convertedAttribute)) {
