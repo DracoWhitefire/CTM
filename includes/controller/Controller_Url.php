@@ -15,15 +15,10 @@ class Controller_Url {
     public function __construct($type = "request") {
         if($type == "request") {
             $this->_string = $_SERVER["REQUEST_URI"];
-            $urlQueries_array = array();
             $urlQueries = explode("&", $_SERVER["QUERY_STRING"]);
-            if(count($urlQueries) > 0) {
-                foreach($urlQueries as $urlQuery) {
-                    $query_array = explode("=", $urlQuery);
-                    $this->_array[$query_array[0]] = $query_array[1];
-                }
-            } else {
-                $this->_array = array();
+            foreach($urlQueries as $urlQuery) {
+                $query_array = explode("=", $urlQuery);
+                $this->_array[$query_array[0]] = $query_array[1];
             }
         }
     }
