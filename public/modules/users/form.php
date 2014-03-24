@@ -99,7 +99,7 @@
 	$userForm .= "<thead><tr><th>Weekday</th><th>Begin Shift</th><th>End Shift</th></tr></thead><tbody>";
 	foreach($weekdays_array as $weekday) {
 		if($editUser == TRUE) {
-			$userSched_array = $user->get_sch(strtolower($weekday));
+			$userSched = $user->get_sch(strtolower($weekday));
 		}
 		$userForm .= "<tr><td>{$weekday}</td><td><input type=\"text\" name=\"{$weekday}Begin_input\" ";
 		if(isset($validator->errors["{$weekday}Begin_input"])) {
@@ -109,7 +109,7 @@
 			if(isset($_POST["{$weekday}Begin_input"])) {
 				$userForm .= "value=\"" . Controller_Time::format($_POST["{$weekday}Begin_input"], "html") . "\" ";
 			}
-			$userForm .= "value=\"" . Controller_Time::format($userSched_array["start_time"], "html") . "\" ";
+			$userForm .= "value=\"" . Controller_Time::format($userSched->get_starttime(), "html") . "\" ";
 		}
 		$userForm .= "/></td><td><input type=\"text\" name=\"{$weekday}End_input\" ";
 		if(isset($validator->errors["{$weekday}End_input"])) {
@@ -119,7 +119,7 @@
 			if(isset($_POST["{$weekday}End_input"])) {
 				$userForm .= "value=\"" . Controller_Time::format($_POST["{$weekday}End_input"], "html") . "\" ";
 			}
-			$userForm .= "value=\"" . Controller_Time::format($userSched_array["end_time"], "html") . "\" ";
+			$userForm .= "value=\"" . Controller_Time::format($userSched->get_endtime(), "html") . "\" ";
 		}
 		$userForm .= "/></td></tr>";
 	}
