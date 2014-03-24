@@ -14,6 +14,7 @@ class Model_User extends Model_Dao
     public $passwordhash;
     public $team;
     public $employeeNr;
+    protected $_tableName = "users";
     
     /**
      * get

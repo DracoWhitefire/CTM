@@ -5,6 +5,42 @@
  */
 abstract class Model_Dao
 {
+    protected $_tableName;
+    protected $_columns;
+    
+    public function _get_columns() {
+        global $db;
+        if(is_null($this->_columns)) {
+            $columnQuery  = "SELECT `COLUMN_NAME` ";
+            $columnQuery .= "FROM `INFORMATION_SCHEMA`.`COLUMNS` ";
+            $columnQuery .= "WHERE `TABLE_NAME`='";
+            $columnQuery .= $db->query_prep($this->_tableName);
+            $columnQuery .= "';";
+            $columnResult = $db->query($columnQuery);
+            while($row = $db->fetch_assoc($columnResult)) {
+                $this->_columns[$row["COLUMN_NAME"]] = $this->_column_to_var($row["COLUMN_NAME"]);
+            }
+            mysqli_free_result($columnResult);
+        }
+        return $this->_columns;
+    }
+    
+    private function _column_to_var($var) {
+        //SQL table names and columns are separated by underscore.
+        //Object attributes are camelCase instead.
+        if(!function_exists("rename_attribute")) { 
+            function rename_attribute(array $strings) {
+                return $strings[1] . ucfirst($strings[2]);
+            }
+        }
+        $convertedAttribute = preg_replace_callback("/^(\w+?)_(\w+?)$/", "rename_attribute", $var);
+        if($this->_has_attribute($convertedAttribute)) {
+            return $convertedAttribute;
+        } elseif($this->_has_attribute("_" . $convertedAttribute)) {
+            return "_" . $convertedAttribute;
+        }
+    }
+    
     /**
      * _instantiate
      * Instatiates object from query result row
@@ -13,21 +49,10 @@ abstract class Model_Dao
      */
     private static function _instantiate(array $row) {
         $object = new static;
-        foreach($row as $attribute => $value) {
-            //SQL table names and columns are separated by underscore.
-            //Object attributes are camelCase instead.
-            if(!function_exists("rename_attribute")) { 
-                function rename_attribute(array $strings) {
-                    return $strings[1] . ucfirst($strings[2]);
-                }
-            }
-            $converted_attribute = preg_replace_callback("/^(\w+?)_(\w+?)$/", "rename_attribute", $attribute);
-            $privateAttribute = "_" . $converted_attribute;
-            if($object->_has_attribute($converted_attribute)) {
-                $object->$converted_attribute = $value;
-            } elseif($object->_has_attribute($privateAttribute)) {
-                $object->$privateAttribute = $value;
-            }
+        $object->_get_columns();
+        foreach($row as $columnName => $value) {
+            $varName = $object->_columns[$columnName];
+            $object->$varName = $value;
         }
         return $object;
     }
@@ -40,6 +65,7 @@ abstract class Model_Dao
      */
     private function _has_attribute($attribute) {
         $vars = get_object_vars($this);
+        //print_r($vars);
         return array_key_exists($attribute, $vars);
     }
     

@@ -11,6 +11,7 @@ Class Model_Module extends Model_Dao
     public $menuName;
     public $rank;
     public $position;
+    protected $_tableName = "modules";
     
     /**
      * get

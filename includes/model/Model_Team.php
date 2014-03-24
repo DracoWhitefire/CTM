@@ -9,6 +9,7 @@ class Model_Team extends Model_Dao
 	public $project;
 	public $name;
 	public $count;
+        protected $_tableName = "teams";
 	
 	public static function get($selection = "all") {
 		global $db;

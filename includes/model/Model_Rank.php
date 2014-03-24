@@ -8,6 +8,7 @@ class Model_Rank extends Model_Dao
     public $id;
     public $value;
     public $name;
+    protected $_tableName = "ranks";
 
     public static function get($selection = "all") {
         global $db;
