@@ -51,7 +51,8 @@ Class View_Date
         $daysLastMonthFirstWeek = cal_days_in_month(CAL_GREGORIAN, $prevMonth, $prevYear)-$firstDay+1;
         $remainingLastMonth = cal_days_in_month(CAL_GREGORIAN, $prevMonth, $prevYear)-$daysLastMonthFirstWeek;
         $daysNextMonthLastWeek = cal_days_in_month(CAL_GREGORIAN, $nextMonth, $this->_date["selectedYear"]);
-        $output = "<div id=\"calendar_div\"><div id=\"month_select\">";
+        $output  = "<div id=\"calendar_div\">";
+        $output .= "<div id=\"monthSelect_div\">";
         $prevMonthNav = Controller_Date::to_get($prevYear, $prevMonth);
         $navLinks = "<div id=\"calPrev_div\"><a href=\"" . htmlspecialchars($prevMonthNav) . "\">Prev</a></div>";
         $nextMonthNav = Controller_Date::to_get($nextYear, $nextMonth);
