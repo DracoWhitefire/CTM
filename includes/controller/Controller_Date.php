@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Description of Controller_Date
+ * Controller_Date
  */
 Class Controller_Date
 {
@@ -68,11 +68,6 @@ Class Controller_Date
      */
     public static function to_get($year = "", $month = "", $day = "") {
         $urlQueries_array = array();
-//        $urlQueries = explode("&", $_SERVER["QUERY_STRING"]);
-//        foreach($urlQueries as $urlQuery) {
-//            $query_array = explode("=", $urlQuery);
-//            $urlQueries_array[$query_array[0]] = $query_array[1];
-//        }
         $urlQueries_array["y"] =    !empty($year) 
                                     ? urlencode($year) 
                                     :  (isset($urlQueries_array["y"]) 
@@ -88,10 +83,8 @@ Class Controller_Date
                                     :  (isset($urlQueries_array["d"]) 
                                        ? $urlQueries_array["d"]
                                        : date("j"));
-//        $url = $_SERVER["PHP_SELF"] . "?" . http_build_query($urlQueries_array);
         $url = new Controller_Url();
         $url->add($urlQueries_array);
-        //print_r($url->get_array());
         return (string) $url;
     }
     
