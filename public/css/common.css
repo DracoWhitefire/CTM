@@ -1,182 +1,261 @@
+/* Main Site CSS*/
 * {
-	margin: 0;
-	padding: 0;
-	background: #0A2C7A;
-	color: white;
-	font-family: tahoma;
+    margin: 0;
+    padding: 0;
+    font-family: tahoma;
 }
 
-#siteTitle_div {
-	height: 60px;
-	background: #0A2C7A;
+body {
 }
 
 #site_div {
-	width: 1280px;
-	margin: auto;
-	background: white;
-}
-
-#pageTitle_div {
-	text-align: center;
+    max-width: 1280px;
+    margin: auto;
+    background-color: rgba(13, 15, 19, 0.1);
+    border: 1px solid #0B1E1C;
+    border-radius: 3px;
+    margin: 5px auto;
+    padding: 0.6em 0.6em 5px;
 }
 
 #nav_div {
-	width: 160px;
-	float: left;
+    float: left;
+    width: 160px;
+    margin: 1.08em 0;
+}
+#nav_div ul {
+    background: #505050;
+    border-radius: 3px;
+    box-shadow: 0 2px 1px 1px #303030 inset;
+    padding: 3px;
 }
 
 #nav_div li {
-	list-style: none;
+    list-style: none;
+    border: 1px solid black;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.7), 0 1px 0 rgba(255, 255, 255, 0.4) inset;
 }
 
-#nav_div li.selected {
-	font-weight: bold;
+#nav_div li.selected a {
+    font-weight: bold;
+    color: #DFDFDF;
+    text-shadow: 0 0 2px #D0D0D0;
 }
 
 #nav_div a {
-	display: block;
-	text-decoration: none;
-	border: solid 1px white;
+    color: #B0B0B0;
+    display: block;
+    text-decoration: none;
+    padding: 6px;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.6);
+    transition: all 350ms ease-in-out 0s;
 }
 
 #nav_div a:hover {
-	background: #103A96;
+    background: #5F5F5F;
 }
 
 #main_div {
-	margin-left: 190px;
-	padding: 10px;
-	background: white;
+    margin-left: 190px;
+    padding: 0.8em 0 0 0.8em;
 }
 
 #content_div {
-	padding: 10px;
-	min-height: 230px;
-	overflow: auto;
+    min-height: 230px;
+    overflow: auto;
 }
 
 #copyright_div {
-	text-align: center;
-	clear: both;
-	width: 100%;
+    text-align: center;
+    clear: both;
+    width: 100%;
 }
 
+#siteTitle_div, #pageTitle_div, #calendar_div, #nav_div {
+    background: padding-box appworkspace;
+    border: 1px solid #141414;
+    border-radius: 3px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.7), 0 1px 0 rgba(255, 255, 255, 0.4) inset;
+    margin-bottom: 4px;
+    overflow: hidden;
+    padding: 5px;
+    position: relative;
+    text-shadow: 0px 1px 1px #EDEDED;
+    color: #222;
+    font: 12px;
+}
+
+/* Date Selector CSS */
 #calendar_div {
-	float: left;
-	border: solid 1px white;
-	margin: 10px;
-	padding: 9px;
+    text-align: center;
+    float: right;
+    border: 1px solid #141414;
+    margin: 4px 0;
+    padding: 9px;
 }
 
 #calendar_div a {
-	display: block;
-	text-decoration: none;
+    color: #B0B0B0;
+    display: block;
+    text-decoration: none;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.6);
 }
 
 #calendar_div a:hover {
-	background: #103A96;
+    background: #5F5F5F;
 }
 
-#calendar_div {
+#calendar_div a:active {
+    color: #DFDFDF;
+    text-shadow: 0 0 2px #D0D0D0;
+}
+
+#calendar_div input[type=submit] {
+    color: #B0B0B0;
+    background: #505050;
+    border: 1px solid black;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.7), 0 1px 0 rgba(255, 255, 255, 0.4) inset;
+    height: 1.6em;
+}
+
+#calendar_div input[type=submit]:hover {
+    background: #5F5F5F;
+}
+
+#calendar_div input[type=submit]:active {
+    color: #DFDFDF;
+    text-shadow: 0 0 2px #D0D0D0;
+}
+
+#monthSelect_div {
+    background: #505050;
+    padding: 4px 2px 0 2px;
+    height: 2em;
+    border-radius: 3px 3px 0 0;
+    box-shadow: 0 2px 1px 1px #303030 inset;
+}
+
+#monthSelect_div #calCur_div {
     text-align: center;
-}        
-
-#calendar_div a {
-    display: block;
+    height: 2em;
 }
 
-#calPrev_div {
+#monthSelect_div #calPrev_div {
     float: left;
+    text-align: center;
+    width: 40px;
 }
 
-#calNext_div {
+#monthSelect_div #calNext_div {
+    text-align: center;
+    width: 40px;
     float: right;
 }
 
-.day {
+#monthSelect_div a {
+    display: block;
+    border: 1px solid black;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.7), 0 1px 0 rgba(255, 255, 255, 0.4) inset;
+    height: 1.6em;
+    width: 38px;
+}
+
+#monthSelect_div input[type=submit] {
+    width: 40px;
+}
+
+#calPrev_div input[type=submit], #calPrev_div a {
+    margin: 0 0 0 2px;
+}
+
+#day_select {
+    background: #505050;
+    padding: 0 2px 4px 2px;
+    border-radius: 0 0 3px 3px ;
+    box-shadow: 0 -2px 1px 1px #303030 inset;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.6);
+}
+
+#day_select .day {
     float: left; width: 2em;
+    border: 1px solid black;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.7), 0 1px 0 rgba(255, 255, 255, 0.4) inset;
 }
 
-.weekrow {
+#day_select .weekrow {
     clear: both;
+    padding: 0 0 0 2px;
 }
 
-.selectedDay a {
-    color: red;
+#day_select .selectedDay a {
+    color: #DFDFDF;
+    text-shadow: 0 0 2px #D0D0D0;
 }
 
-#calendar_div .day.weekDay a {
-    text-decoration: bold;
+#day_select .prevMonth a, #day_select .nextMonth a, #day_select .prevMonth, #day_select .nextMonth {
+    font-weight: normal;
 }
 
-#calPrev_div {
-	text-align: center;
-	width: 40px;
-	float: left;
+#day_select .day.weekDay a, #day_select .day.weekDay {
+    font-weight: bold;
 }
 
-#calNext_div {
-	text-align: center;
-	width: 40px;
-	float: right;
-}
-
-#calCur_div {
-	text-align: center;
+#loginButtons_div input[type=submit]{
+    width: 30%;
+    margin: 1em 10%;
 }
 
 #scheduleSelector_div {
-	float: left;
+    float: left;
 }
 
 #scheduleSelected_div {
-	float: right;
-	border: solid 1px white;
-	margin: 10px;
-	padding: 9px;
+    float: right;
+    border: solid 1px white;
+    margin: 10px;
+    padding: 9px;
 }
 
 #scheduleSelected_div th {
-	width: 150px;
-	height: 22px;
+    width: 150px;
+    height: 22px;
 }
 
 #scheduleSelected_div th.time {
-	text-align: center;
+    text-align: center;
 }
 
 #scheduleSelected_div th.time input[type=text] {
-	width: 126px;
+    width: 126px;
 }
 
 #userlist_div {
-	float: left;
-	border: solid 1px white;
-	margin: 10px;
-	padding: 9px;
+    float: left;
+    border: solid 1px white;
+    margin: 10px;
+    padding: 9px;
 }
 
 #userlist_div td.check {
-	width: 20px;
-	height: 22px;
+    width: 20px;
+    height: 22px;
 }
 
 #userlist_div td.name, td.rank {
-	width: 160px;
-	height: 22px;
+    width: 160px;
+    height: 22px;
 }
 
 #userlist_div td.name input[type=text] {
-	width: 156px;
+    width: 156px;
 }
 
 #userlist_div td.error input[type=text] {
-	//background: red;
-	border-left: 2px solid #a60000;
-	border-top: 2px solid #a60000;
-	border-right: 2px solid red;
-	border-bottom: 2px solid red;
+    //background: red;
+    border-left: 2px solid #a60000;
+    border-top: 2px solid #a60000;
+    border-right: 2px solid red;
+    border-bottom: 2px solid red;
 }
 
 #userForm_div {
@@ -184,83 +263,82 @@
 }
 
 #userForm_div  input[type=text].error, input[type=password].error {
-	//background: red;
-	border-left: 2px solid #a60000;
-	border-top: 2px solid #a60000;
-	border-right: 2px solid red;
-	border-bottom: 2px solid red;
+    //background: red;
+    border-left: 2px solid #a60000;
+    border-top: 2px solid #a60000;
+    border-right: 2px solid red;
+    border-bottom: 2px solid red;
 }
 
-#userForm_div label, input[type=text], input[type=password] {	
-	width: 22%;
-	display: inline-block;
-	box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	-webkit-box-sizing: border-box;
+#userForm_div label, input[type=text], input[type=password] {    
+    width: 22%;
+    display: inline-block;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
 }
 
 #userForm_div label.check {
-	display: block;
-	float: left;
+    display: block;
+    float: left;
 }
 
 #userForm_div hr {
-	margin: 1.5em 0 0.5em 0;
-	clear:both;
+    margin: 1.5em 0 0.5em 0;
+    clear:both;
 }
 
 #userForm_div select {
-	width: 22%;
-	box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	-webkit-box-sizing: border-box;
+    width: 22%;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
 }
 
 #userForm_div input[type=checkbox] {
-	float: left;
-	margin-top: 5px;
+    float: left;
+    margin-top: 5px;
 }
 
 #userFormSchedule_div {
-	clear: both;
+    clear: both;
 }
 
 #userFormSchedule_div input {
-	width: 100%;
+    width: 100%;
 }
 
 #userForm_div input[type=submit], #userForm_div input[type=reset] {
-	float: left;
-	margin: 6px;
+    float: left;
+    margin: 6px;
 }
 
 #debug_div {
-	clear: both;
+    clear: both;
 }
 
 #login_div label {
-	width: 50%;
-	float: left;
-	text-align: right;
-	box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	-webkit-box-sizing: border-box;
+    width: 50%;
+    float: left;
+    text-align: right;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
 }
 
 #login_div input[type=text], #login_div input[type=password] {
-/*	width: 50%;*/
-	float: left;
-	box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	-webkit-box-sizing: border-box;
+    float: left;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
 }
 
 #login_div #loginbuttons_div {
-	width: 30%;
-	margin: auto;
+    width: 30%;
+    margin: auto;
 }
 
 #loginButtons_div input[type=submit]{
-	width: 30%;
-	margin: 1em 10%;
+    width: 30%;
+    margin: 1em 10%;
 }
