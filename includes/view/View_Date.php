@@ -86,12 +86,7 @@ Class View_Date
                     $urlDay = $tdOutput2 = ($dayNo - $prevNumberOfDays - $numberOfDays);
                 }
                 $tdOutput3 = "</a></div>";
-                if($type == "GET") {
-                    $dateUrl = Controller_Date::to_get($urlYear, $urlMonth, $urlDay);
-                } elseif($type == "SESSION") {
-                    $url = new Controller_Url;
-                    $dateUrl = $url->get_string();
-                }
+                $dateUrl = Controller_Date::to_get($urlYear, $urlMonth, $urlDay);
                 $output .= $tdOutput1 . "<a href=\"" . htmlspecialchars($dateUrl) . "\" >" . $tdOutput2 . $tdOutput3;
                 $dayNo++;
             }
