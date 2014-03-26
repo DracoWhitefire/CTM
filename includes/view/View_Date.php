@@ -59,6 +59,7 @@ Class View_Date
         $navLinks .= "<div id=\"calNext_div\"><a href=\"" . htmlspecialchars($nextMonthNav) . "\">Next</a></div>";
         $navLinks .= "<div id=\"calCur_div\">" . htmlspecialchars(date("j F Y",strtotime($this->_date["selectedDay"] . "-" . $this->_date["selectedMonth"] . "-" . $this->_date["selectedYear"]))) . "</div>";
         $output .= $navLinks . "</div>"; 
+        $output .= "<div id=\"daySelect_div\">";
         $dayNo = $daysLastMonthFirstWeek;
         for($weekNo = 1; $weekNo <= $numberOfWeeks; $weekNo++) {
             $output .= "<div class=\"weekrow\" >";
@@ -93,6 +94,7 @@ Class View_Date
             }
             $output .= "</div>";
         }
+        $output .= "</div>";
         $output .= "</div>";
         return $output;	
     }
