@@ -168,7 +168,7 @@ body {
     margin: 0 0 0 2px;
 }
 
-#day_select {
+#daySelect_div {
     background: #505050;
     padding: 0 2px 4px 2px;
     border-radius: 0 0 3px 3px ;
@@ -176,27 +176,27 @@ body {
     text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.6);
 }
 
-#day_select .day {
+#daySelect_div .day {
     float: left; width: 2em;
     border: 1px solid black;
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.7), 0 1px 0 rgba(255, 255, 255, 0.4) inset;
 }
 
-#day_select .weekrow {
+#daySelect_div .weekrow {
     clear: both;
     padding: 0 0 0 2px;
 }
 
-#day_select .selectedDay a {
+#daySelect_div .selectedDay a {
     color: #DFDFDF;
     text-shadow: 0 0 2px #D0D0D0;
 }
 
-#day_select .prevMonth a, #day_select .nextMonth a, #day_select .prevMonth, #day_select .nextMonth {
+#daySelect_div .prevMonth a, #daySelect_div .nextMonth a, #daySelect_div .prevMonth, #daySelect_div .nextMonth {
     font-weight: normal;
 }
 
-#day_select .day.weekDay a, #day_select .day.weekDay {
+#daySelect_div .day.weekDay a, #daySelect_div .day.weekDay {
     font-weight: bold;
 }
 
