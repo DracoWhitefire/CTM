@@ -56,7 +56,7 @@ Class View_Date
         $navLinks = "<div id=\"calPrev_div\"><a href=\"" . htmlspecialchars($prevMonthNav) . "\">Prev</a></div>";
         $nextMonthNav = Controller_Date::to_get($nextYear, $nextMonth);
         $navLinks .= "<div id=\"calNext_div\"><a href=\"" . htmlspecialchars($nextMonthNav) . "\">Next</a></div>";
-        $navLinks .= "<div id=\"calCur_div\">" . htmlspecialchars(date("F Y",strtotime($this->_date["selectedDay"] . "-" . $this->_date["selectedMonth"] . "-" . $this->_date["selectedYear"]))) . "</div>";
+        $navLinks .= "<div id=\"calCur_div\">" . htmlspecialchars(date("j F Y",strtotime($this->_date["selectedDay"] . "-" . $this->_date["selectedMonth"] . "-" . $this->_date["selectedYear"]))) . "</div>";
         $output .= $navLinks . "</div>"; 
         $dayNo = $daysLastMonthFirstWeek;
         for($weekNo = 1; $weekNo <= $numberOfWeeks; $weekNo++) {
