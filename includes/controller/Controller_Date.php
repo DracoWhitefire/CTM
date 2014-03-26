@@ -90,16 +90,6 @@ Class Controller_Date
         return (string) $url;
     }
     
-    public static function to_post() {
-        
-    }
-    
-    public static function to_session($year = "", $month = "", $day = "") {
-        unset($_SESSION["date"]);
-        $dateArray = array("y" => $year, "m" => $month, "d" => $day);
-        $_SESSION["selectedDate"] = $dateArray;
-    }
-    
     /**
      * get_selected
      * Gets selected date
