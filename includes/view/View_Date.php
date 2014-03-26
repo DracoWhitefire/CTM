@@ -92,7 +92,7 @@ Class View_Date
                 $output .= $tdOutput1 . "<a href=\"" . htmlspecialchars($dateUrl) . "\" >" . $tdOutput2 . $tdOutput3;
                 $dayNo++;
             }
-            $output .= "</div>";
+            $output .= "&thinsp;</div>";
         }
         $output .= "</div>";
         $output .= "</div>";
