@@ -251,7 +251,6 @@ body {
 }
 
 #userlist_div td.error input[type=text] {
-    //background: red;
     border-left: 2px solid #a60000;
     border-top: 2px solid #a60000;
     border-right: 2px solid red;
@@ -263,7 +262,6 @@ body {
 }
 
 #userForm_div  input[type=text].error, input[type=password].error {
-    //background: red;
     border-left: 2px solid #a60000;
     border-top: 2px solid #a60000;
     border-right: 2px solid red;
