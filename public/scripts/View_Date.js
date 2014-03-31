@@ -179,16 +179,18 @@ function addChooser(node) {
 }
 
 var dateSelectorDiv = document.getElementById("calendar_div");
-var daySelectorDiv = document.getElementById("day_select");
+var daySelectorDiv = document.getElementById("daySelect_div");
 var dayLinks = daySelectorDiv.getElementsByTagName("a");
 var calPrevDiv = document.getElementById("calPrev_div");
 var calNextDiv = document.getElementById("calNext_div");
 
-changeAnchorTargets(dayLinks);
-changeSelectedDay(dayLinks);
-disableOtherMonthDays(dayLinks);
-selectionForm = convertToForm(dateSelectorDiv);
+window.onload = function() {
+    changeAnchorTargets(dayLinks);
+    changeSelectedDay(dayLinks);
+    disableOtherMonthDays(dayLinks);
+    selectionForm = convertToForm(dateSelectorDiv);
 
-changeMonthNav(calPrevDiv);
-changeMonthNav(calNextDiv);
-addChooser(selectionForm);
+    changeMonthNav(calPrevDiv);
+    changeMonthNav(calNextDiv);
+    addChooser(selectionForm);
+};

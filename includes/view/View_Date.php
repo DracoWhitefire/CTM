@@ -96,6 +96,11 @@ Class View_Date
         }
         $output .= "</div>";
         $output .= "</div>";
+        if(file_exists("scripts/miniscript.js")) {
+            $output .= "<script src=\"scripts/miniscript.js\"></script>";
+        } else {
+            $output .= "<script src=\"scripts/View_Date.js\"></script>";
+        }
         return $output;	
     }
 }
