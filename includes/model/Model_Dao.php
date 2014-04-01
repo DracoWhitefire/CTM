@@ -6,7 +6,7 @@
 abstract class Model_Dao
 {
     protected $_tableName;
-    protected $_columns;
+    var $_columns;
     
     /**
      * _get_columns
@@ -47,6 +47,20 @@ abstract class Model_Dao
         }
         $convertedAttribute = preg_replace_callback("/^(\w+?)_(\w+?)$/", "rename_attribute", $column);
         if($this->_has_attribute($convertedAttribute)) {
+            return $convertedAttribute;
+        } elseif($this->_has_attribute("_" . $convertedAttribute)) {
+            return "_" . $convertedAttribute;
+        }
+    }
+    
+    private function _var_to_column($var) {
+        if(!function_exists("rename_attribute")) { 
+            function rename_attribute(array $strings) {
+                return $strings[1] . "_" . strtolower($strings[2]);
+            }
+        }
+        $convertedAttribute = preg_replace_callback("/^([a-z]+?)([A-Z][a-z]+?)$/", "rename_attribute", $column);
+        if($this->_has_attribute($var)) {
             return $convertedAttribute;
         } elseif($this->_has_attribute("_" . $convertedAttribute)) {
             return "_" . $convertedAttribute;
@@ -113,11 +127,14 @@ abstract class Model_Dao
     protected function _create() {
             global $db;
             $vars = get_object_vars($this);
-            $query  = "INSERT INTO `" . $table . "` (";
+            $columnVars = array_flip($this->_columns);
+            $query  = "INSERT INTO `" . $this->_tableName . "` (";
             $count = 0;
             foreach($vars as $var->$value) {
                     $count += 1;
-                    $query .= $db->query_prep($var);
+                    if(in_array($var, $columnVars)) {
+                        $query .= $db->query_prep($var);
+                    }
                     if ($count < count($vars)) {
                             $query .= ", ";
                     } else {
@@ -127,7 +144,9 @@ abstract class Model_Dao
             $query .= " VALUES (";
             foreach($vars as $var->$value) {
                     $count += 1;
-                    $query .= $db->query_prep($value);
+                    if(in_array($var, $columnVars)) {
+                        $query .= $db->query_prep($value);
+                    }
                     if ($count < count($vars)) {
                             $query .= ", ";
                     } else {
@@ -136,13 +155,39 @@ abstract class Model_Dao
             }
             echo $query;
     }
-    protected function _update() {
-            global $db;
+    
+    function _update() {
+        global $db;
+        $vars = get_object_vars($this);
+        $columnVars = array_flip($this->_columns);
+        $query = "UPDATE `" . $this->_tableName . "` SET ";
+        $count = 0;
+        foreach($vars as $var => $value) {
+            $count += 1;
+            if(array_key_exists($var, $columnVars)) {
+                if($var != "id") {
+                    $query .= "`";
+                    $query .= $db->query_prep($columnVars[$var]);
+                    $query .= "`='";
+                    $query .= $db->query_prep($this->$var);
+                    if ($count < count($columnVars)) {
+                        $query .= "', ";
+                    } else {
+                        $query .= "' ";
+                    }
+                }
+            }
+        }
+        $query .= "WHERE `id` = " . $this->id . " ";
+        $query .= "LIMIT 1";
+        $query .= ";";
+        $db->query($query);
     }
+    
     public function save() {
-            return isset($this->id) ? $this->_update() : $this->_create();
+        return isset($this->id) ? $this->_update() : $this->_create();
     }
     public function delete() {
-            global $db;
+        global $db;
     }
 }
