@@ -120,20 +120,8 @@ if(isset($_POST["submitList"])) {
                 $field = "rank";
             }
             $user->$field = $postValue;
-            $changefields .= "`{$field}` = '{$postValue}'";
-            if($i < count($user_array)) {
-                $changefields .= ",";
-            }
-            $changefields .= " ";
-            $i++;
         }
-        $query  = "UPDATE `users` SET ";
-        $query .= $changefields;
-        $query .= "WHERE `id` = '{$array_id}' ";
-        $query .= "LIMIT 1 ";
-        $query .= "; ";
         if(empty($validator->errors)) {
-            //$result = $db->query($query);
             $result = $user->_update();
         } else {
             $editList = TRUE;
