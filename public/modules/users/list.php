@@ -84,7 +84,7 @@ foreach($users_array as $user) {
         if($_POST["$fieldname"] == "on") {
             $editRow = TRUE;
         }
-    } elseif((!empty($validator->errors)) && ((isset($errorId_array[$id])) || isset($_POST["user_name_{$id}"]))) {
+    } elseif((!empty($validator->errors)) && ((isset($errorId_array[$id])) || isset($_POST["userName_{$id}"]))) {
         $editRow = TRUE;
     }
     $userList .= "<tr><td class=\"check\" >";
@@ -94,17 +94,17 @@ foreach($users_array as $user) {
     $userList .= "</td>";
     if($columnFilter_array["userName"]) {
         $userList .= "<td class=\"name";
-        if(isset($validator->errors["user_name_{$id}"])) {
+        if(isset($validator->errors["userName_{$id}"])) {
             $userList .= " error\"";
         } else {
             $userList .= "\"";
         }
         $userList .= " >";
         if($editRow == TRUE) {
-            $userList .= "<input type=\"text\" name=\"" . htmlspecialchars("user_name_{$id}") . "\" value=\"";
+            $userList .= "<input type=\"text\" name=\"" . htmlspecialchars("userName_{$id}") . "\" value=\"";
         }
-        if(isset($_POST["user_name_{$id}"])) {
-            $userList .= htmlspecialchars($_POST["user_name_{$id}"]);
+        if(isset($_POST["userName_{$id}"])) {
+            $userList .= htmlspecialchars($_POST["userName_{$id}"]);
         } else {
             $userList .= htmlspecialchars($user->userName);
         }		
@@ -115,17 +115,17 @@ foreach($users_array as $user) {
     }
     if($columnFilter_array["firstName"]) {
         $userList .= "<td class=\"name";
-        if(isset($validator->errors["first_name_{$id}"])) {
+        if(isset($validator->errors["firstName_{$id}"])) {
             $userList .= " error\"";
         } else {
             $userList .= "\"";
         }
         $userList .= " >";
         if($editRow == TRUE) {
-            $userList .= "<input type=\"text\" name=\"" . htmlspecialchars("first_name_{$id}") . "\" value=\"";
+            $userList .= "<input type=\"text\" name=\"" . htmlspecialchars("firstName_{$id}") . "\" value=\"";
         }
-        if(isset($_POST["first_name_{$id}"])) {
-            $userList .= htmlspecialchars($_POST["first_name_{$id}"]);
+        if(isset($_POST["firstName_{$id}"])) {
+            $userList .= htmlspecialchars($_POST["firstName_{$id}"]);
         } else {
             $userList .= htmlspecialchars($user->firstName);
         }		
@@ -136,17 +136,17 @@ foreach($users_array as $user) {
     }
     if($columnFilter_array["lastName"]) {
         $userList .= "<td class=\"name";
-        if(isset($validator->errors["last_name_{$id}"])) {
+        if(isset($validator->errors["lastName_{$id}"])) {
             $userList .= " error\"";
         } else {
             $userList .= "\"";
         }
         $userList .= " >";
         if($editRow == TRUE) {
-            $userList .= "<input type=\"text\" name=\"" . htmlspecialchars("last_name_{$id}") . "\" value=\"";
+            $userList .= "<input type=\"text\" name=\"" . htmlspecialchars("lastName_{$id}") . "\" value=\"";
         }
-        if(isset($_POST["last_name_{$id}"])) {
-            $userList .= htmlspecialchars($_POST["last_name_{$id}"]);
+        if(isset($_POST["lastName_{$id}"])) {
+            $userList .= htmlspecialchars($_POST["lastName_{$id}"]);
         } else {
             $userList .= htmlspecialchars($user->lastName);
         }
@@ -157,17 +157,17 @@ foreach($users_array as $user) {
     }
     if($columnFilter_array["forumName"]) {
         $userList .= "<td class=\"name";
-        if(isset($validator->errors["forum_name_{$id}"])) {
+        if(isset($validator->errors["forumName_{$id}"])) {
             $userList .= " error\"";
         } else {
             $userList .= "\"";
         }
         $userList .= ">";
         if($editRow == TRUE) {
-            $userList .= "<input type=\"text\" name=\"" . htmlspecialchars("forum_name_{$id}") . "\" value=\"";
+            $userList .= "<input type=\"text\" name=\"" . htmlspecialchars("forumName_{$id}") . "\" value=\"";
         }
-        if(isset($_POST["forum_name_{$id}"])) {
-            $userList .= htmlspecialchars($_POST["forum_name_{$id}"]);
+        if(isset($_POST["forumName_{$id}"])) {
+            $userList .= htmlspecialchars($_POST["forumName_{$id}"]);
         } else {
             $userList .= htmlspecialchars($user->forumName);
         }
@@ -187,7 +187,7 @@ foreach($users_array as $user) {
         $userList .= "</td>";
 }
 if($columnFilter_array["active"]) {
-        $userList .= "<td><input type=\"checkbox\" name=\"" . htmlspecialchars("active_check_{$id}") . "\" ";
+        $userList .= "<td><input type=\"checkbox\" name=\"" . htmlspecialchars("activeCheck_{$id}") . "\" ";
         if($editRow == FALSE) {
             $userList .= "disabled=\"disabled\" ";
         }
