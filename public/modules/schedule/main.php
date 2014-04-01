@@ -43,7 +43,7 @@
     if(count($usersArray) > 0) {
         $schedOutput = "<form id=\"scheduleSelected_form\" action=\"index.php" . htmlspecialchars("?id={$currentId}") . "\" method=\"POST\" ><table id = \"scheduleSelected_table\"><thead><tr><th>Name</th><th>Start Time</th><th>End Time</th><th>Working Hours</th></tr></thead><tbody>";
         $date = Controller_Date::get_selected();
-        $selectedDay = date("w", strtotime($date["d"] . "-" . $date["m"] . "-" . $date["y"]));
+        (int) $selectedDay = date("w", strtotime($date["d"] . "-" . $date["m"] . "-" . $date["y"])) +  1;
         foreach($usersArray as $user) {
             $schedule = $user->get_sch($selectedDay);
             if(count($schedule) == 0) {
