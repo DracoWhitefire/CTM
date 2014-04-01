@@ -25,7 +25,7 @@ if(isset($_POST["editList"])) {
     $editUser = FALSE;
     $editList = FALSE;
 }
-//Form Validation    
+//Form Validation
 if((isset($_POST["submitList"])) || (isset($_POST["submitForm"]))) {
     $checkReq_array = array();
     $checkLen_array = array();
@@ -35,10 +35,10 @@ if((isset($_POST["submitList"])) || (isset($_POST["submitForm"]))) {
     $checkTimeDiff_array = array();
     $checkSame_array = array();
     $checkPw_array = array();
-    foreach($_POST as $valField => $val) {            
+    foreach($_POST as $valField => $val) {
         $valFieldString_array = preg_split("/([A-Z][a-z]+)|_/", $valField, -1, PREG_SPLIT_DELIM_CAPTURE|PREG_SPLIT_NO_EMPTY);
         if(count($valFieldString_array) > 1){
-            if(strtolower($valFieldString_array[1]) == "name") {                    
+            if(strtolower($valFieldString_array[1]) == "name") {
                 if(strtolower($valFieldString_array[0]) != "forum") {
                     $checkReq_array[] = $valField;
                     $checkLen_array[$valField] = "1-32";
@@ -142,16 +142,15 @@ if(isset($_POST["submitForm"])) {
             }
             $query  = "INSERT INTO `users` ";
             $query .= "(`user_name`, `forum_name`, `first_name`, `last_name`, `rank`, `passwordhash`, `active`) ";
-            $query .= "VALUES ('" .     $db->query_prep($_POST["userName_input"]) . "', '" . 
-                                        $db->query_prep($_POST["forumName_input"]) . "', '" . 
-                                        $db->query_prep($_POST["firstName_input"]) . "', '" . 
-                                        $db->query_prep($_POST["lastName_input"]) . "', '" . 
+            $query .= "VALUES ('" .     $db->query_prep($_POST["userName_input"]) . "', '" .
+                                        $db->query_prep($_POST["forumName_input"]) . "', '" .
+                                        $db->query_prep($_POST["firstName_input"]) . "', '" .
+                                        $db->query_prep($_POST["lastName_input"]) . "', '" .
                                         $db->query_prep($_POST["rank_select"]) . "', '" .
-                                        $db->query_prep($hashPw) . "', '" . 
+                                        $db->query_prep($hashPw) . "', '" .
                                         $db->query_prep($active) . "') ";
             $query .= ";";
             $insert_success = $db->query($query);
-
             //create schedule for user
             (int) $createdId = $db->insert_id();
             $query  = "INSERT INTO `schedules` ";
@@ -189,54 +188,30 @@ if(isset($_POST["submitForm"])) {
             isset($_POST["rank_select_" . $userId])     ? $user->rank = $_POST["rank_select_" . $userId] : NULL;
             isset($hashPw)                              ? $user->passwordhash = $hashPw : NULL;
             $update_success = $user->_update();
-
-            $query  = "SELECT * ";
-            $query .= "FROM `schedules` ";
-            $query .= "WHERE `id` =  {$userId} ";
-
-            $weekdays_array = array("monday", "tuesday", "wednesday", "thursday", "friday");
-            $result_array = $db->fetch_assoc($db->query($query));
-            if(count($result_array) >= 1) {
-                foreach($weekdays_array as $weekday) {
-                    $beginFieldname = ucfirst($weekday) . "Begin_input";
-                    $endFieldname = ucfirst($weekday) . "End_input";
-                    $query  = "UPDATE `schedules` SET ";
-                    $query .= "`start_time`='" . $db->query_prep($_POST[$beginFieldname]) . "', `end_time`='" . $db->query_prep($_POST[$endFieldname]) . "' ";
-                    $query .= "WHERE `id` = '" . $db->query_prep($userId) . "' ";
-                    $query .= "AND `weekday` = '{$weekday}' ";
-                    $query .= "LIMIT 1 ";
-                    $query .= ";";
-                    $insert_success = $db->query($query);
+            
+            for($weekday = 0; $weekday <= 6; $weekday++) {
+                $schedule = $user->get_sch($weekday);
+                if(!is_object($schedule)) {
+                    $schedule = new Model_Schedule;
+                    $schedule->userId = $user->id;
+                    $schedule->weekdayId = $weekday;
                 }
-            } else {
-                $query  = "INSERT INTO `schedules` ";
-                $query .= "(`id`, `weekday`, `start_time`, `end_time`) VALUES ";
-                foreach ($weekdays_array as $weekday) {
-                    $beginFieldname = ucfirst($weekday) . "Begin_input";
-                    $endFieldname = ucfirst($weekday) . "End_input";
-                    $startTime = $db->query_prep($_POST[$beginFieldname]);
-                    $endTime = $db->query_prep($_POST[$endFieldname]);
-                    $query .= "('" . $db->query_prep($userId) . "', '{$weekday}', '{$startTime}', '{$endTime}')";
-                    if($weekday != "friday") {
-                        $query .= ", ";
-                    }
-                }
-                $query .= ";";
-                //echo $query;
-                $insert_success = $db->query($query);
+                
+                isset($_POST["{$weekday}Begin_input"])  ? $schedule->set_starttime($db->query_prep($_POST["{$weekday}Begin_input"])) : NULL;
+                isset($_POST["{$weekday}End_input"])    ? $schedule->set_endtime($db->query_prep($_POST["{$weekday}End_input"])) : NULL;
+                is_null($schedule->id) ? NULL : $insert_success = $schedule->_update();
             }
         }
     } else {
         if($_POST["submitForm"] == "Add User") {
             $editUser = TRUE;
             $addUser = TRUE;
-
         } elseif($_POST["submitForm"] == "Submit User") {
             $editUser = TRUE;
         }
     }
 }
-// If validation fails:    
+// If validation fails:
 if(isset($_POST["submitList"])) {
     if(isset($validator->errors) && !empty($validator->errors)) {
         $errorId_array = array();
