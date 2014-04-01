@@ -82,18 +82,14 @@ if(isset($_POST["submitList"])) {
     foreach($_POST as $varName => $postValue) {
         $string_array = explode("_", $varName);
         if(count($string_array) > 1){
-            if(count($string_array) > 2) {
-                if(!($string_array[0] == "filter")) {
-                    $string_id = $string_array[2];
-                }
-            } else {
-                $string_id = $_POST["userId_input"];
+            if(!($string_array[0] == "filter")) {
+                $string_id = $string_array[1];
             }
             if(isset($string_id)) {
                 if(!isset($query_array_{$string_id})) {
                     $query_array_{$string_id} = array();
                 }
-                $field = $string_array[0] . "_" . $string_array[1];
+                $field = $string_array[0];
                 $postValue = trim($db->query_prep($postValue));
                 $query_array_{$string_id}[$field] = $postValue;
                 $query_array[$string_id] = $query_array_{$string_id};
