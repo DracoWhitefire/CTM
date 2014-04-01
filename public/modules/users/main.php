@@ -25,7 +25,7 @@ if(isset($_POST["editList"])) {
     $editUser = FALSE;
     $editList = FALSE;
 }
-//Form Validation	
+//Form Validation    
 if((isset($_POST["submitList"])) || (isset($_POST["submitForm"]))) {
     $checkReq_array = array();
     $checkLen_array = array();
@@ -35,10 +35,10 @@ if((isset($_POST["submitList"])) || (isset($_POST["submitForm"]))) {
     $checkTimeDiff_array = array();
     $checkSame_array = array();
     $checkPw_array = array();
-    foreach($_POST as $valField => $val) {			
+    foreach($_POST as $valField => $val) {            
         $valFieldString_array = preg_split("/([A-Z][a-z]+)|_/", $valField, -1, PREG_SPLIT_DELIM_CAPTURE|PREG_SPLIT_NO_EMPTY);
         if(count($valFieldString_array) > 1){
-            if(strtolower($valFieldString_array[1]) == "name") {					
+            if(strtolower($valFieldString_array[1]) == "name") {                    
                 if(strtolower($valFieldString_array[0]) != "forum") {
                     $checkReq_array[] = $valField;
                     $checkLen_array[$valField] = "1-32";
@@ -142,7 +142,7 @@ if(isset($_POST["submitForm"])) {
             }
             $query  = "INSERT INTO `users` ";
             $query .= "(`user_name`, `forum_name`, `first_name`, `last_name`, `rank`, `passwordhash`, `active`) ";
-            $query .= "VALUES ('" . 	$db->query_prep($_POST["userName_input"]) . "', '" . 
+            $query .= "VALUES ('" .     $db->query_prep($_POST["userName_input"]) . "', '" . 
                                         $db->query_prep($_POST["forumName_input"]) . "', '" . 
                                         $db->query_prep($_POST["firstName_input"]) . "', '" . 
                                         $db->query_prep($_POST["lastName_input"]) . "', '" . 
@@ -161,7 +161,7 @@ if(isset($_POST["submitForm"])) {
             foreach($weekdays_array as $weekday) {
                     $beginFieldname = ucfirst($weekday) . "Begin_input";
                     $endFieldname = ucfirst($weekday) . "End_input";
-                    $query .= 	"(" .	$createdId . ", '" .
+                    $query .=     "(" .    $createdId . ", '" .
                                         $weekday . "', '" .
                                         $db->query_prep($_POST[$beginFieldname]) . "', '" .
                                         $db->query_prep($_POST[$endFieldname]) . "')";
@@ -236,7 +236,7 @@ if(isset($_POST["submitForm"])) {
         }
     }
 }
-// If validation fails:	
+// If validation fails:    
 if(isset($_POST["submitList"])) {
     if(isset($validator->errors) && !empty($validator->errors)) {
         $errorId_array = array();
