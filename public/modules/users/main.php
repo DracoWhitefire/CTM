@@ -98,6 +98,7 @@ if(isset($_POST["submitList"])) {
     }
     // This combines every field in an id (row) into one query and runs the query
     foreach($query_array as $array_id => $user_array) {
+        $user = Model_User::get($array_id);
         $i = 1;
         $changefields = "";
         if(!isset($user_array["active_check"])) {
@@ -118,6 +119,7 @@ if(isset($_POST["submitList"])) {
             if($field == "rank_select") {
                 $field = "rank";
             }
+            $user->$field = $postValue;
             $changefields .= "`{$field}` = '{$postValue}'";
             if($i < count($user_array)) {
                 $changefields .= ",";
@@ -131,7 +133,8 @@ if(isset($_POST["submitList"])) {
         $query .= "LIMIT 1 ";
         $query .= "; ";
         if(empty($validator->errors)) {
-            $result = $db->query($query);
+            //$result = $db->query($query);
+            $result = $user->_update();
         } else {
             $editList = TRUE;
         }
@@ -184,25 +187,21 @@ if(isset($_POST["submitForm"])) {
         } elseif($_POST["submitForm"] == "Submit User") {
             //Update existing user
             $userId = $_POST["userId_input"];
+            $user = Model_User::get($userId);
             if(isset($_POST["active_input"])) {
                 $active = 1;
             } else {
                 $active = 0;
             }
-            $query  = 	"UPDATE `users` SET ";
-            $query .= 	"`user_name`='" . 	$db->query_prep($_POST["userName_input_" . $userId]) . "', " . 
-                        "`forum_name`='" . 	$db->query_prep($_POST["forumName_input_" . $userId]) . "', " . 
-                        "`first_name`='" . 	$db->query_prep($_POST["firstName_input_" . $userId]) . "', " .  
-                        "`last_name`='" . 	$db->query_prep($_POST["lastName_input_" . $userId]) . "', " .  
-                        "`rank`='" . 		$db->query_prep($_POST["rank_select_" . $userId]);
-            if(isset($hashPw)) {
-                $query .= "', `passwordhash`='" . $db->query_prep($hashPw);
-            }
-            $query .= "', `active`='" . $db->query_prep($active) . "' ";
-            $query .= "WHERE `id`=" . $db->query_prep($userId) . " ";
-            $query .= "LIMIT 1" ;
-            $query .= ";";
-            $update_success = $db->query($query);
+            isset($active)                              ? $user->active = $active : NULL;
+            isset($employeeNr)                          ? $user->employeeNr = $employeeNr : NULL;
+            isset($_POST["userName_input_" . $userId])  ? $user->userName = $_POST["userName_input_" . $userId] : NULL;
+            isset($_POST["forumName_input_" . $userId]) ? $user->forumName = $_POST["forumName_input_" . $userId] : NULL;
+            isset($_POST["firstName_input_" . $userId]) ? $user->firstName = $_POST["firstName_input_" . $userId] : NULL;
+            isset($_POST["lastName_input_" . $userId])  ? $user->lastName = $_POST["lastName_input_" . $userId] : NULL;
+            isset($_POST["rank_select_" . $userId])     ? $user->rank = $_POST["rank_select_" . $userId] : NULL;
+            isset($hashPw)                              ? $user->passwordhash = $hashPw : NULL;
+            $update_success = $user->_update();
 
             $query  = "SELECT * ";
             $query .= "FROM `schedules` ";
