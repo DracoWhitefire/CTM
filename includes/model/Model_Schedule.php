@@ -102,4 +102,14 @@ Class Model_Schedule extends Model_Dao
         }
         return $this->_endTimeObject->format($this->_timeFormat);
     }
+    
+    public function set_starttime($time) {
+        $this->_starTimeObject = new DateTime($time);
+        $this->_startTime = $time;
+    }
+    
+    public function set_endtime($time) {
+        $this->_endTimeObject = new DateTime($time);
+        $this->_endTime = $time;
+    }
 }
