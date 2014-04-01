@@ -7,7 +7,7 @@ Class Model_Schedule extends Model_Dao
 {
     public $id;
     public $userId;
-    public $weekday;
+    public $weekdayId;
     protected $_startTime;
     protected $_endTime;
     protected $_starTimeObject;
@@ -39,7 +39,7 @@ Class Model_Schedule extends Model_Dao
         $query  = "SELECT * ";
         $query .= "FROM `schedules` ";
         $query .= "WHERE `user_id` = " . (int) $userId . " ";
-        $query .= "AND `weekday` = '" . $db->query_prep($weekday) . "' ";
+        $query .= "AND `weekday_id` = " . (int) $weekday . " ";
         $query .= "ORDER BY `id` ASC ";
         $query .= "LIMIT 1";
         $object = self::get_by_query($query);
