@@ -97,9 +97,10 @@
 	$weekdays_array = array("Monday", "Tuesday", "Wednesday", "Thursday", "Friday");
 	$userForm .= "<div id=\"userFormSchedule_div\"><table id=\"userFormSchedule_table\">";
 	$userForm .= "<thead><tr><th>Weekday</th><th>Begin Shift</th><th>End Shift</th></tr></thead><tbody>";
-	foreach($weekdays_array as $weekday) {
+	for($weekday = 2; $weekday <= 6; $weekday++) {
+//        foreach($weekdays_array as $weekday) {
 		if($editUser == TRUE) {
-			$userSched = $user->get_sch(strtolower($weekday));
+                        $userSched = $user->get_sch($weekday);
 		}
 		$userForm .= "<tr><td>{$weekday}</td><td><input type=\"text\" name=\"{$weekday}Begin_input\" ";
 		if(isset($validator->errors["{$weekday}Begin_input"])) {
