@@ -5,11 +5,11 @@
  */
 Class View_Rank {
     public static function selector($user = "") {
-        $output = "<select id=\"" . htmlspecialchars("rank_select");
+        $output = "<select id=\"" . htmlspecialchars("rankSelect");
         if($user!="") {
             $output .= htmlspecialchars("_" . $user->id);
         }
-        $output .= "\" name=\"" . htmlspecialchars("rank_select");
+        $output .= "\" name=\"" . htmlspecialchars("rankSelect");
         if($user!="") {
             $output .= htmlspecialchars("_" . $user->id);
         }
