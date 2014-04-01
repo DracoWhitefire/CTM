@@ -96,7 +96,7 @@ if(isset($_POST["submitList"])) {
             }
         }
     }
-    // This combines every field in an id (row) into one query and runs the query
+    // This adds every field in an id (row) into a Model_User object and updates the database
     foreach($query_array as $array_id => $user_array) {
         $user = Model_User::get($array_id);
         $i = 1;
@@ -104,7 +104,6 @@ if(isset($_POST["submitList"])) {
         if(!isset($user_array["active_check"])) {
             $user_array["active_check"] = "off";
         }
-        //print_r($user_array);
         foreach($user_array as $field => $postValue) {
             $field = $db->query_prep($field);
             $postValue = $db->query_prep($postValue);
