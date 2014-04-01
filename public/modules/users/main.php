@@ -101,13 +101,13 @@ if(isset($_POST["submitList"])) {
         $user = Model_User::get($array_id);
         $i = 1;
         $changefields = "";
-        if(!isset($user_array["active_check"])) {
-            $user_array["active_check"] = "off";
+        if(!isset($user_array["activeCheck"])) {
+            $user_array["activeCheck"] = "off";
         }
         foreach($user_array as $field => $postValue) {
             $field = $db->query_prep($field);
             $postValue = $db->query_prep($postValue);
-            if($field == "active_check") {
+            if($field == "activeCheck") {
                 $field = "active";
                 if($postValue == "on") {
                     $postValue = 1;
@@ -115,7 +115,7 @@ if(isset($_POST["submitList"])) {
                     $postValue = 0;
                 }
             }
-            if($field == "rank_select") {
+            if($field == "rankSelect") {
                 $field = "rank";
             }
             $user->$field = $postValue;
