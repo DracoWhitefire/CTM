@@ -134,48 +134,10 @@ if(isset($_POST["submitForm"])) {
         if(!empty($_POST["password_input"])) {
             $hashPw = Model_User::pw_encrypt($_POST["password_input"]);
         }
-        if($_POST["submitForm"] == "Add User") {
-            //create user
-            if(isset($_POST["active_input"])) {
-                $active = 1;
-            } else {
-                $active = 0;
-            }
-            $query  = "INSERT INTO `users` ";
-            $query .= "(`user_name`, `forum_name`, `first_name`, `last_name`, `rank`, `passwordhash`, `active`) ";
-            $query .= "VALUES ('" .     $db->query_prep($_POST["userName_input"]) . "', '" .
-                                        $db->query_prep($_POST["forumName_input"]) . "', '" .
-                                        $db->query_prep($_POST["firstName_input"]) . "', '" .
-                                        $db->query_prep($_POST["lastName_input"]) . "', '" .
-                                        $db->query_prep($_POST["rank_select"]) . "', '" .
-                                        $db->query_prep($hashPw) . "', '" .
-                                        $db->query_prep($active) . "') ";
-            $query .= ";";
-            $insert_success = $db->query($query);
-            //create schedule for user
-            (int) $createdId = $db->insert_id();
-            $query  = "INSERT INTO `schedules` ";
-            $query .= "(`id`, `weekday`, `start_time`, `end_time`) ";
-            $query .= "VALUES ";
-            $weekdays_array = array("monday", "tuesday", "wednesday", "thursday", "friday");
-            foreach($weekdays_array as $weekday) {
-                    $beginFieldname = ucfirst($weekday) . "Begin_input";
-                    $endFieldname = ucfirst($weekday) . "End_input";
-                    $query .=     "(" .    $createdId . ", '" .
-                                        $weekday . "', '" .
-                                        $db->query_prep($_POST[$beginFieldname]) . "', '" .
-                                        $db->query_prep($_POST[$endFieldname]) . "')";
-                    if($weekday != "friday") {
-                        $query .= ",";
-                    }
-            }
-            $query .= ";";
-            $insert_success = $db->query($query);
-        } elseif($_POST["submitForm"] == "Submit User") {
-            //Update existing user
-            $userId = $_POST["userId_input"];
-            $user = Model_User::get($userId);
-            if(isset($_POST["active_input"])) {
+        if(($_POST["submitForm"] == "Submit User") || ($_POST["submitForm"] == "Add User")) {
+            isset($_POST["userId_input"]) ? $userId = $_POST["userId_input"] : $userId = NULL;
+            !is_null($userId) ? $user = Model_User::get($userId) : $user = new Model_User;
+            if(isset($_POST["active_input_" . $userId])) {
                 $active = 1;
             } else {
                 $active = 0;
@@ -186,10 +148,9 @@ if(isset($_POST["submitForm"])) {
             isset($_POST["forumName_input_" . $userId]) ? $user->forumName = $_POST["forumName_input_" . $userId] : NULL;
             isset($_POST["firstName_input_" . $userId]) ? $user->firstName = $_POST["firstName_input_" . $userId] : NULL;
             isset($_POST["lastName_input_" . $userId])  ? $user->lastName = $_POST["lastName_input_" . $userId] : NULL;
-            isset($_POST["rank_select_" . $userId])     ? $user->rank = $_POST["rank_select_" . $userId] : NULL;
+            isset($_POST["rankSelect_" . $userId])      ? $user->rank = $_POST["rankSelect_" . $userId] : NULL;
             isset($hashPw)                              ? $user->passwordhash = $hashPw : NULL;
             $update_success = $user->save();
-            
             for($weekday = 0; $weekday <= 6; $weekday++) {
                 $schedule = $user->get_sch($weekday);
                 if(!is_object($schedule)) {
@@ -197,7 +158,6 @@ if(isset($_POST["submitForm"])) {
                     $schedule->userId = $user->id;
                     $schedule->weekdayId = $weekday;
                 }
-                
                 isset($_POST["{$weekday}Begin_input"])  ? $schedule->set_starttime($db->query_prep($_POST["{$weekday}Begin_input"])) : NULL;
                 isset($_POST["{$weekday}End_input"])    ? $schedule->set_endtime($db->query_prep($_POST["{$weekday}End_input"])) : NULL;
                 is_null($schedule->id) ? NULL : $insert_success = $schedule->save();
