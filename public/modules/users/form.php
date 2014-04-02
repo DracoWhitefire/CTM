@@ -7,6 +7,9 @@ if($editUser == TRUE) {
         $user = Model_User::get($_POST["userId_input"]);
     }
 }
+if($addUser == TRUE) {
+    $user = new Model_User;
+}
 $userForm = "<div id=\"userForm_div\"><form id=\"userForm_form\" method=\"POST\" action=\"index.php" . htmlspecialchars("?id={$currentId}") . "\">";
 if($editUser == TRUE) {
     $userForm .= "<input type=\"hidden\" name=\"userId_input\" value=\"" . htmlspecialchars($user->id) . "\" />";
