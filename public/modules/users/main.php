@@ -121,7 +121,7 @@ if(isset($_POST["submitList"])) {
             $user->$field = $postValue;
         }
         if(empty($validator->errors)) {
-            $result = $user->_update();
+            $result = $user->save();
         } else {
             $editList = TRUE;
         }
@@ -187,7 +187,7 @@ if(isset($_POST["submitForm"])) {
             isset($_POST["lastName_input_" . $userId])  ? $user->lastName = $_POST["lastName_input_" . $userId] : NULL;
             isset($_POST["rank_select_" . $userId])     ? $user->rank = $_POST["rank_select_" . $userId] : NULL;
             isset($hashPw)                              ? $user->passwordhash = $hashPw : NULL;
-            $update_success = $user->_update();
+            $update_success = $user->save();
             
             for($weekday = 0; $weekday <= 6; $weekday++) {
                 $schedule = $user->get_sch($weekday);
@@ -199,7 +199,7 @@ if(isset($_POST["submitForm"])) {
                 
                 isset($_POST["{$weekday}Begin_input"])  ? $schedule->set_starttime($db->query_prep($_POST["{$weekday}Begin_input"])) : NULL;
                 isset($_POST["{$weekday}End_input"])    ? $schedule->set_endtime($db->query_prep($_POST["{$weekday}End_input"])) : NULL;
-                is_null($schedule->id) ? NULL : $insert_success = $schedule->_update();
+                is_null($schedule->id) ? NULL : $insert_success = $schedule->save();
             }
         }
     } else {
