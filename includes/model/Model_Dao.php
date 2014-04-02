@@ -125,35 +125,38 @@ abstract class Model_Dao
      * @return NULL 
      */
     function _create() {
-            global $db;
-            $vars = get_object_vars($this);
-            $columnVars = array_flip($this->_columns);
-            $query  = "INSERT INTO `" . $this->_tableName . "` (";
-            $count = 0;
-            foreach($vars as $var->$value) {
-                    $count += 1;
-                    if(in_array($var, $columnVars)) {
-                        $query .= $db->query_prep($var);
-                    }
-                    if ($count < count($vars)) {
-                            $query .= ", ";
-                    } else {
-                            $query .= ")";
-                    }
+        global $db;
+        $vars = get_object_vars($this);
+        $columnVars = array_flip($this->_get_columns());
+        $query  = "INSERT INTO `" . $this->_tableName . "` (";
+        $valueCount = 0;
+        $count = 0;
+        foreach($vars as $var => $value) {
+            isset($value) ? $valueCount++ : NULL;
+        }
+        foreach($vars as $var => $value) {
+            $count += 1;
+            if(array_key_exists($var, $columnVars) && !is_null($value)) {
+                $query .= "`" . $db->query_prep($columnVars[$var]) . "`";
+                if ($count < $valueCount) {
+                        $query .= ", ";
+                }
             }
-            $query .= " VALUES (";
-            foreach($vars as $var->$value) {
-                    $count += 1;
-                    if(in_array($var, $columnVars)) {
-                        $query .= $db->query_prep($value);
-                    }
-                    if ($count < count($vars)) {
-                            $query .= ", ";
-                    } else {
-                            $query .= ")";
-                    }
+        }
+        $query .= ") VALUES (";
+        $count = 0;
+        foreach($vars as $var => $value) {
+            $count += 1;
+            if(array_key_exists($var, $columnVars) && !is_null($value)) {
+                $query .= "'" . $db->query_prep($value) . "'";
+                if ($count < $valueCount) {
+                        $query .= ", ";
+                }
             }
-            echo $query;
+        }
+        $query .= ") ";
+        $query .= ";";
+        $db->query($query);
     }
     
     function _update() {
