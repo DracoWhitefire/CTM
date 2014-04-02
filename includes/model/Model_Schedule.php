@@ -80,7 +80,7 @@ Class Model_Schedule extends Model_Dao
     }
     
     /**
-     * get_starttime()
+     * get_starttime
      * Returns start time of schedule;
      * @return string - Start time formatted as H:MM
      */
@@ -92,7 +92,7 @@ Class Model_Schedule extends Model_Dao
     }
     
     /**
-     * get_endtime()
+     * get_endtime
      * Returns end time of schedule;
      * @return string - End time formatted as H:MM
      */
@@ -103,11 +103,21 @@ Class Model_Schedule extends Model_Dao
         return $this->_endTimeObject->format($this->_timeFormat);
     }
     
+    /**
+     * set_starttime
+     * Sets the start time of a schedule;
+     * @param string $time - The time to be set
+     */
     public function set_starttime($time) {
         $this->_starTimeObject = new DateTime($time);
         $this->_startTime = $time;
     }
     
+    /**
+     * set_endtime
+     * Sets the end time of a schedule;
+     * @param string $time - The time to be set
+     */
     public function set_endtime($time) {
         $this->_endTimeObject = new DateTime($time);
         $this->_endTime = $time;
