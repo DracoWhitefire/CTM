@@ -124,7 +124,7 @@ abstract class Model_Dao
      * @global dbObject $db
      * @return NULL 
      */
-    protected function _create() {
+    function _create() {
             global $db;
             $vars = get_object_vars($this);
             $columnVars = array_flip($this->_columns);
@@ -185,7 +185,7 @@ abstract class Model_Dao
     }
     
     public function save() {
-        return isset($this->id) ? $this->_update() : $this->_create();
+        return !is_null($this->id) ? $this->_update() : $this->_create();
     }
     public function delete() {
         global $db;
