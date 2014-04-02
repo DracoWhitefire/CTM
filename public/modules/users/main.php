@@ -59,7 +59,8 @@ if((isset($_POST["submitList"])) || (isset($_POST["submitForm"]))) {
                 }
             }
             if(strtolower($valFieldString_array[0]) == "password") {
-                $checkSame_array[$valField] = "conf" . ucfirst($valFieldString_array[0]) . "_" . $valFieldString_array[1] . "_" . $valFieldString_array[2];
+                $checkSame_array[$valField] = "conf" . ucfirst($valFieldString_array[0]) . "_" . $valFieldString_array[1] . "_";
+                isset($valFieldString_array[2]) ? $checkSame_array[$valField] .= $valFieldString_array[2] : NULL;
                 if(!empty($_POST[$valField])) {
                     $checkPw_array[] = $valField;
                 }
