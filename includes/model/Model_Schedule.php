@@ -43,9 +43,6 @@ Class Model_Schedule extends Model_Dao
         $query .= "ORDER BY `id` ASC ";
         $query .= "LIMIT 1";
         $object = self::get_by_query($query);
-        if(count($object) != 1) {
-            $object = new self;
-        }
         return $object;
     }
     
