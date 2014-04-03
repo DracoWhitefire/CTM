@@ -6,7 +6,7 @@
 Class Model_Schedule extends Model_Dao
 {
     public $id;
-    public $userId;
+    public $presetId;
     public $weekdayId;
     protected $_startTime;
     protected $_endTime;
