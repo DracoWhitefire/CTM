@@ -9,20 +9,22 @@
 function findClass(node, name, mode) {
     var classNames = String(node.className);
     var classArray = classNames.split(" ");
-    if(classArray.indexOf(name) === -1) {
-        if(mode === "add") {
+    var success;
+
+    if (classArray.indexOf(name) === -1) {
+        if (mode === "add") {
             classArray.push(name);
-            var success = true;
+            success = true;
         } else {
-            var success = false;
+            success = false;
         }
-    } else if(mode === "del") {
+    } else if (mode === "del") {
         classArray.splice(classArray.indexOf(name), 1);
-        var success = true;
-    } else if(mode === "find") {
-        var success = true;
+        success = true;
+    } else if (mode === "find") {
+        success = true;
     } else {
-        var success = false;
+        success = false;
     }
     node.className = classArray.join(" ");
     return success;
@@ -35,30 +37,52 @@ function findClass(node, name, mode) {
  * @returns {bool} - did the operation succeed?
  */
 function changeAnchorTargets(dayLinks) {
-    if(dayLinks instanceof HTMLCollection) {
-        for(i = 0; i < dayLinks.length; i++) {
+    if (dayLinks instanceof HTMLCollection) {
+        var i;
+        for (i = 0; i < dayLinks.length; i++) {
             dayLinks[i].setAttribute("href", "#");
         }
         return true;
     }
 }
 
+/**
+ * addHiddenDateInputs
+ * Adds hidden inputs for POST requests;
+ * @param {node} node - the parent node
+ * @param {date} date - set date
+ */
 function addHiddenDateInputs(node, date) {
-    ySelect = document.createElement("input");
+    var ySelect = document.createElement("input");
     ySelect.setAttribute("type", "hidden");
     ySelect.setAttribute("name", "y");
     ySelect.setAttribute("value", date.getFullYear());
     node.appendChild(ySelect);
-    mSelect = document.createElement("input");
+    var mSelect = document.createElement("input");
     mSelect.setAttribute("type", "hidden");
     mSelect.setAttribute("name", "m");
     mSelect.setAttribute("value", date.getMonth() + 1);
     node.appendChild(mSelect);
-    dSelect = document.createElement("input");
+    var dSelect = document.createElement("input");
     dSelect.setAttribute("type", "hidden");
     dSelect.setAttribute("name", "d");
     dSelect.setAttribute("value", date.getDate());
     node.appendChild(dSelect);
+}
+
+/**
+ * getSelectedDay
+ * Date based on calCur_div;
+ * @returns {Date}
+ */
+function getSelectedDay() {
+    var selectedDateDiv = document.getElementById("calCur_div");
+    var selectedDateArray = selectedDateDiv.textContent.split(" ");
+    var selectedDay = selectedDateArray[0];
+    var selectedMonth = selectedDateArray[1];
+    var selectedYear = selectedDateArray[2];
+    var date = new Date(selectedDay + " " + selectedMonth + " " + selectedYear);
+    return date;
 }
 
 /**
@@ -68,11 +92,17 @@ function addHiddenDateInputs(node, date) {
  * @returns {changeSelectedDay}
  */
 function changeSelectedDay(dayLinks) {
-    for(i = 0; i < dayLinks.length; i++) {
-        dayLinks[i].onclick = function() {
-            for(i = 0; i < dayLinks.length; i++) {
-                var linkDivs = this.parentNode.parentNode.parentNode.getElementsByTagName("div");
-                for(i = 0; i < linkDivs.length; i++) {
+    var i;
+    var linkDivs;
+    var selectedDateDiv;
+    var date;
+    var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+    for (i = 0; i < dayLinks.length; i++) {
+        dayLinks[i].onclick = function () {
+            for (i = 0; i < dayLinks.length; i++) {
+                linkDivs = this.parentNode.parentNode.parentNode.getElementsByTagName("div");
+                for (i = 0; i < linkDivs.length; i++) {
                     findClass(linkDivs[i], "selectedDay", "del");
                 }
             }
@@ -80,46 +110,55 @@ function changeSelectedDay(dayLinks) {
             selectedDateDiv = document.getElementById("calCur_div");
             date = getSelectedDay();
             date.setDate(this.textContent);
-            //addHiddenDateInputs(this, date);
-            var months = new Array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
             selectedDateDiv.textContent = date.getDate() + " " + months[date.getMonth()] + " " + date.getFullYear();
         };
     }
 }
 
 /**
- * getSelectedDay
- * Date based on calCur_div;
- * @returns {Date}
+ * addSubmit
+ * Adds submit input as a child node of parentNode;
+ * @param {node} parentNode - the parent node
+ * @param {type} name - the input's name
+ * @param {type} value - the input's value
+ * @returns {addSubmit.submitButton|Element} - the created input
  */
-function getSelectedDay() {
-    selectedDateDiv = document.getElementById("calCur_div");
-    selectedDateArray = selectedDateDiv.textContent.split(" ");
-    selectedDay = selectedDateArray[0];
-    selectedMonth = selectedDateArray[1];
-    selectedYear = selectedDateArray[2];
-    var date = new Date(selectedDay + " " + selectedMonth + " " + selectedYear);
-    return date;
+function addSubmit(parentNode, name, value) {
+    var submitButton = document.createElement("input");
+
+    submitButton.setAttribute("type", "submit");
+    submitButton.setAttribute("value", value);
+    submitButton.setAttribute("name", name);
+    parentNode.appendChild(submitButton);
+    return submitButton;
 }
 
-function changeMonthNav(node, mode) {
-    splitString = node.id.replace(/([A-Z])/, "_$1");
-    nameArray = splitString.split("_");
-    date = getSelectedDay();
-    submitButton = addSubmit(node, nameArray[1], nameArray[1]);
-    if(nameArray[1] === "Next") {
-        submitButton.onclick = function() {
+
+/**
+ * changeMonthNav
+ * changes month selector links to submit inputs
+ * @param {node} node
+ */
+function changeMonthNav(node) {
+    var splitString = node.id.replace(/([A-Z])/, "_$1");
+    var nameArray = splitString.split("_");
+    var date = getSelectedDay();
+    var submitButton = addSubmit(node, nameArray[1], nameArray[1]);
+    var anchor = node.getElementsByTagName("a");
+    var i;
+
+    if (nameArray[1] === "Next") {
+        submitButton.onclick = function () {
             date.setMonth(date.getMonth() + 1);
             addHiddenDateInputs(node, date);
         };
-    } else if(nameArray[1] === "Prev") {
-        submitButton.onclick = function() {
+    } else if (nameArray[1] === "Prev") {
+        submitButton.onclick = function () {
             date.setMonth(date.getMonth() - 1);
             addHiddenDateInputs(node, date);
         };
     }
-    anchor = node.getElementsByTagName("a");
-    for(i = 0; i < anchor.length; i++) {
+    for (i = 0; i < anchor.length; i++) {
         node.removeChild(anchor[i]);
     }
 }
@@ -128,15 +167,18 @@ function changeMonthNav(node, mode) {
  * disableOtherMonthDays
  * Changes anchors in divs with prevMonth and nextMonth classes to static div text;
  * @param {HTMLCollection} dayLinks - the links to be searched
- * @returns {null}
  */
 function disableOtherMonthDays(dayLinks) {
-    for(i = 0; i < dayLinks.length; i++) {
-        if(findClass(dayLinks[i].parentNode, "prevMonth", "find") 
-        || findClass(dayLinks[i].parentNode, "nextMonth", "find")) {
+    var i;
+    var foundNode;
+    var dayNumber;
+    var dayTextNode;
+
+    for (i = 0; i < dayLinks.length; i++) {
+        if (findClass(dayLinks[i].parentNode, "prevMonth", "find") || findClass(dayLinks[i].parentNode, "nextMonth", "find")) {
             foundNode = dayLinks[i];
-            var dayNumber = dayLinks[i].textContent;
-            var dayTextNode = document.createTextNode(dayNumber);
+            dayNumber = dayLinks[i].textContent;
+            dayTextNode = document.createTextNode(dayNumber);
             foundNode.parentNode.appendChild(dayTextNode);
             foundNode.parentNode.removeChild(foundNode);
             i--;
@@ -144,52 +186,62 @@ function disableOtherMonthDays(dayLinks) {
     }
 }
 
-function convertToForm(node) {
+/**
+ * convertToForm
+ * Created a form as child of parentNode and attaches node's children to it;
+ * @param {node} parentNode - the parent node
+ * @returns {convertToForm.selForm|Element} - the created form
+ */
+function convertToForm(parentNode) {
     var selForm = document.createElement("form");
-    selForm.setAttribute("id", "date_selector");
+    var moveNodes = [];
+    var i;
+    var childNode;
+
+    selForm.setAttribute("id", "dateSelector_form");
     selForm.setAttribute("method", "POST");
     selForm.setAttribute("action", document.location.href);
-    var moveNodes = [];
-    for(i = 0; i < node.childNodes.length; i++) {
-        moveNodes.push(node.childNodes[i]);
+    for (i = 0; i < parentNode.childNodes.length; i++) {
+        moveNodes.push(parentNode.childNodes[i]);
     }
-    for(i = 0; i < moveNodes.length; i++) {
-        childNode = node.removeChild(moveNodes[i]);
+    for (i = 0; i < moveNodes.length; i++) {
+        childNode = parentNode.removeChild(moveNodes[i]);
         selForm.appendChild(childNode);
     }
-    node.appendChild(selForm);
+    parentNode.appendChild(selForm);
     return selForm;
 }
 
-function addSubmit(parentName, name, value) {
-    var submitButton = document.createElement("input");
-    submitButton.setAttribute("type", "submit");
-    submitButton.setAttribute("value", value);
-    submitButton.setAttribute("name", name);
-    parentName.appendChild(submitButton);
+
+
+/**
+ * addChooser
+ * Adds submit input as a child node of parentNode;
+ * @param {node} parentNode - the parent node
+ * @returns {addSubmit.submitButton|Element|Node|addChooser.submitButton} - the created input
+ */
+function addChooser(parentNode) {
+    var submitButton = addSubmit(parentNode, "dateSubmit", "Choose");
+    submitButton.onclick = function () {
+        var date = getSelectedDay();
+        addHiddenDateInputs(parentNode, date);
+    };
     return submitButton;
 }
 
-function addChooser(node) {
-    submitButton = addSubmit(node, "dateSubmit", "Choose");
-    submitButton.onclick = function() {
-        date = getSelectedDay();
-        addHiddenDateInputs(node, date);
-    };
-}
 
-var dateSelectorDiv = document.getElementById("calendar_div");
-var daySelectorDiv = document.getElementById("daySelect_div");
-var dayLinks = daySelectorDiv.getElementsByTagName("a");
-var calPrevDiv = document.getElementById("calPrev_div");
-var calNextDiv = document.getElementById("calNext_div");
 
-window.onload = function() {
+window.onload = function () {
+    var dateSelectorDiv = document.getElementById("calendar_div");
+    var daySelectorDiv = document.getElementById("daySelect_div");
+    var dayLinks = daySelectorDiv.getElementsByTagName("a");
+    var calPrevDiv = document.getElementById("calPrev_div");
+    var calNextDiv = document.getElementById("calNext_div");
+    var selectionForm = convertToForm(dateSelectorDiv);
+
     changeAnchorTargets(dayLinks);
     changeSelectedDay(dayLinks);
     disableOtherMonthDays(dayLinks);
-    selectionForm = convertToForm(dateSelectorDiv);
-
     changeMonthNav(calPrevDiv);
     changeMonthNav(calNextDiv);
     addChooser(selectionForm);
