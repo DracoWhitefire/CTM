@@ -8,12 +8,18 @@ final class Model_MySqlDb implements Model_DbInterface
     private $_connection;
     private $_magicQuotesActive;
     private $_mysqliRealEscapeStringExists;
+    private static $_singleInstance;
     public $last_query;
 
-    function __construct() {
+    private function __construct() {
         $this->_connect();
         $this->_magicQuotesActive = get_magic_quotes_gpc();
         $this->_mysqliRealEscapeStringExists = function_exists("mysqli_real_escape_string"); //PHP5
+    }
+    
+    public static function getInstance() {
+        !isset(self::$_singleInstance) ? self::$_singleInstance = new self : NULL;
+        return self::$_singleInstance;
     }
     
     /**

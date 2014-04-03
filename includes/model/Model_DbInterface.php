@@ -6,6 +6,17 @@
  */
 interface Model_DbInterface
 {
+    /**
+     * getInstance
+     * Singleton method to instantiate single instance;
+     * @return Model_DbInterface - instance of self
+     */
+    public static function getInstance();
+    
+    /**
+     * disconnect
+     * Disconnects from database;
+     */
     public function disconnect();
 
     /**
