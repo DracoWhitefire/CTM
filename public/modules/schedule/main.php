@@ -4,9 +4,8 @@
     } else {
         $editing = FALSE;
     }
-    if(isset($_POST["teamSelect"])) {
-        $_SESSION["teamSelect"] = $_POST["teamSelect"];
-    }
+    $_SESSION["teamSelect"] = Model_Team::get_selected();
+    $_SESSION["selectedDate"] = Controller_Date::get_selected();
 ?>
 <div id="scheduleSelector_div">
     <div id="dateSelector_div">
