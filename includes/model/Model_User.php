@@ -14,6 +14,7 @@ class Model_User extends Model_Dao
     public $passwordhash;
     public $team;
     public $employeeNr;
+    public $schedulePreset;
     protected $_tableName = "users";
     
     /**
@@ -73,7 +74,7 @@ class Model_User extends Model_Dao
 //        $result_array = $db->fetch_assoc($sch_set);
 //        mysqli_free_result($sch_set);
 //        return $result_array;
-        return Model_Schedule::get_by_preset_day($this->id, $day);
+        return Model_Schedule::get_by_preset_day($this->schedulePreset, $day);
     }
     
     /**
