@@ -96,11 +96,9 @@ if(isset($validator->errors["confPassword_input_" . $user->id])) {
 }
 $userForm .= "/><br />";
 $userForm .= "<label for=\"changePw_input_" . $user->id . "\" class=\"check\">Change password on next login</label><input type=\"checkbox\" id=\"changePw_input_" . $user->id . "\" name=\"changePw_input_" . $user->id . "\" /></div><hr />";
-$weekdays_array = array("Monday", "Tuesday", "Wednesday", "Thursday", "Friday");
 $userForm .= "<div id=\"userFormSchedule_div\"><table id=\"userFormSchedule_table\">";
 $userForm .= "<thead><tr><th>Weekday</th><th>Begin Shift</th><th>End Shift</th></tr></thead><tbody>";
 for($weekday = 2; $weekday <= 6; $weekday++) {
-//        foreach($weekdays_array as $weekday) {
     if($editUser == TRUE) {
         $userSched = $user->get_sch($weekday);
         count($userSched) != 1 ? $userSched = new Model_Schedule : NULL;
