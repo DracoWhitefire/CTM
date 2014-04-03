@@ -129,7 +129,7 @@ abstract class Model_Dao
      * Creates new db entry from Object
      * @global dbObject $db
      */
-    function _create() {
+    private function _create() {
         global $db;
         $vars = get_object_vars($this);
         $columnVars = array_flip($this->_get_columns());
@@ -169,7 +169,7 @@ abstract class Model_Dao
      * Updates existing db record with current object;
      * @global dbObject $db
      */
-    function _update() {
+    private function _update() {
         global $db;
         $vars = get_object_vars($this);
         $columnVars = array_flip($this->_columns);
