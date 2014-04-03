@@ -5,14 +5,16 @@
 class Controller_Validator
 {
     public $errors;
-    public function required($val_req_array) {
+    
+    public function required(array $val_req_array) {
         foreach($val_req_array as $fieldName) {
             if(!isset($_POST[$fieldName]) || ((empty($_POST[$fieldName])) && !(is_numeric($_POST[$fieldName])))) {
                 $this->errors[$fieldName] = "error_req";
             }
         }
     }
-    public function length($val_len_array) {
+    
+    public function length(array $val_len_array) {
         foreach($val_len_array as $fieldName => $minmax) {
             $string_array = explode("-", $minmax);
             $min = $string_array["0"];
@@ -24,7 +26,8 @@ class Controller_Validator
             }
         }
     }
-    public function numeric($checkNum_array) {
+    
+    public function numeric(array $checkNum_array) {
         foreach($checkNum_array as $fieldName) {
             if(!is_numeric($_POST[$fieldName])) {
                 if(!isset($this->errors[$fieldName])) {
@@ -33,7 +36,8 @@ class Controller_Validator
             }
         }
     }
-    public function unique($val_uniq_array) {
+    
+    public function unique(array $val_uniq_array) {
         global $db;
         $user_query  = "SELECT `user_name`, `id` ";
         $user_query .= "FROM `users` ";
@@ -68,7 +72,8 @@ class Controller_Validator
             }
         }
     }
-    public function time($val_time_array) {
+    
+    public function time(array $val_time_array) {
         foreach($val_time_array as $fieldName) {
             if(preg_match("/^(0(?=\d)|1(?=\d)|2(?=[0-3]))?\d:[0-5]\d(:[0-5]\d)?$/", $_POST[$fieldName]) == 0) {
                 if(!isset($this->errors[$fieldName])) {
@@ -77,7 +82,8 @@ class Controller_Validator
             }
         }
     }
-    public function timediff($val_timediff_array) {
+    
+    public function timediff(array $val_timediff_array) {
         //requires the function Controller_Time::format()
         foreach($val_timediff_array as $startTime_fieldname => $endTime_fieldname) {
             $startTime = (float) strtotime(Controller_Time::format($_POST[$startTime_fieldname], "db"));
@@ -90,7 +96,8 @@ class Controller_Validator
             }
         }
     }
-    public function password($val_pw_array) {
+    
+    public function password(array $val_pw_array) {
         foreach($val_pw_array as $pw_field) {
             $success = preg_match("/^(?=.*\d)(?=.*[a-zA-Z])(?=.*[^a-zA-Z\d\s]).{8,20}$/", trim($_POST[$pw_field]));
             if(!$success) {
@@ -100,7 +107,8 @@ class Controller_Validator
             }
         }
     }
-    public function compare($val_compare_array) {
+    
+    public function compare(array $val_compare_array) {
         foreach($val_compare_array as $firstField => $secondField) {
             if($_POST[$firstField] !== $_POST[$secondField]) {
                 if(!isset($this->errors[$firstField]) && !isset($this->errors[$secondField])) {
