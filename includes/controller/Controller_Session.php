@@ -45,4 +45,3 @@ class Controller_Session
 		$this->_loggedIn = FALSE;
 	}
 }
-?>

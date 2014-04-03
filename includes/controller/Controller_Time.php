@@ -15,4 +15,3 @@ Class Controller_Time
 	return htmlspecialchars($result);
     }
 }
-?>

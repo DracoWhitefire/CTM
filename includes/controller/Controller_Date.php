@@ -111,4 +111,3 @@ Class Controller_Date
         return (array) $dateArray;        
     }
 }
-
