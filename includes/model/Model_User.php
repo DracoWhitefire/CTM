@@ -57,23 +57,11 @@ class Model_User extends Model_Dao
     
     /**
      * get_sch
-     * Returns current User's array with schedule for day $day;
-     * @global type $db
+     * Returns current User's Model_Schedule for day $day;
      * @param string $day
-     * @return array - array with User's schedule for day $day
+     * @return object - Model_Schedule for day $day
      */
     public function get_sch($day) {
-//        global $db;
-//        $selected_user = $db->query_prep($this->id);
-//        $day = $db->query_prep($day);
-//        $sch_query  = "SELECT `start_time`, `end_time` ";
-//        $sch_query .= "FROM `schedules` ";
-//        $sch_query .= "WHERE `weekday` = '{$day}' ";
-//        $sch_query .= "AND `user_id` = '{$selected_user}' ";
-//        $sch_set = $db->query($sch_query);
-//        $result_array = $db->fetch_assoc($sch_set);
-//        mysqli_free_result($sch_set);
-//        return $result_array;
         return Model_Schedule::get_by_preset_day($this->schedulePreset, $day);
     }
     
