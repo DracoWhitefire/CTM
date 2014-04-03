@@ -38,7 +38,7 @@ class Controller_Validator
     }
     
     public function unique(array $val_uniq_array) {
-        global $db;
+        $db = call_user_func(DB_CLASS . "::getInstance");
         $user_query  = "SELECT `user_name`, `id` ";
         $user_query .= "FROM `users` ";
         $user_set = $db->query($user_query);

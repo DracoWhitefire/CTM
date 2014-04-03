@@ -1,6 +1,7 @@
 <?php
 	if(isset($_POST["login"])) {
 		//login attempt
+                $db = call_user_func(DB_CLASS . "::getInstance");
 		$username = trim($db->query_prep($_POST["username_input"]));
 		$password = trim($db->query_prep($_POST["password_input"]));
 		$checkReq_array = array("username_input", "password_input");
