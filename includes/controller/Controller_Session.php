@@ -16,6 +16,10 @@ class Controller_Session
         $this->_check_login();
     }
     
+    /**
+     * _check_login
+     * Checks whether user is logged in and sets session properties;
+     */
     private function _check_login() {
         if(isset($_SESSION["id"])) {
             $this->userId = $_SESSION["id"];
@@ -29,10 +33,20 @@ class Controller_Session
         }
     }	
     
+    /**
+     * is_loggedIn
+     * Returns whether user is logged in;
+     * @return bool - Is user logged in?
+     */
     public function is_loggedIn() {
         return $this->_loggedIn;
     }
     
+    /**
+     * login
+     * Logs in user $user;
+     * @param Model_User $user - the user to log in
+     */
     public function login(Model_User $user) {
         if($user) {
             $this->userId = $_SESSION["id"] = $user->id;
@@ -43,6 +57,10 @@ class Controller_Session
         }
     }
     
+    /**
+     * logout;
+     * Logs out current user;
+     */
     public function logout() {
         unset($_SESSION["id"]);
         unset($this->userId);
