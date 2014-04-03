@@ -53,6 +53,12 @@ abstract class Model_Dao
         }
     }
     
+    /**
+     * _var_to_column
+     * Turns object var name into db column name;
+     * @param string $var - the var name to be converted
+     * @return string - the converted column name
+     */
     private function _var_to_column($var) {
         if(!function_exists("rename_attribute")) { 
             function rename_attribute(array $strings) {
@@ -122,7 +128,6 @@ abstract class Model_Dao
      * create
      * Creates new db entry from Object
      * @global dbObject $db
-     * @return NULL 
      */
     function _create() {
         global $db;
@@ -159,6 +164,11 @@ abstract class Model_Dao
         $db->query($query);
     }
     
+    /**
+     * _update
+     * Updates existing db record with current object;
+     * @global dbObject $db
+     */
     function _update() {
         global $db;
         $vars = get_object_vars($this);
@@ -187,9 +197,20 @@ abstract class Model_Dao
         $db->query($query);
     }
     
+    /**
+     * save
+     * Creates or updates db entry based on current object;
+     * @return bool - Did the operation succeed?
+     */
     public function save() {
         return !is_null($this->id) ? $this->_update() : $this->_create();
     }
+    
+    /**
+     * delete
+     * Deletes current object from memory and entry from db;
+     * @global dbObject $db
+     */
     public function delete() {
         global $db;
     }
