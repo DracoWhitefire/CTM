@@ -18,7 +18,7 @@ class Model_Rank extends Model_Dao
      * @return object|array - instance of Model_Rank or array thereof
      */
     public static function get($selection = "all") {
-        global $db;
+        $db = call_user_func(DB_CLASS . "::getInstance");
         $query  = "SELECT MAX(`value`) ";
         $query .= "FROM `ranks` ";
         $result = $db->query($query);

@@ -15,7 +15,7 @@ abstract class Model_Dao
      * @return array - this object's column names and respective var names
      */
     public function _get_columns() {
-        global $db;
+        $db = call_user_func(DB_CLASS . "::getInstance");
         if(is_null($this->_columns)) {
             $columnQuery  = "SELECT `COLUMN_NAME` ";
             $columnQuery .= "FROM `INFORMATION_SCHEMA`.`COLUMNS` ";
@@ -110,7 +110,7 @@ abstract class Model_Dao
      * @return object - if query results in single object
      */
     public static function get_by_query($query) {
-        global $db;
+        $db = call_user_func(DB_CLASS . "::getInstance");
         $objectArray = array();
         $resultSet = $db->query($query);
         while($row = $db->fetch_assoc($resultSet)) {
@@ -130,7 +130,7 @@ abstract class Model_Dao
      * @global dbObject $db
      */
     private function _create() {
-        global $db;
+        $db = call_user_func(DB_CLASS . "::getInstance");
         $vars = get_object_vars($this);
         $columnVars = array_flip($this->_get_columns());
         $query  = "INSERT INTO `" . $this->_tableName . "` (";
@@ -170,7 +170,7 @@ abstract class Model_Dao
      * @global dbObject $db
      */
     private function _update() {
-        global $db;
+        $db = call_user_func(DB_CLASS . "::getInstance");
         $vars = get_object_vars($this);
         $columnVars = array_flip($this->_columns);
         $query = "UPDATE `" . $this->_tableName . "` SET ";
@@ -212,6 +212,6 @@ abstract class Model_Dao
      * @global dbObject $db
      */
     public function delete() {
-        global $db;
+        $db = call_user_func(DB_CLASS . "::getInstance");
     }
 }

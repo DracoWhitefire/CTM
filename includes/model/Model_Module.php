@@ -22,7 +22,7 @@ Class Model_Module extends Model_Dao
      * @return object or array of objects
      */
     public static function get($selection = "all") {
-        global $db;
+        $db = call_user_func(DB_CLASS . "::getInstance");
         global $session;
         $loginId = LOGIN_MODULE_ID;
         if($selection == "all") {

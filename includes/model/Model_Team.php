@@ -12,7 +12,7 @@ class Model_Team extends Model_Dao
         protected $_tableName = "teams";
 	
 	public static function get($selection = "all") {
-		global $db;
+		$db = call_user_func(DB_CLASS . "::getInstance");
 		$query  = "SELECT * ";
 		$query .= "FROM `teams` ";
 		$result = $db->query($query);

@@ -4,7 +4,7 @@
     if((!$session->is_loggedIn()) && ($_GET["id"] != "7")) {
         header("location:index.php?id=7");
     }
-    $db = Model_MySqlDb::getInstance();
+    
     $currentId = Model_Module::get_current_id();
     $currentModule = Model_Module::get($currentId);
 ?>
@@ -63,4 +63,4 @@
     </body>
 </html>
 <?php
-    $db->disconnect();
+    call_user_func(DB_CLASS . "::getInstance")->disconnect();
