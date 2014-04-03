@@ -73,7 +73,7 @@ class Model_User extends Model_Dao
 //        $result_array = $db->fetch_assoc($sch_set);
 //        mysqli_free_result($sch_set);
 //        return $result_array;
-        return Model_Schedule::get_by_user_day($this->id, $day);
+        return Model_Schedule::get_by_preset_day($this->id, $day);
     }
     
     /**

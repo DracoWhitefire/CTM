@@ -34,11 +34,11 @@ Class Model_Schedule extends Model_Dao
      * @param string $weekday
      * @return object - instance of Schedule
      */
-    public static function get_by_user_day($userId, $weekday) {
+    public static function get_by_preset_day($userId, $weekday) {
         global $db;
         $query  = "SELECT * ";
         $query .= "FROM `schedules` ";
-        $query .= "WHERE `user_id` = " . (int) $userId . " ";
+        $query .= "WHERE `preset_id` = " . (int) $userId . " ";
         $query .= "AND `weekday_id` = " . (int) $weekday . " ";
         $query .= "ORDER BY `id` ASC ";
         $query .= "LIMIT 1";
