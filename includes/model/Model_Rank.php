@@ -10,6 +10,13 @@ class Model_Rank extends Model_Dao
     public $name;
     protected $_tableName = "ranks";
 
+    /**
+     * get
+     * Instantiates rank object(s);
+     * @global object $db
+     * @param string $selection
+     * @return object|array - instance of Model_Rank or array thereof
+     */
     public static function get($selection = "all") {
         global $db;
         $query  = "SELECT MAX(`value`) ";
