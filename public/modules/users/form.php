@@ -103,6 +103,7 @@ for($weekday = 2; $weekday <= 6; $weekday++) {
 //        foreach($weekdays_array as $weekday) {
     if($editUser == TRUE) {
                     $userSched = $user->get_sch($weekday);
+                    count($userSched) != 1 ? $userSched = new Model_Schedule : NULL;
     }
     $userForm .= "<tr><td>{$weekday}</td><td><input type=\"text\" name=\"{$weekday}Begin_input\" ";
     if(isset($validator->errors["{$weekday}Begin_input"])) {
