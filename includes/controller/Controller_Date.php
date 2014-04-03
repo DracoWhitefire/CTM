@@ -56,7 +56,7 @@ Class Controller_Date
      * @return array $sessionDateArray - array with selected date
      */
     private static function _from_session() {
-        $sessionDateArray = $_SESSION["date"];
+        $sessionDateArray = $_SESSION["selectedDate"];
         return (array) $sessionDateArray;
     }
     
