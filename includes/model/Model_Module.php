@@ -11,7 +11,50 @@ Class Model_Module extends Model_Dao
     public $menuName;
     public $rank;
     public $position;
+    private static $_count;
     protected $_tableName = "modules";
+    
+    /**
+     * _getById
+     * Returns module object by id;
+     * @global Controller_Session $session
+     * @param int $id - the id if the module
+     * @return Model_Module|boolean - Instance of Model_Module or false
+     */
+    private static function _getById($id) {
+        global $session;
+        $db = call_user_func(DB_CLASS . "::getInstance");
+        if(!((1 <= $id) && ($id <= self::_getCount()))) { // Prevents GET request abuse - will always connect to valid module
+            $id = 1;
+        }
+        $query  = "SELECT * ";
+        $query .= "FROM `modules` ";
+        $query .= "WHERE `id` = '" . $db->query_prep($id) . "' ";
+        $query .= "LIMIT 1";
+        $object = self::get_by_query($query);
+        if($object->minRank <= $session->rank) {
+            return $object;
+        } else {
+            return FALSE;
+        }
+    }
+    
+    /**
+     * _getCount
+     * Returns the amount of modules;
+     * @return int self::$_count - The amount of modules
+     */
+    private static function _getCount() {
+        if(!isset(self::$_count)) {
+            $db = call_user_func(DB_CLASS . "::getInstance");
+            $query  = "SELECT * ";
+            $query .= "FROM `modules` ";
+            $set = $db->query($query);
+            self::$_count = $db->num_rows($set);
+            mysqli_free_result($set);
+        }
+        return self::$_count;
+    }
     
     /**
      * get
@@ -32,28 +75,8 @@ Class Model_Module extends Model_Dao
             $query .= "ORDER BY `position` ASC ";
             return self::get_by_query($query);
         } elseif(is_numeric($selection)) {
-            //Check whether user session exists
             if(isset($session->rank)) {
-                $query  = "SELECT * ";
-                $query .= "FROM `modules` ";
-                $set = $db->query($query);
-                $moduleTotal = $db->num_rows($set);
-                mysqli_free_result($set);
-                // Prevents GET request abuse - will always connect to valid module
-                if(!((1 <= $selection) && ($selection <= $moduleTotal))) {
-                    $selection = 1;
-                }
-                $query  = "SELECT * ";
-                $query .= "FROM `modules` ";
-                $query .= "WHERE `id` = '" . $db->query_prep($selection) . "' ";
-                $query .= "LIMIT 1";
-                $object = self::get_by_query($query);
-                if($object->minRank <= $session->rank) {
-                    return $object;
-                } else {
-                    return FALSE;
-                }
-            // If no user session exists redirect to login module
+                return self::_getById($selection);
             } else {
                 $query  = "SELECT * ";
                 $query .= "FROM `modules` ";
