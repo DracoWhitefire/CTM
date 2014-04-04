@@ -46,10 +46,12 @@ final class Model_MySqlDb implements Model_DbInterface
      * Unsets Connection;
      * @return void
      */
-    public function disconnect() {
-        if(isset($this->_connection)) {
-            mysqli_close($this->_connection);
-            unset($this->_connection);
+    public static function disconnect() {
+        if(isset(self::$_singleInstance)) {
+            if(isset(self::$_singleInstance->_connection)) {
+                mysqli_close(self::$_singleInstance->_connection);
+                unset(self::$_singleInstance->_connection);
+            }
         }
     }
 

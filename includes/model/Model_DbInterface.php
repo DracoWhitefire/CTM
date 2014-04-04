@@ -17,7 +17,7 @@ interface Model_DbInterface
      * disconnect
      * Disconnects from database;
      */
-    public function disconnect();
+    public static function disconnect();
 
     /**
      * query_prep
