@@ -15,6 +15,19 @@ Class Model_Module extends Model_Dao
     protected $_tableName = "modules";
     
     /**
+     * _getAll
+     * Gets all modules
+     * @return array|object - array of Model_Module (or single instance of Model_Module)
+     */
+    private static function _getAll() {
+        $query  = "SELECT * ";
+        $query .= "FROM `modules` ";
+        $query .= "WHERE `visible` = 1 ";
+        $query .= "ORDER BY `position` ASC ";
+        return self::get_by_query($query);
+    }
+    
+    /**
      * _getById
      * Returns module object by id;
      * @global Controller_Session $session
@@ -69,11 +82,7 @@ Class Model_Module extends Model_Dao
         global $session;
         $loginId = LOGIN_MODULE_ID;
         if($selection == "all") {
-            $query  = "SELECT * ";
-            $query .= "FROM `modules` ";
-            $query .= "WHERE `visible` = 1 ";
-            $query .= "ORDER BY `position` ASC ";
-            return self::get_by_query($query);
+            return self::_getAll();
         } elseif(is_numeric($selection)) {
             if(isset($session->rank)) {
                 return self::_getById($selection);
