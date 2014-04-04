@@ -13,7 +13,7 @@ Class Model_Module extends Model_Dao
     public $position;
     private static $_count;
     protected $_tableName = "modules";
-    
+        
     /**
      * _getAll
      * Gets all modules
@@ -87,12 +87,7 @@ Class Model_Module extends Model_Dao
             if(isset($session->rank)) {
                 return self::_getById($selection);
             } else {
-                $query  = "SELECT * ";
-                $query .= "FROM `modules` ";
-                $query .= "WHERE `id` = '{$loginId}' ";
-                $query .= "LIMIT 1";
-                $object = self::get_by_query($query);
-                return $object;
+                return self::_getById($loginId);
             }
         }
     }
