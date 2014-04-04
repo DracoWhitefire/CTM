@@ -9,7 +9,7 @@
 ?>
 <div id="scheduleSelector_div">
     <div id="dateSelector_div">
-        <?php 
+        <?php
             $date = new View_Date;
             echo $date->selector("GET");
         ?>
@@ -38,7 +38,7 @@
     }
     $team = Model_Team::get($selectedTeam);
     $schedCount = 0;
-    $output = "<div id=\"scheduleSelected_div\">";    
+    $output = "<div id=\"scheduleSelected_div\">";
     if(count($usersArray) > 0) {
         $schedOutput = "<form id=\"scheduleSelected_form\" action=\"index.php" . htmlspecialchars("?id={$currentId}") . "\" method=\"POST\" ><table id = \"scheduleSelected_table\"><thead><tr><th>Name</th><th>Start Time</th><th>End Time</th><th>Working Hours</th></tr></thead><tbody>";
         $date = Controller_Date::get_selected();
@@ -56,7 +56,7 @@
             $endTime = $schedule->get_endtime();
             if($editing == TRUE) {
                 $schedOutput .= "<input type=\"text\" name=\"starttime_" . htmlspecialchars($user->id) . "\" value=\"";
-            }		
+            }
             $schedOutput .= $startTime;
             if($editing == TRUE) {
                 $schedOutput .= "\" />";
