@@ -79,9 +79,8 @@ class Model_Rank extends Model_Dao
      * @return Model_Rank - instance of Model_Rank
      */
     private static function _getByValue($value) {
-        $db = call_user_func(DB_CLASS . "::getInstance");
         if((self::_getMin() <= $value) && ($value <= self::_getMax())) {
-            $value = $db->query_prep($value);
+            $value = call_user_func(DB_CLASS . "::query_prep", $value);
         } else {
             $value = self::_getMin();
         }

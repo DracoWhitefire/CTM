@@ -22,7 +22,7 @@ class Model_Team extends Model_Dao
 			return self::get_by_query($query);
 		} elseif(is_numeric($selection)) {
 			if((1 <= $selection) && ($selection <= $numRows)) {
-				$selection = $db->query_prep($selection);
+				$selection = call_user_func(DB_CLASS . "::query_prep", $selection);
 			} else {
 				$selection = 2;
 			}			

@@ -36,13 +36,12 @@ Class Model_Module extends Model_Dao
      */
     private static function _getById($id) {
         global $session;
-        $db = call_user_func(DB_CLASS . "::getInstance");
         if(!((1 <= $id) && ($id <= self::_getCount()))) { // Prevents GET request abuse - will always connect to valid module
             $id = 1;
         }
         $query  = "SELECT * ";
         $query .= "FROM `modules` ";
-        $query .= "WHERE `id` = '" . $db->query_prep($id) . "' ";
+        $query .= "WHERE `id` = '" . call_user_func(DB_CLASS . "::query_prep", $id) . "' ";
         $query .= "LIMIT 1";
         $object = self::get_by_query($query);
         if($object->minRank <= $session->getRank()) {

@@ -1,9 +1,8 @@
 <?php
 if(isset($_POST["login"])) {
     //login attempt
-    $db = call_user_func(DB_CLASS . "::getInstance");
-    $username = $db->query_prep($_POST["username_input"]);
-    $password = $db->query_prep($_POST["password_input"]);
+    $username = call_user_func(DB_CLASS . "::query_prep", $_POST["username_input"]);
+    $password = call_user_func(DB_CLASS . "::query_prep", $_POST["password_input"]);
     $checkReq_array = array("username_input", "password_input");
     $validator = new Controller_Validator;
     $validator->required($checkReq_array);

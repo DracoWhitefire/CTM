@@ -45,8 +45,7 @@ class Model_User extends Model_Dao
      * @return object|array - single User object or array of User objects
      */
     public static function get_by_team($team) {
-        $db = call_user_func(DB_CLASS . "::getInstance");
-        $team = $db->query_prep($team);
+        $team = call_user_func(DB_CLASS . "::query_prep", $team);
         $user_query  = "SELECT * ";
         $user_query .= "FROM `users` ";
         $user_query .= "WHERE `team` = '{$team}' ";

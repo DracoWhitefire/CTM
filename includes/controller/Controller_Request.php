@@ -16,8 +16,7 @@ class Controller_Request
      * @return string
      */
     private static function _cleanup($string) {
-        $db = call_user_func(DB_CLASS . "::getInstance");
-        return $db->query_prep($string);
+        return call_user_func(DB_CLASS . "::query_prep", $string);
     }
     
     /**

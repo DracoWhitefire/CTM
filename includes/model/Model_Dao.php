@@ -20,7 +20,7 @@ abstract class Model_Dao
             $columnQuery  = "SELECT `COLUMN_NAME` ";
             $columnQuery .= "FROM `INFORMATION_SCHEMA`.`COLUMNS` ";
             $columnQuery .= "WHERE `TABLE_NAME`='";
-            $columnQuery .= $db->query_prep($this->_tableName);
+            $columnQuery .= call_user_func(DB_CLASS . "::query_prep", $this->_tableName);
             $columnQuery .= "';";
             $columnResult = $db->query($columnQuery);
             while($row = $db->fetch_assoc($columnResult)) {
@@ -142,7 +142,7 @@ abstract class Model_Dao
         foreach($vars as $var => $value) {
             $count += 1;
             if(array_key_exists($var, $columnVars) && !is_null($value)) {
-                $query .= "`" . $db->query_prep($columnVars[$var]) . "`";
+                $query .= "`" . call_user_func(DB_CLASS . "::query_prep", $columnVars[$var]) . "`";
                 if ($count < $valueCount) {
                         $query .= ", ";
                 }
@@ -153,7 +153,7 @@ abstract class Model_Dao
         foreach($vars as $var => $value) {
             $count += 1;
             if(array_key_exists($var, $columnVars) && !is_null($value)) {
-                $query .= "'" . $db->query_prep($value) . "'";
+                $query .= "'" . call_user_func(DB_CLASS . "::query_prep", $value) . "'";
                 if ($count < $valueCount) {
                         $query .= ", ";
                 }
@@ -180,9 +180,9 @@ abstract class Model_Dao
             if(array_key_exists($var, $columnVars)) {
                 if($var != "id") {
                     $query .= "`";
-                    $query .= $db->query_prep($columnVars[$var]);
+                    $query .= call_user_func(DB_CLASS . "::query_prep", $columnVars[$var]);
                     $query .= "`='";
-                    $query .= $db->query_prep($this->$var);
+                    $query .= call_user_func(DB_CLASS . "::query_prep", $this->$var);
                     if ($count < count($columnVars)) {
                         $query .= "', ";
                     } else {
