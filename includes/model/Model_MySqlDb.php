@@ -18,6 +18,11 @@ final class Model_MySqlDb implements Model_DbInterface
         $this->_mysqliRealEscapeStringExists = function_exists("mysqli_real_escape_string"); //PHP5
     }
     
+    /**
+     * getInstance
+     * Singleton getter for self;
+     * @return Model_MySqlDb - instance of self
+     */
     public static function getInstance() {
         !isset(self::$_singleInstance) ? self::$_singleInstance = new self : NULL;
         return self::$_singleInstance;
