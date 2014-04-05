@@ -6,6 +6,7 @@
 class Model_Rank extends Model_Dao
 {
     private static $_max;
+    private static $_min;
     public $id;
     public $value;
     public $name;
@@ -44,6 +45,23 @@ class Model_Rank extends Model_Dao
     }
     
     /**
+     * _getMin
+     * Returns the lowest value in the rank table;
+     * @return int - the lowest rank
+     */
+    private static function _getMin() {
+        if(!isset(self::$_min)) {
+            $db = call_user_func(DB_CLASS . "::getInstance");
+            $query  = "SELECT MIN(`value`) ";
+            $query .= "FROM `ranks` ";
+            $result = $db->query($query);
+            (int) self::$_min = $db->fetch_assoc($result)["MIN(`value`)"];
+            mysqli_free_result($result);
+        }        
+        return self::$_min;
+    }
+    
+    /**
      * _getAll
      * Returns all instances of self;
      * @return Model_Rank|array - returns instance of self or array of instances
@@ -62,10 +80,10 @@ class Model_Rank extends Model_Dao
      */
     private static function _getByValue($value) {
         $db = call_user_func(DB_CLASS . "::getInstance");
-        if((1 <= $value) && ($value <= self::_getMax())) {
+        if((self::_getMin() <= $value) && ($value <= self::_getMax())) {
             $value = $db->query_prep($value);
         } else {
-            $value = 1;
+            $value = self::_getMin();
         }
         $query  = "SELECT * ";
         $query .= "FROM `ranks` ";
