@@ -78,16 +78,14 @@ Class Model_Module extends Model_Dao
      * @return object or array of objects
      */
     public static function get($selection = "all") {
-        $db = call_user_func(DB_CLASS . "::getInstance");
         global $session;
-        $loginId = LOGIN_MODULE_ID;
         if($selection == "all") {
             return self::_getAll();
         } elseif(is_numeric($selection)) {
             if(isset($session->rank)) {
                 return self::_getById($selection);
             } else {
-                return self::_getById($loginId);
+                return self::_getById(LOGIN_MODULE_ID);
             }
         }
     }
