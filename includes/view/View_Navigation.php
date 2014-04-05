@@ -8,7 +8,6 @@ Class View_Navigation
     
     static function menu() {
         global $currentId;
-        $db = call_user_func(DB_CLASS . "::getInstance");
         global $session;
         $output = "";
         
