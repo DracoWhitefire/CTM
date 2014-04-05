@@ -8,8 +8,9 @@ final class Model_MySqlDb implements Model_DbInterface
     private $_connection;
     private $_magicQuotesActive;
     private $_mysqliRealEscapeStringExists;
+    private $_lastQuery;
     private static $_singleInstance;
-    public $last_query;
+    
 
     private function __construct() {
         $this->_connect();
@@ -54,7 +55,24 @@ final class Model_MySqlDb implements Model_DbInterface
             }
         }
     }
-
+    
+    /**
+     * _getLastQuery
+     * Returns the last executed query if it exists, or null;
+     * @return string|null - Either last query or null
+     */
+    private function _getLastQuery() {
+        return isset($this->_lastQuery) ? $this->_lastQuery : NULL;
+    }
+    
+    /**
+     * _setLastQuery - saves the last query to _lastQuery;
+     * @param string $query - the query string to be saved
+     */
+    private function _setLastQuery($query) {
+        $this->_lastQuery = $query;
+    }
+    
     /**
      * query_prep
      * Prepares a query for database operation;
@@ -123,7 +141,7 @@ final class Model_MySqlDb implements Model_DbInterface
         if(!$result) {
             if($debug == TRUE) {
                 $message = "Database query failed: " . $this->_connection->error;
-                $message .= "<br />" . $this->last_query;
+                $message .= "<br />" . $this->_getLastQuery();
             } else {
                 $message = "There was an error. Please contact the system administrator.";
             }
@@ -138,7 +156,7 @@ final class Model_MySqlDb implements Model_DbInterface
      * @return result $result - Result set from query
      */
     public function query($query) {
-        $this->last_query = $query;
+        $this->_setLastQuery($query);
         $result = mysqli_query($this->_connection, $query);
         $this->_mysqli_confirm($result);
         return $result;
