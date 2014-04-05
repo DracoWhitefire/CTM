@@ -8,3 +8,5 @@
 !defined("SITE_TITLE")          ? define("SITE_TITLE", "")          : NULL;
 !defined("LOGIN_MODULE_ID")     ? define("LOGIN_MODULE_ID", "")     : NULL;
 !defined("DEFAULT_TIMEZONE")    ? define("DEFAULT_TIMEZONE", "")    : NULL;
+
+!defined("DEBUGMODE")           ? define("DEBUGMODE", FALSE)        : NULL;
