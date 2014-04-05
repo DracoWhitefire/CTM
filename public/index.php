@@ -5,7 +5,7 @@
         header("location:index.php?id=7");
     }
     
-    $currentId = Model_Module::get_current_id();
+    $currentId = Model_Module::getCurrentId();
     $currentModule = Model_Module::get($currentId);
 ?>
 <!DOCTYPE HTML>
