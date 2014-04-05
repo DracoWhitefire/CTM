@@ -5,13 +5,10 @@
  */
 Class View_Navigation 
 {
-    
     static function menu() {
         global $currentId;
         global $session;
         $output = "";
-        
-        //Check if user session exists
         if($session->is_loggedIn()) {
             $output .= "<ul>";
             $modulesArray = Model_Module::get();
