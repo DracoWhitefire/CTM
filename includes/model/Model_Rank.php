@@ -5,6 +5,7 @@
  */
 class Model_Rank extends Model_Dao
 {
+    private static $_max;
     public $id;
     public $value;
     public $name;
@@ -19,17 +20,12 @@ class Model_Rank extends Model_Dao
      */
     public static function get($selection = "all") {
         $db = call_user_func(DB_CLASS . "::getInstance");
-        $query  = "SELECT MAX(`value`) ";
-        $query .= "FROM `ranks` ";
-        $result = $db->query($query);
-        $maxValue = $db->fetch_assoc($result)["MAX(`value`)"];
-        mysqli_free_result($result);
         $query  = "SELECT * ";
         $query .= "FROM `ranks` ";
         if($selection == "all") {
             return self::get_by_query($query);
         } elseif(is_numeric($selection)) {	
-            if((1 <= $selection) && ($selection <= $maxValue)) {
+            if((1 <= $selection) && ($selection <= self::_getMax())) {
                 $selection = $db->query_prep($selection);
             } else {
                 $selection = 1;
@@ -38,5 +34,22 @@ class Model_Rank extends Model_Dao
             $query .= "LIMIT 1 ";
             return self::get_by_query($query);
         }
+    }
+    
+    /**
+     * _getMax
+     * Returns the highest value in the rank table;
+     * @return int - the highest rank
+     */
+    private static function _getMax() {
+        if(!isset(self::$_max)) {
+            $db = call_user_func(DB_CLASS . "::getInstance");
+            $query  = "SELECT MAX(`value`) ";
+            $query .= "FROM `ranks` ";
+            $result = $db->query($query);
+            (int) self::$_max = $db->fetch_assoc($result)["MAX(`value`)"];
+            mysqli_free_result($result);
+        }        
+        return self::$_max;
     }
 }
