@@ -17,7 +17,7 @@ class Model_Rank extends Model_Dao
      * Instantiates rank object(s);
      * @global object $db
      * @param string $selection
-     * @return object|array - instance of Model_Rank or array thereof
+     * @return Model_Rank|array - instance of Model_Rank or array thereof
      */
     public static function get($selection = "all") {
         if($selection == "all") {
