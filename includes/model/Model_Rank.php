@@ -23,7 +23,7 @@ class Model_Rank extends Model_Dao
         $query  = "SELECT * ";
         $query .= "FROM `ranks` ";
         if($selection == "all") {
-            return self::get_by_query($query);
+            return self::_getAll();
         } elseif(is_numeric($selection)) {	
             if((1 <= $selection) && ($selection <= self::_getMax())) {
                 $selection = $db->query_prep($selection);
@@ -51,5 +51,16 @@ class Model_Rank extends Model_Dao
             mysqli_free_result($result);
         }        
         return self::$_max;
+    }
+    
+    /**
+     * _getAll
+     * Returns all instances of self;
+     * @return Model_Rank|array - returns instance of self or array of instances
+     */
+    private static function _getAll() {
+        $query  = "SELECT * ";
+        $query .= "FROM `ranks` ";
+        return self::get_by_query($query);
     }
 }
