@@ -25,7 +25,7 @@ interface Model_DbInterface
      * @param string $value - raw query
      * @return string $value - safe query
      */
-    public function query_prep($value);
+    public static function query_prep($value);
 
     /**
      * fetch_assoc

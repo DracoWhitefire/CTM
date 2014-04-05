@@ -6,16 +6,14 @@
 final class Model_MySqlDb implements Model_DbInterface
 {
     private $_connection;
-    private $_magicQuotesActive;
-    private $_mysqliRealEscapeStringExists;
     private $_lastQuery;
     private static $_singleInstance;
+    private static $_magicQuotesActive;
+    private static $_mysqliRealEscapeStringExists;
     
 
     private function __construct() {
         $this->_connect();
-        $this->_magicQuotesActive = get_magic_quotes_gpc();
-        $this->_mysqliRealEscapeStringExists = function_exists("mysqli_real_escape_string"); //PHP5
     }
     
     /**
@@ -26,6 +24,26 @@ final class Model_MySqlDb implements Model_DbInterface
     public static function getInstance() {
         !isset(self::$_singleInstance) ? self::$_singleInstance = new self : NULL;
         return self::$_singleInstance;
+    }
+    
+    /**
+     * _getMagicQuotesAtive
+     * Getter for lazy instantiation of self::$_magicQuotesActive;
+     * @return bool - is Magic Quotes active?
+     */
+    private static function _getMagicQuotesActive() {
+        !isset(self::$_magicQuotesActive) ? self::$_magicQuotesActive = get_magic_quotes_gpc() : NULL;
+        return self::$_magicQuotesActive;
+    }
+    
+    /**
+     * _getMysqliRealEscapeStringExists
+     * Getter for lazy instantiation of self::$_mysqliRealEscapeStringExists;
+     * @return bool - does mysqli_real_escape_string() exist (so it's PHP5)?
+     */
+    private static function _getMysqliRealEscapeStringExists() {
+        !isset(self::$_mysqliRealEscapeStringExists) ? self::$_mysqliRealEscapeStringExists = function_exists("mysqli_real_escape_string") : NULL;
+        return self::$_mysqliRealEscapeStringExists;
     }
     
     /**
@@ -84,14 +102,14 @@ final class Model_MySqlDb implements Model_DbInterface
      * @param string $value - raw query
      * @return string $value - safe query
      */
-    public function query_prep($value) {
-        if($this->_mysqliRealEscapeStringExists) {
-            if($this->_magicQuotesActive) {
-                $value = $this->_connection->real_escape_string(stripslashes($value));
+    public static function query_prep($value) {
+        if(self::_getMysqliRealEscapeStringExists()) {
+            if(self::_getMagicQuotesActive()) {
+                $value = mysqli::real_escape_string(stripslashes($value));
             }
         } else {
             if(!$this->_magicQuotesActive) {
-                $value = $this->_connection->real_escape_string($value);
+                $value = mysqli::real_escape_string($value);
             }
         }
         return trim($value);
