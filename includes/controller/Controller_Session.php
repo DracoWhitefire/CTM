@@ -57,11 +57,21 @@ class Controller_Session
         }
     }
     
+    /**
+     * getRank
+     * Gets the set rank or sets it to 0 if not set;
+     * @return int - the rank
+     */
     public function getRank() {
         !isset($this->_rank) ? $this->setRank(0) : NULL;
         return $this->_rank;
     }
     
+    /**
+     * setRank
+     * Sets the rank to $rank;
+     * @param int $rank - the rank to be set
+     */
     public function setRank($rank) {
         $this->_rank = $_SESSION["rank"] = $rank;
     }
