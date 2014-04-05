@@ -18,7 +18,7 @@ Class View_Navigation
             $modulesArray = Model_Module::get();
             foreach($modulesArray as $module) {
                 //Only generate menu items for visible modules allowed by rank
-                if($module->visible == 1 && $module->minRank <= $session->rank) {
+                if($module->visible == 1 && $module->minRank <= $session->getRank()) {
                     $output .= "<li";
                     if($module->id == $currentId) {
                         $output .= " class=\"selected\"";

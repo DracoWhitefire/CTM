@@ -6,9 +6,9 @@
 class Controller_Session
 {
     private $_loggedIn;
+    private $_rank;
     public $userId;
     public $firstName;
-    public $rank;
     public $team;
 
     function __construct() {
@@ -25,7 +25,7 @@ class Controller_Session
             $this->userId = $_SESSION["id"];
             $this->_loggedIn = TRUE;
             $this->firstName = $_SESSION["firstname"];
-            $this->rank = $_SESSION["rank"];
+            $this->setRank($_SESSION["rank"]);
             $this->team = $_SESSION["team"];
         } else {
             unset($this->userId);
@@ -51,10 +51,19 @@ class Controller_Session
         if($user) {
             $this->userId = $_SESSION["id"] = $user->id;
             $this->firstName = $_SESSION["firstname"] = $user->firstName;
-            $this->rank = $_SESSION["rank"] = $user->rank;
+            $this->setRank($user->rank);
             $this->team = $_SESSION["team"] = $user->team;
             $this->_loggedIn = TRUE;
         }
+    }
+    
+    public function getRank() {
+        !isset($this->_rank) ? $this->setRank(0) : NULL;
+        return $this->_rank;
+    }
+    
+    public function setRank($rank) {
+        $this->_rank = $_SESSION["rank"] = $rank;
     }
     
     /**

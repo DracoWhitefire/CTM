@@ -16,7 +16,7 @@
     </div>
     <div id="teamSelector_div">
         <?php
-            if(($session->rank)>=50) {
+            if($session->getRank() >= 50) {
                 $url = new Controller_Url();
                 (int) $selectedTeam = Model_Team::get_selected();
                 $output = "<form id=\"teamSelector_form\" method=\"POST\" action=\"" . $url . "\"><label for=\"teamSelect\">Team: </label>";

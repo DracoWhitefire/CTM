@@ -45,7 +45,7 @@ Class Model_Module extends Model_Dao
         $query .= "WHERE `id` = '" . $db->query_prep($id) . "' ";
         $query .= "LIMIT 1";
         $object = self::get_by_query($query);
-        if($object->minRank <= $session->rank) {
+        if($object->minRank <= $session->getRank()) {
             return $object;
         } else {
             return FALSE;
@@ -82,7 +82,7 @@ Class Model_Module extends Model_Dao
         if($selection == "all") {
             return self::_getAll();
         } elseif(is_numeric($selection)) {
-            if(isset($session->rank)) {
+            if($session->getRank() > 0) {
                 return self::_getById($selection);
             } else {
                 return self::_getById(LOGIN_MODULE_ID);
