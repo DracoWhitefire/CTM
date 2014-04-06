@@ -1,7 +1,7 @@
 <?php
     require_once("../includes/functions.php");
     $session = new Controller_Session;
-    if((!$session->is_loggedIn()) && ($_GET["id"] != "7")) {
+    if((!$session->isLoggedIn()) && ($_GET["id"] != "7")) {
         header("location:index.php?id=7");
     }
     

@@ -9,7 +9,7 @@ Class View_Module
         global $currentId;
         global $session;
         $output = "";
-        if($session->is_loggedIn()) {
+        if($session->isLoggedIn()) {
             $output .= "<ul>";
             $modulesArray = Model_Module::get();
             foreach($modulesArray as $module) {

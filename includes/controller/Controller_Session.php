@@ -36,7 +36,7 @@ class Controller_Session
      * Returns whether user is logged in;
      * @return bool - Is user logged in?
      */
-    public function is_loggedIn() {
+    public function isLoggedIn() {
         return $this->_loggedIn;
     }
     
