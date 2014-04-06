@@ -5,7 +5,7 @@
         $editing = FALSE;
     }
     $_SESSION["teamSelect"] = Model_Team::getSelected();
-    $_SESSION["selectedDate"] = Controller_Date::get_selected();
+    $_SESSION["selectedDate"] = Controller_Date::getSelected();
 ?>
 <div id="scheduleSelector_div">
     <div id="dateSelector_div">
@@ -41,7 +41,7 @@
     $output = "<div id=\"scheduleSelected_div\">";
     if(count($usersArray) > 0) {
         $schedOutput = "<form id=\"scheduleSelected_form\" action=\"index.php" . htmlspecialchars("?id={$currentId}") . "\" method=\"POST\" ><table id = \"scheduleSelected_table\"><thead><tr><th>Name</th><th>Start Time</th><th>End Time</th><th>Working Hours</th></tr></thead><tbody>";
-        $date = Controller_Date::get_selected();
+        $date = Controller_Date::getSelected();
         (int) $selectedDay = date("w", strtotime($date["d"] . "-" . $date["m"] . "-" . $date["y"])) +  1;
         foreach($usersArray as $user) {
             $schedule = $user->getSchedule($selectedDay);

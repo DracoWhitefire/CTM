@@ -90,7 +90,7 @@ Class Controller_Date
      * Gets selected date
      * @return array $dateArray - array with selected date
      */
-    public static function get_selected() {
+    public static function getSelected() {
         $dateArray = array();
         if(isset($_POST["d"]) || isset($_POST["m"]) || isset($_POST["y"])) {
             $dateArray = self::_fromPost();

@@ -9,7 +9,7 @@ Class View_Date
     private $_date = array();
     
     public function __construct() {
-        $dateArray = Controller_Date::get_selected();
+        $dateArray = Controller_Date::getSelected();
         $this->_date["selectedYear"] = isset($dateArray["y"]) ? $dateArray["y"] : date("Y");
         $this->_date["selectedMonth"] = isset($dateArray["m"]) ? $dateArray["m"] : date("n");
         $this->_date["selectedDay"] = isset($dateArray["d"]) ? $dateArray["d"] : date("j");
