@@ -8,20 +8,16 @@ class Model_Team extends Model_Dao
 	public $id;
 	public $project;
 	public $name;
-	public $count;
         protected static $_tableName = "teams";
 	
 	public static function get($selection = "all") {
 		$db = call_user_func(DB_CLASS . "::getInstance");
 		$query  = "SELECT * ";
-		$query .= "FROM `teams` ";
-		$result = $db->query($query);
-		$numRows = $db->num_rows($result);
-		mysqli_free_result($result);		
+		$query .= "FROM `teams` ";		
 		if($selection == "all") {
 			return self::get_by_query($query);
 		} elseif(is_numeric($selection)) {
-			if((1 <= $selection) && ($selection <= $numRows)) {
+			if((1 <= $selection) && ($selection <= self::_getCount())) {
 				$selection = call_user_func(DB_CLASS . "::query_prep", $selection);
 			} else {
 				$selection = 2;
