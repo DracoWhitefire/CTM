@@ -3,7 +3,7 @@
 /**
  * Navigation class to create menu
  */
-Class View_Navigation 
+Class View_Module 
 {
     static function menu() {
         global $currentId;

@@ -22,7 +22,7 @@
             </div>
             <div id="body_div">
                 <div id="nav_div">
-                    <?php echo View_Navigation::menu(); ?>
+                    <?php echo View_Module::menu(); ?>
                 </div>
                 <div id="main_div">
                     <div id="pageTitle_div">
