@@ -52,7 +52,7 @@ Class Controller_Date
      * Gets selected date from SESSION 
      * @return array $sessionDateArray - array with selected date
      */
-    private static function _from_session() {
+    private static function _fromSession() {
         $sessionDateArray = $_SESSION["selectedDate"];
         return (array) $sessionDateArray;
     }
@@ -95,7 +95,7 @@ Class Controller_Date
         if(isset($_POST["d"]) || isset($_POST["m"]) || isset($_POST["y"])) {
             $dateArray = self::_fromPost();
         } elseif(isset($_SESSION["selectedDate"])) {
-            $dateArray = self::_from_session();
+            $dateArray = self::_fromSession();
         } elseif(isset($_GET["d"]) || isset($_GET["m"]) || isset($_GET["y"])) {
             $dateArray = self::_fromGet();
         } else {
