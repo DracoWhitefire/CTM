@@ -26,7 +26,7 @@ abstract class Model_Dao
                 $columnQuery .= "';";
                 $columnResult = $db->query($columnQuery);
                 while($row = $db->fetch_assoc($columnResult)) {
-                    $this->_columns[$row["COLUMN_NAME"]] = $this->_column_to_var($row["COLUMN_NAME"]);
+                    $this->_columns[$row["COLUMN_NAME"]] = $this->_columnToVar($row["COLUMN_NAME"]);
                 }
                 mysqli_free_result($columnResult);
             }
@@ -58,7 +58,7 @@ abstract class Model_Dao
      * @param type $column - the column name to be converted
      * @return string - the converted attribute name
      */
-    private function _column_to_var($column) {
+    private function _columnToVar($column) {
         //SQL table names and columns are separated by underscore.
         //Object attributes are camelCase instead.
         if(!function_exists("rename_attribute")) { 
