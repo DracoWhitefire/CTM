@@ -59,10 +59,11 @@ Class Model_Module extends Model_Dao
     private static function _getCount() {
         if(!isset(self::$_count)) {
             $db = call_user_func(DB_CLASS . "::getInstance");
-            $query  = "SELECT * ";
+            $query  = "SELECT COUNT(*) ";
+            $query .= "AS `rowCount`";
             $query .= "FROM `modules` ";
             $set = $db->query($query);
-            self::$_count = $db->num_rows($set);
+            self::$_count = $db->fetch_assoc($set)["rowCount"];
             mysqli_free_result($set);
         }
         return self::$_count;
