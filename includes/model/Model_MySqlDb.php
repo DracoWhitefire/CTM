@@ -131,7 +131,7 @@ final class Model_MySqlDb implements Model_DbInterface
      * @param result $result - result set from db query
      * @return int $count - number of rows in result set
      */
-    public function num_rows($result) {
+    public function numRows($result) {
         return mysqli_num_rows($result);
     }
 

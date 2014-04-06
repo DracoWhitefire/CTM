@@ -36,12 +36,12 @@ interface Model_DbInterface
     public function fetchAssoc($result);
 
     /**
-     * num_rows
+     * numRows
      * Returns number of rows in result set;
      * @param result $result - result set from db query
      * @return int $count - number of rows in result set
      */
-    public function num_rows($result);
+    public function numRows($result);
 
     /**
      * insert_id
