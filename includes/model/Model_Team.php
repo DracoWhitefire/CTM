@@ -11,21 +11,31 @@ class Model_Team extends Model_Dao
         protected static $_tableName = "teams";
 	
 	public static function get($selection = "all") {
-		$db = call_user_func(DB_CLASS . "::getInstance");
-		$query  = "SELECT * ";
-		$query .= "FROM `teams` ";		
 		if($selection == "all") {
 			return self::_getAll();
 		} elseif(is_numeric($selection)) {
-			if((1 <= $selection) && ($selection <= self::_getCount())) {
-				$selection = call_user_func(DB_CLASS . "::query_prep", $selection);
-			} else {
-				$selection = 2;
-			}			
-			$query .= "WHERE `id` = {$selection} ";
-			return self::get_by_query($query);
+			return self::_getById($selection);
 		}		
 	}
+        
+        /**
+         * _getById
+         * Returns instance of self;
+         * @param int $id - the id
+         * @return Model_Team - instance of self
+         */
+        protected static function _getById($id) {
+            $db = call_user_func(DB_CLASS . "::getInstance");
+            $query  = "SELECT * ";
+            $query .= "FROM `teams` ";
+            if((1 <= $id) && ($id <= self::_getCount())) {
+                $id = call_user_func(DB_CLASS . "::query_prep", $id);
+            } else {
+                $id = 2;
+            }			
+            $query .= "WHERE `id` = {$id} ";
+            return self::get_by_query($query);
+        }
         
         /**
          * get_selected
