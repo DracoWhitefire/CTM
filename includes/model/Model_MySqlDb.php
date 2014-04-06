@@ -140,7 +140,7 @@ final class Model_MySqlDb implements Model_DbInterface
      * Returns id of last inserted row;
      * @return int - id of last insert
      */
-    public function insert_id() {
+    public function getInsertId() {
         return mysqli_insert_id($this->_connection);
     }
 

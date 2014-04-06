@@ -44,11 +44,11 @@ interface Model_DbInterface
     public function numRows($result);
 
     /**
-     * insert_id
+     * getInsertId
      * Returns id of last inserted row;
      * @return int - id of last insert
      */
-    public function insert_id();
+    public function getInsertId();
 
     /**
      * affected_rows
