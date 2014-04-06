@@ -11,11 +11,11 @@ class Model_Team extends Model_Dao
         protected static $_tableName = "teams";
 	
 	public static function get($selection = "all") {
-		if($selection == "all") {
-			return self::_getAll();
-		} elseif(is_numeric($selection)) {
-			return self::_getById($selection);
-		}		
+            if($selection == "all") {
+                return self::_getAll();
+            } elseif(is_numeric($selection)) {
+                return self::_getById($selection);
+            }		
 	}
         
         /**
