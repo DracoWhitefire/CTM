@@ -40,7 +40,7 @@ class Model_Team extends Model_Dao
                 $id = 2;
             }			
             $query .= "WHERE `id` = {$id} ";
-            return self::get_by_query($query);
+            return self::getByQuery($query);
         }
         
         /**

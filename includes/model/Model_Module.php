@@ -23,7 +23,7 @@ Class Model_Module extends Model_Dao
         $query .= "FROM `modules` ";
         $query .= "WHERE `visible` = 1 ";
         $query .= "ORDER BY `position` ASC ";
-        return self::get_by_query($query);
+        return self::getByQuery($query);
     }
     
     /**
@@ -42,7 +42,7 @@ Class Model_Module extends Model_Dao
         $query .= "FROM `modules` ";
         $query .= "WHERE `id` = '" . call_user_func(DB_CLASS . "::query_prep", $id) . "' ";
         $query .= "LIMIT 1";
-        $object = self::get_by_query($query);
+        $object = self::getByQuery($query);
         if($object->minRank <= $session->getRank()) {
             return $object;
         } else {

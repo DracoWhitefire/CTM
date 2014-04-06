@@ -77,6 +77,6 @@ class Model_Rank extends Model_Dao
         $query .= "FROM `ranks` ";
         $query .= "WHERE `value` = {$value} ";
         $query .= "LIMIT 1 ";
-        return self::get_by_query($query);
+        return self::getByQuery($query);
     }
 }

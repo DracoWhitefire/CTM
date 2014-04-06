@@ -130,7 +130,7 @@ abstract class Model_Dao
      * @return array $objectArray - if query results in multiple objects
      * @return object - if query results in single object
      */
-    public static function get_by_query($query) {
+    public static function getByQuery($query) {
         $db = call_user_func(DB_CLASS . "::getInstance");
         $objectArray = array();
         $resultSet = $db->query($query);
@@ -154,7 +154,7 @@ abstract class Model_Dao
         $query  = "SELECT * ";
         $query .= "FROM " . static::$_tableName . " ";
         $query .= "ORDER BY `id` ASC";
-        return self::get_by_query($query);
+        return self::getByQuery($query);
     }
     
     /**

@@ -34,7 +34,7 @@ class Model_User extends Model_Dao
             $user_query .= "WHERE `active` = '0' ";
         }
         $user_query .= "ORDER BY `id` ASC";
-        return self::get_by_query($user_query);
+        return self::getByQuery($user_query);
     }
     
     /**
@@ -51,7 +51,7 @@ class Model_User extends Model_Dao
         $user_query .= "WHERE `team` = '{$team}' ";
         $user_query .= "AND `active` = '1' ";
         $user_query .= "ORDER BY `id` ASC";
-        return self::get_by_query($user_query);
+        return self::getByQuery($user_query);
     }
     
     /**
