@@ -28,12 +28,12 @@ interface Model_DbInterface
     public static function queryPrep($value);
 
     /**
-     * fetch_assoc
+     * fetchAssoc
      * Fetches associative array from query result;
      * @param result $result - result set from db query
      * @return array - associative array from result set
      */
-    public function fetch_assoc($result);
+    public function fetchAssoc($result);
 
     /**
      * num_rows

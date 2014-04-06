@@ -68,7 +68,7 @@
 	$users_query .= "ORDER BY `id` ASC ";
 	$result = $mysqli->query($users_query);
 	$users_array = array();
-	while($names_array = $result->fetch_assoc()) {
+	while($names_array = $result->fetchAssoc()) {
 		$users_array[$names_array["first_name"] . " " . $names_array["last_name"]] = $names_array["id"];
 	}
 	

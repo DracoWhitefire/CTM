@@ -38,7 +38,7 @@ class Model_Rank extends Model_Dao
             $query  = "SELECT MAX(`value`) ";
             $query .= "FROM `ranks` ";
             $result = $db->query($query);
-            (int) self::$_max = $db->fetch_assoc($result)["MAX(`value`)"];
+            (int) self::$_max = $db->fetchAssoc($result)["MAX(`value`)"];
             mysqli_free_result($result);
         }        
         return self::$_max;
@@ -55,7 +55,7 @@ class Model_Rank extends Model_Dao
             $query  = "SELECT MIN(`value`) ";
             $query .= "FROM `ranks` ";
             $result = $db->query($query);
-            (int) self::$_min = $db->fetch_assoc($result)["MIN(`value`)"];
+            (int) self::$_min = $db->fetchAssoc($result)["MIN(`value`)"];
             mysqli_free_result($result);
         }        
         return self::$_min;

@@ -42,7 +42,7 @@ class Controller_Validator
         $user_query  = "SELECT `user_name`, `id` ";
         $user_query .= "FROM `users` ";
         $user_set = $db->query($user_query);
-        while($user_row = $db->fetch_assoc($user_set)) {
+        while($user_row = $db->fetchAssoc($user_set)) {
             $id = (int) $user_row["id"];
             $user_array[$id] = $user_row["user_name"];
         }

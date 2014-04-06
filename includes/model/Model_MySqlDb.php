@@ -121,7 +121,7 @@ final class Model_MySqlDb implements Model_DbInterface
      * @param result $result - result set from db query
      * @return array - associative array from result set
      */
-    public function fetch_assoc($result) {
+    public function fetchAssoc($result) {
         return mysqli_fetch_assoc($result);
     }
 

@@ -25,7 +25,7 @@ abstract class Model_Dao
                 $columnQuery .= call_user_func(DB_CLASS . "::queryPrep", static::$_tableName);
                 $columnQuery .= "';";
                 $columnResult = $db->query($columnQuery);
-                while($row = $db->fetch_assoc($columnResult)) {
+                while($row = $db->fetchAssoc($columnResult)) {
                     $this->_columns[$row["COLUMN_NAME"]] = $this->_columnToVar($row["COLUMN_NAME"]);
                 }
                 mysqli_free_result($columnResult);
@@ -46,7 +46,7 @@ abstract class Model_Dao
             $query .= "AS `rowCount`";
             $query .= "FROM `" . static::$_tableName . "` ";
             $set = $db->query($query);
-            self::$_count = $db->fetch_assoc($set)["rowCount"];
+            self::$_count = $db->fetchAssoc($set)["rowCount"];
             mysqli_free_result($set);
         }
         return self::$_count;
@@ -134,7 +134,7 @@ abstract class Model_Dao
         $db = call_user_func(DB_CLASS . "::getInstance");
         $objectArray = array();
         $resultSet = $db->query($query);
-        while($row = $db->fetch_assoc($resultSet)) {
+        while($row = $db->fetchAssoc($resultSet)) {
             $objectArray[] = static::_instantiate($row);
         }
         mysqli_free_result($resultSet);
