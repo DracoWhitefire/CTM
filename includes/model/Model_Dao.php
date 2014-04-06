@@ -10,7 +10,6 @@ abstract class Model_Dao
     protected $_columns;
     
     /**
-     * _get_columns
      * Populates and returns $this->_columns with db column names and converted object var names
      * @global dbObject $db
      * @return array - this object's column names and respective var names
@@ -35,7 +34,6 @@ abstract class Model_Dao
     }
     
     /**
-     * _getCount
      * Returns the amount of rows;
      * @return int self::$_count - The amount of rows
      */
@@ -53,7 +51,6 @@ abstract class Model_Dao
     }
     
     /**
-     * _column_to_var
      * Turns db column name into object var name;
      * @param type $column - the column name to be converted
      * @return string - the converted attribute name
@@ -75,7 +72,6 @@ abstract class Model_Dao
     }
     
     /**
-     * _var_to_column
      * Turns object var name into db column name;
      * @param string $var - the var name to be converted
      * @return string - the converted column name
@@ -95,7 +91,6 @@ abstract class Model_Dao
     }
     
     /**
-     * _instantiate
      * Instatiates object from query result row
      * @param array $row - Row of a fetch_assoc
      * @return \static object - Instantiated object
@@ -111,7 +106,6 @@ abstract class Model_Dao
     }
     
     /**
-     * _has_attribute
      * Checks whether object $this has attribute $attribute
      * @param type $attribute
      * @return bool
@@ -123,7 +117,6 @@ abstract class Model_Dao
     }
     
     /**
-     * get_by_query
      * Fetches object or array of objects from query $query
      * @global dbObject $db
      * @param string $query
@@ -146,7 +139,6 @@ abstract class Model_Dao
     }
     
     /**
-     * _getAll
      * Returns all instances of self;
      * @return object|array - returns instance of self or array of instances
      */
@@ -158,7 +150,6 @@ abstract class Model_Dao
     }
     
     /**
-     * create
      * Creates new db entry from Object
      * @global dbObject $db
      */
@@ -198,7 +189,6 @@ abstract class Model_Dao
     }
     
     /**
-     * _update
      * Updates existing db record with current object;
      * @global dbObject $db
      */
@@ -231,7 +221,6 @@ abstract class Model_Dao
     }
     
     /**
-     * save
      * Creates or updates db entry based on current object;
      * @return bool - Did the operation succeed?
      */
@@ -240,7 +229,6 @@ abstract class Model_Dao
     }
     
     /**
-     * delete
      * Deletes current object from memory and entry from db;
      * @global dbObject $db
      */

@@ -18,7 +18,6 @@ class Model_User extends Model_Dao
     protected static $_tableName = "users";
     
     /**
-     * get
      * Returns a single User object or array of User objects;
      * @param string $selection - defines the type of get selection
      * @return object|array - single User object or array of User objects
@@ -38,7 +37,6 @@ class Model_User extends Model_Dao
     }
     
     /**
-     * getByTeam
      * Returns User object or array of User objects belonging to team $team;
      * @global type $db
      * @param integer $team - the team
@@ -55,7 +53,6 @@ class Model_User extends Model_Dao
     }
     
     /**
-     * getSchedule
      * Returns current User's Model_Schedule for day $day;
      * @param string $day
      * @return object - Model_Schedule for day $day
@@ -65,7 +62,6 @@ class Model_User extends Model_Dao
     }
     
     /**
-     * _generateSalt
      * Generates salt for pw_encrypt;
      * @param integer $length - required salt length
      * @return string - the salt
@@ -75,7 +71,6 @@ class Model_User extends Model_Dao
     }
     
     /**
-     * pwEncrypt
      * Encrypts password using the salt from _generate_salt();
      * @param string $pw_string - the raw password
      * @return string $hashPw - the hashed password
@@ -90,7 +85,6 @@ class Model_User extends Model_Dao
     }
     
     /**
-     * pwCheck
      * Checks whether password is correct;
      * @param string $pw_string - the raw password
      * @return boolean - is password correct?

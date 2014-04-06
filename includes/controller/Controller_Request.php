@@ -1,6 +1,5 @@
 <?php
 /**
- * Controller_Request
  * Handles and filters all GET, POST, and SESSION requests
  */
 class Controller_Request
@@ -10,7 +9,6 @@ class Controller_Request
     private static $_sessionStore = [];
     
     /**
-     * _cleanup
      * prepares string for output/database
      * @param string $string
      * @return string
@@ -20,7 +18,6 @@ class Controller_Request
     }
     
     /**
-     * filter
      * Handler method to filter requests;
      * @param string $requestType - GET, POST or SESSION
      * @param string $keyName - the specific request key

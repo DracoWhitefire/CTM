@@ -6,7 +6,6 @@
 Class Controller_Date
 {
     /**
-     * _from_get
      * Gets selected date from GET request
      * @return array $getDateArray - array with selected date
      */
@@ -39,7 +38,6 @@ Class Controller_Date
     }
 
     /**
-     * _from_post
      * Gets selected date from POST request 
      * @return array $postDateArray - array with selected date
      */
@@ -51,7 +49,6 @@ Class Controller_Date
     }
     
     /**
-     * _from_session
      * Gets selected date from SESSION 
      * @return array $sessionDateArray - array with selected date
      */
@@ -61,7 +58,6 @@ Class Controller_Date
     }
     
     /**
-     * to_get
      * Creates a url for GET request anchors
      * @param string $year
      * @param string $month
@@ -91,7 +87,6 @@ Class Controller_Date
     }
     
     /**
-     * get_selected
      * Gets selected date
      * @return array $dateArray - array with selected date
      */

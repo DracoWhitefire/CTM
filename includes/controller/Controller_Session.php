@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Description of Controller_Session
+ * Controller_Session
  */
 class Controller_Session
 {
@@ -17,7 +17,6 @@ class Controller_Session
     }
     
     /**
-     * _check_login
      * Checks whether user is logged in and sets session properties;
      */
     private function _check_login() {
@@ -34,7 +33,6 @@ class Controller_Session
     }	
     
     /**
-     * is_loggedIn
      * Returns whether user is logged in;
      * @return bool - Is user logged in?
      */
@@ -43,7 +41,6 @@ class Controller_Session
     }
     
     /**
-     * login
      * Logs in user $user;
      * @param Model_User $user - the user to log in
      */
@@ -58,7 +55,6 @@ class Controller_Session
     }
     
     /**
-     * getRank
      * Gets the set rank or sets it to 0 if not set;
      * @return int - the rank
      */
@@ -68,7 +64,6 @@ class Controller_Session
     }
     
     /**
-     * setRank
      * Sets the rank to $rank;
      * @param int $rank - the rank to be set
      */
@@ -77,7 +72,6 @@ class Controller_Session
     }
     
     /**
-     * logout;
      * Logs out current user;
      */
     public function logout() {

@@ -1,14 +1,14 @@
 <?php
 
 /**
- * Description of Controller_Url
+ * Controller_Url
  */
 class Controller_Url {
     private $_string;
     private $_array;
     
     /**
-     * Constructor
+     * Constructor;
      * @param string $type - The type of URL; defaults to url of requesting page
      * @return NULL
      */
@@ -32,7 +32,6 @@ class Controller_Url {
     }
     
     /**
-     * get_string
      * @return string $this->_string - the _string property
      */
     public function get_string() {
@@ -40,7 +39,6 @@ class Controller_Url {
     }
     
     /**
-     * get_array
      * @return array $this->_array - array of GET attributes
      */
     public function get_array() {
@@ -48,7 +46,6 @@ class Controller_Url {
     }
     
     /**
-     * add
      * adds GET parameters to url
      * @param array $params
      * @return NULL

@@ -11,7 +11,6 @@ class Model_Team extends Model_Dao
         protected static $_tableName = "teams";
 	
         /**
-         * get
          * Returns (array of) instance(s) of self
          * @param string $selection
          * @return object|array - (array of) instance(s) of self
@@ -25,7 +24,6 @@ class Model_Team extends Model_Dao
 	}
         
         /**
-         * _getById
          * Returns instance of self;
          * @param int $id - the id
          * @return Model_Team - instance of self
@@ -44,7 +42,6 @@ class Model_Team extends Model_Dao
         }
         
         /**
-         * getSelected
          * Returns the currently selected team;
          * @return int - the currently selected team
          */

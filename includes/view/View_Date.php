@@ -16,7 +16,6 @@ Class View_Date
     }
     
     /**
-     * selector
      * Returns an HTML-ready string with a calendar;
      * @param string $type - defines the return type for the selector
      * @return string - HTML-ready calendar string

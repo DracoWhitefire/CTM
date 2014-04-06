@@ -1,6 +1,6 @@
 <?php
 /**
- * Description of Controller_Validator
+ * Controller_Validator
  */
 class Controller_Validator
 {

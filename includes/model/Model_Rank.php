@@ -13,7 +13,6 @@ class Model_Rank extends Model_Dao
     protected static $_tableName = "ranks";
 
     /**
-     * get
      * Instantiates rank object(s);
      * @global object $db
      * @param string $selection
@@ -28,7 +27,6 @@ class Model_Rank extends Model_Dao
     }
     
     /**
-     * _getMax
      * Returns the highest value in the rank table;
      * @return int - the highest rank
      */
@@ -45,7 +43,6 @@ class Model_Rank extends Model_Dao
     }
     
     /**
-     * _getMin
      * Returns the lowest value in the rank table;
      * @return int - the lowest rank
      */
@@ -62,7 +59,6 @@ class Model_Rank extends Model_Dao
     }
     
     /**
-     * _getByValue
      * Returns single Model_Rank based on $value
      * @param int $value - the value for the rank
      * @return Model_Rank - instance of Model_Rank

@@ -1,12 +1,11 @@
 <?php
 
 /**
- * Description of Controller_Time
+ * Controller_Time
  */
 Class Controller_Time
 {
     /**
-     * format
      * Formats a time string for html output or db entries;
      * @param string $timeString - the string to be converted
      * @param string $target - the target of the string

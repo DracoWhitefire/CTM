@@ -14,7 +14,6 @@ Class Model_Module extends Model_Dao
     protected static $_tableName = "modules";
         
     /**
-     * _getAll
      * Gets all modules
      * @return array|object - array of Model_Module (or single instance of Model_Module)
      */
@@ -27,7 +26,6 @@ Class Model_Module extends Model_Dao
     }
     
     /**
-     * _getById
      * Returns module object by id;
      * @global Controller_Session $session
      * @param int $id - the id if the module
@@ -52,7 +50,6 @@ Class Model_Module extends Model_Dao
     
     
     /**
-     * get
      * Gets Subject object(s) from query
      * @global Db Object $db
      * @global Session Object $session - current user session
@@ -73,7 +70,6 @@ Class Model_Module extends Model_Dao
     }
     
     /**
-     * get_current_id
      * Returns id of current subject
      * @return int - id of current subject
      */

@@ -7,20 +7,17 @@
 interface Model_DbInterface
 {
     /**
-     * getInstance
      * Singleton method to instantiate single instance;
      * @return Model_DbInterface - instance of self
      */
     public static function getInstance();
     
     /**
-     * disconnect
      * Disconnects from database;
      */
     public static function disconnect();
 
     /**
-     * queryPrep
      * Prepares a query for database operation;
      * @param string $value - raw query
      * @return string $value - safe query
@@ -28,7 +25,6 @@ interface Model_DbInterface
     public static function queryPrep($value);
 
     /**
-     * fetchAssoc
      * Fetches associative array from query result;
      * @param result $result - result set from db query
      * @return array - associative array from result set
@@ -36,7 +32,6 @@ interface Model_DbInterface
     public function fetchAssoc($result);
 
     /**
-     * numRows
      * Returns number of rows in result set;
      * @param result $result - result set from db query
      * @return int $count - number of rows in result set
@@ -44,21 +39,18 @@ interface Model_DbInterface
     public function numRows($result);
 
     /**
-     * getInsertId
      * Returns id of last inserted row;
      * @return int - id of last insert
      */
     public function getInsertId();
 
     /**
-     * affectedRows
      * Returns amount of rows affected by last query;
      * @return int - amount of affected rows
      */
     public function affectedRows();
 
     /**
-     * query
      * Processes MySQL query
      * @param string $query - The query to be processed
      * @return result $result - Result set from query

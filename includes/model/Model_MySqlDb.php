@@ -17,7 +17,6 @@ final class Model_MySqlDb implements Model_DbInterface
     }
     
     /**
-     * getInstance
      * Singleton getter for self;
      * @return Model_MySqlDb - instance of self
      */
@@ -27,7 +26,6 @@ final class Model_MySqlDb implements Model_DbInterface
     }
     
     /**
-     * _getMagicQuotesAtive
      * Getter for lazy instantiation of self::$_magicQuotesActive;
      * @return bool - is Magic Quotes active?
      */
@@ -37,7 +35,6 @@ final class Model_MySqlDb implements Model_DbInterface
     }
     
     /**
-     * _getMysqliRealEscapeStringExists
      * Getter for lazy instantiation of self::$_mysqliRealEscapeStringExists;
      * @return bool - does mysqli_real_escape_string() exist (so it's PHP5)?
      */
@@ -47,7 +44,6 @@ final class Model_MySqlDb implements Model_DbInterface
     }
     
     /**
-     * _connect
      * Establish connection with DB;
      * @return void
      */
@@ -66,7 +62,6 @@ final class Model_MySqlDb implements Model_DbInterface
     }
 
     /**
-     * disconnect
      * Unsets Connection;
      * @return void
      */
@@ -80,7 +75,6 @@ final class Model_MySqlDb implements Model_DbInterface
     }
     
     /**
-     * _getLastQuery
      * Returns the last executed query if it exists, or null;
      * @return string|null - Either last query or null
      */
@@ -89,7 +83,7 @@ final class Model_MySqlDb implements Model_DbInterface
     }
     
     /**
-     * _setLastQuery - saves the last query to _lastQuery;
+     * Saves the last query to _lastQuery;
      * @param string $query - the query string to be saved
      */
     private function _setLastQuery($query) {
@@ -97,7 +91,6 @@ final class Model_MySqlDb implements Model_DbInterface
     }
     
     /**
-     * queryPrep
      * Prepares a query for database operation;
      * @param string $value - raw query
      * @return string $value - safe query
@@ -116,7 +109,6 @@ final class Model_MySqlDb implements Model_DbInterface
     }
 
     /**
-     * fetch_assoc
      * Fetches associative array from query result;
      * @param result $result - result set from db query
      * @return array - associative array from result set
@@ -126,7 +118,6 @@ final class Model_MySqlDb implements Model_DbInterface
     }
 
     /**
-     * num_rows
      * Returns number of rows in result set;
      * @param result $result - result set from db query
      * @return int $count - number of rows in result set
@@ -136,7 +127,6 @@ final class Model_MySqlDb implements Model_DbInterface
     }
 
     /**
-     * insert_id
      * Returns id of last inserted row;
      * @return int - id of last insert
      */
@@ -145,7 +135,6 @@ final class Model_MySqlDb implements Model_DbInterface
     }
 
     /**
-     * affected_rows
      * Returns amount of rows affected by last query;
      * @return int - amount of affected rows
      */
@@ -154,7 +143,6 @@ final class Model_MySqlDb implements Model_DbInterface
     }
 
     /**
-     * _mysqli_confirm
      * Confirms success of query - kills on failure;
      * @global bool $debug - Is debugging turned on?
      * @param result $result - Result set of query
@@ -173,8 +161,7 @@ final class Model_MySqlDb implements Model_DbInterface
     }
 
     /**
-     * query
-     * Processes MySQL query
+     * Processes MySQL query;
      * @param string $query - The query to be processed
      * @return result $result - Result set from query
      */

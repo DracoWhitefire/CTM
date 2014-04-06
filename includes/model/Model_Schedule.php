@@ -27,7 +27,6 @@ Class Model_Schedule extends Model_Dao
     }
     
     /**
-     * getByPresetByDay
      * Returns a Schedule object for $presetId and $weekday;
      * @global db object $db
      * @param int $userId
@@ -47,7 +46,6 @@ Class Model_Schedule extends Model_Dao
     }
     
     /**
-     * _minutesToIntervalstring
      * Converts an amount of minutes to a string for constructing new DateInterval
      * @param integer $minutes
      * @return string $breakIntString - String for constructing new DateInterval
@@ -60,7 +58,6 @@ Class Model_Schedule extends Model_Dao
     }
     
     /**
-     * getScheduledHours
      * Returns and sets a H:MM formatted string of scheduled hours
      * @return string - formatted string
      */
@@ -80,7 +77,6 @@ Class Model_Schedule extends Model_Dao
     }
     
     /**
-     * getStarttime
      * Returns start time of schedule;
      * @return string - Start time formatted as H:MM
      */
@@ -92,7 +88,6 @@ Class Model_Schedule extends Model_Dao
     }
     
     /**
-     * getEndtime
      * Returns end time of schedule;
      * @return string - End time formatted as H:MM
      */
@@ -104,7 +99,6 @@ Class Model_Schedule extends Model_Dao
     }
     
     /**
-     * setStarttime
      * Sets the start time of a schedule;
      * @param string $time - The time to be set
      */
@@ -114,7 +108,6 @@ Class Model_Schedule extends Model_Dao
     }
     
     /**
-     * setEndtime
      * Sets the end time of a schedule;
      * @param string $time - The time to be set
      */
