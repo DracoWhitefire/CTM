@@ -10,6 +10,12 @@ class Model_Team extends Model_Dao
 	public $name;
         protected static $_tableName = "teams";
 	
+        /**
+         * get
+         * Returns (array of) instance(s) of self
+         * @param string $selection
+         * @return object|array - (array of) instance(s) of self
+         */
 	public static function get($selection = "all") {
             if($selection == "all") {
                 return self::_getAll();
