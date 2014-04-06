@@ -15,7 +15,7 @@ abstract class Model_Dao
      * @global dbObject $db
      * @return array - this object's column names and respective var names
      */
-    public function _get_columns() {
+    public function _getColumns() {
         $db = call_user_func(DB_CLASS . "::getInstance");
         if(is_null($this->_columns)) {
             $columnQuery  = "SELECT `COLUMN_NAME` ";
@@ -100,7 +100,7 @@ abstract class Model_Dao
      */
     private static function _instantiate(array $row) {
         $object = new static;
-        $object->_get_columns();
+        $object->_getColumns();
         foreach($row as $columnName => $value) {
             $varName = $object->_columns[$columnName];
             $object->$varName = $value;
@@ -163,7 +163,7 @@ abstract class Model_Dao
     private function _create() {
         $db = call_user_func(DB_CLASS . "::getInstance");
         $vars = get_object_vars($this);
-        $columnVars = array_flip($this->_get_columns());
+        $columnVars = array_flip($this->_getColumns());
         $query  = "INSERT INTO `" . $this->_tableName . "` (";
         $valueCount = 0;
         $count = 0;
