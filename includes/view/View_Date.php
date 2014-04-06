@@ -52,9 +52,9 @@ Class View_Date
         $daysNextMonthLastWeek = cal_days_in_month(CAL_GREGORIAN, $nextMonth, $this->_date["selectedYear"]);
         $output  = "<div id=\"calendar_div\">";
         $output .= "<div id=\"monthSelect_div\">";
-        $prevMonthNav = Controller_Date::to_get($prevYear, $prevMonth);
+        $prevMonthNav = Controller_Date::toGet($prevYear, $prevMonth);
         $navLinks = "<div id=\"calPrev_div\"><a href=\"" . htmlspecialchars($prevMonthNav) . "\">Prev</a></div>";
-        $nextMonthNav = Controller_Date::to_get($nextYear, $nextMonth);
+        $nextMonthNav = Controller_Date::toGet($nextYear, $nextMonth);
         $navLinks .= "<div id=\"calNext_div\"><a href=\"" . htmlspecialchars($nextMonthNav) . "\">Next</a></div>";
         $navLinks .= "<div id=\"calCur_div\">" . htmlspecialchars(date("j F Y",strtotime($this->_date["selectedDay"] . "-" . $this->_date["selectedMonth"] . "-" . $this->_date["selectedYear"]))) . "</div>";
         $output .= $navLinks . "</div>"; 
@@ -87,7 +87,7 @@ Class View_Date
                     $urlDay = $tdOutput2 = ($dayNo - $prevNumberOfDays - $numberOfDays);
                 }
                 $tdOutput3 = "</a></div>";
-                $dateUrl = Controller_Date::to_get($urlYear, $urlMonth, $urlDay);
+                $dateUrl = Controller_Date::toGet($urlYear, $urlMonth, $urlDay);
                 $output .= $tdOutput1 . "<a href=\"" . htmlspecialchars($dateUrl) . "\" >" . $tdOutput2 . $tdOutput3;
                 $dayNo++;
             }

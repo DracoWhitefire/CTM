@@ -64,7 +64,7 @@ Class Controller_Date
      * @param string $day
      * @return string $url - URL for GET request
      */
-    public static function to_get($year = "", $month = "", $day = "") {
+    public static function toGet($year = "", $month = "", $day = "") {
         $urlQueries_array = array();
         $urlQueries_array["y"] =    !empty($year) 
                                     ? urlencode($year) 
