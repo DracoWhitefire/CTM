@@ -41,7 +41,7 @@ Class Controller_Date
      * Gets selected date from POST request 
      * @return array $postDateArray - array with selected date
      */
-    private static function _from_post() {
+    private static function _fromPost() {
         $postDateArray["d"] = $_POST["d"];
         $postDateArray["m"] = $_POST["m"];
         $postDateArray["y"] = $_POST["y"];
@@ -93,7 +93,7 @@ Class Controller_Date
     public static function get_selected() {
         $dateArray = array();
         if(isset($_POST["d"]) || isset($_POST["m"]) || isset($_POST["y"])) {
-            $dateArray = self::_from_post();
+            $dateArray = self::_fromPost();
         } elseif(isset($_SESSION["selectedDate"])) {
             $dateArray = self::_from_session();
         } elseif(isset($_GET["d"]) || isset($_GET["m"]) || isset($_GET["y"])) {
