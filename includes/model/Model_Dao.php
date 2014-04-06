@@ -5,7 +5,7 @@
  */
 abstract class Model_Dao
 {
-    protected $_tableName;
+    protected static $_tableName;
     var $_columns;
     
     /**
@@ -20,7 +20,7 @@ abstract class Model_Dao
             $columnQuery  = "SELECT `COLUMN_NAME` ";
             $columnQuery .= "FROM `INFORMATION_SCHEMA`.`COLUMNS` ";
             $columnQuery .= "WHERE `TABLE_NAME`='";
-            $columnQuery .= call_user_func(DB_CLASS . "::query_prep", $this->_tableName);
+            $columnQuery .= call_user_func(DB_CLASS . "::query_prep", static::$_tableName);
             $columnQuery .= "';";
             $columnResult = $db->query($columnQuery);
             while($row = $db->fetch_assoc($columnResult)) {
@@ -173,7 +173,7 @@ abstract class Model_Dao
         $db = call_user_func(DB_CLASS . "::getInstance");
         $vars = get_object_vars($this);
         $columnVars = array_flip($this->_columns);
-        $query = "UPDATE `" . $this->_tableName . "` SET ";
+        $query = "UPDATE `" . static::$_tableName . "` SET ";
         $count = 0;
         foreach($vars as $var => $value) {
             $count += 1;

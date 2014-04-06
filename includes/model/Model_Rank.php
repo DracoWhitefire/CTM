@@ -10,7 +10,7 @@ class Model_Rank extends Model_Dao
     public $id;
     public $value;
     public $name;
-    protected $_tableName = "ranks";
+    protected static $_tableName = "ranks";
 
     /**
      * get

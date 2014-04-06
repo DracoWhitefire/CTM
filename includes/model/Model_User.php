@@ -15,7 +15,7 @@ class Model_User extends Model_Dao
     public $team;
     public $employeeNr;
     public $schedulePreset;
-    protected $_tableName = "users";
+    protected static $_tableName = "users";
     
     /**
      * get

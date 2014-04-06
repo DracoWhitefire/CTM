@@ -12,7 +12,7 @@ Class Model_Module extends Model_Dao
     public $rank;
     public $position;
     private static $_count;
-    protected $_tableName = "modules";
+    protected static $_tableName = "modules";
         
     /**
      * _getAll

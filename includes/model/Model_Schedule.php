@@ -17,7 +17,7 @@ Class Model_Schedule extends Model_Dao
     protected $_unpaidBreakInterval;
     protected $_minimumBeforeUnpaid;
     protected $_scheduledHours;
-    protected $_tableName = "schedules";
+    protected static $_tableName = "schedules";
     
     public function __construct() {
         $this->_timeFormat = "G:i";

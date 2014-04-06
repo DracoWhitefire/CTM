@@ -9,7 +9,7 @@ class Model_Team extends Model_Dao
 	public $project;
 	public $name;
 	public $count;
-        protected $_tableName = "teams";
+        protected static $_tableName = "teams";
 	
 	public static function get($selection = "all") {
 		$db = call_user_func(DB_CLASS . "::getInstance");
