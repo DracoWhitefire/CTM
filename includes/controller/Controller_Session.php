@@ -13,13 +13,13 @@ class Controller_Session
 
     function __construct() {
         session_start();
-        $this->_check_login();
+        $this->_checkLogin();
     }
     
     /**
      * Checks whether user is logged in and sets session properties;
      */
-    private function _check_login() {
+    private function _checkLogin() {
         if(isset($_SESSION["id"])) {
             $this->userId = $_SESSION["id"];
             $this->_loggedIn = TRUE;
