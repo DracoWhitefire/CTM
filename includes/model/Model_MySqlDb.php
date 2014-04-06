@@ -149,7 +149,7 @@ final class Model_MySqlDb implements Model_DbInterface
      * Returns amount of rows affected by last query;
      * @return int - amount of affected rows
      */
-    public function affected_rows() {
+    public function affectedRows() {
         return mysqli_affected_rows($this->_connection);
     }
 

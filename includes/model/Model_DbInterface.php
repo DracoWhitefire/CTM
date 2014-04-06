@@ -51,11 +51,11 @@ interface Model_DbInterface
     public function getInsertId();
 
     /**
-     * affected_rows
+     * affectedRows
      * Returns amount of rows affected by last query;
      * @return int - amount of affected rows
      */
-    public function affected_rows();
+    public function affectedRows();
 
     /**
      * query
