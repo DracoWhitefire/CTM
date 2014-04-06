@@ -41,7 +41,7 @@ class Controller_Url {
     /**
      * @return array $this->_array - array of GET attributes
      */
-    public function get_array() {
+    public function getArray() {
         return $this->_array;
     }
     
