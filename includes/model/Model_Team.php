@@ -15,7 +15,7 @@ class Model_Team extends Model_Dao
 		$query  = "SELECT * ";
 		$query .= "FROM `teams` ";		
 		if($selection == "all") {
-			return self::get_by_query($query);
+			return self::_getAll();
 		} elseif(is_numeric($selection)) {
 			if((1 <= $selection) && ($selection <= self::_getCount())) {
 				$selection = call_user_func(DB_CLASS . "::query_prep", $selection);
