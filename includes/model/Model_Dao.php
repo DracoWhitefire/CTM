@@ -7,7 +7,7 @@ abstract class Model_Dao
 {
     protected static $_tableName;
     protected static $_count;
-    var $_columns;
+    protected $_columns;
     
     /**
      * _get_columns
@@ -15,19 +15,21 @@ abstract class Model_Dao
      * @global dbObject $db
      * @return array - this object's column names and respective var names
      */
-    public function _getColumns() {
-        $db = call_user_func(DB_CLASS . "::getInstance");
-        if(is_null($this->_columns)) {
-            $columnQuery  = "SELECT `COLUMN_NAME` ";
-            $columnQuery .= "FROM `INFORMATION_SCHEMA`.`COLUMNS` ";
-            $columnQuery .= "WHERE `TABLE_NAME`='";
-            $columnQuery .= call_user_func(DB_CLASS . "::query_prep", static::$_tableName);
-            $columnQuery .= "';";
-            $columnResult = $db->query($columnQuery);
-            while($row = $db->fetch_assoc($columnResult)) {
-                $this->_columns[$row["COLUMN_NAME"]] = $this->_column_to_var($row["COLUMN_NAME"]);
+    protected function _getColumns() {
+        if(!isset($this->_columns)) {
+            $db = call_user_func(DB_CLASS . "::getInstance");
+            if(is_null($this->_columns)) {
+                $columnQuery  = "SELECT `COLUMN_NAME` ";
+                $columnQuery .= "FROM `INFORMATION_SCHEMA`.`COLUMNS` ";
+                $columnQuery .= "WHERE `TABLE_NAME`='";
+                $columnQuery .= call_user_func(DB_CLASS . "::query_prep", static::$_tableName);
+                $columnQuery .= "';";
+                $columnResult = $db->query($columnQuery);
+                while($row = $db->fetch_assoc($columnResult)) {
+                    $this->_columns[$row["COLUMN_NAME"]] = $this->_column_to_var($row["COLUMN_NAME"]);
+                }
+                mysqli_free_result($columnResult);
             }
-            mysqli_free_result($columnResult);
         }
         return $this->_columns;
     }
