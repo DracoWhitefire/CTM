@@ -80,7 +80,7 @@ abstract class Model_Dao
      * @param string $var - the var name to be converted
      * @return string - the converted column name
      */
-    private function _var_to_column($var) {
+    private function _varToColumn($var) {
         if(!function_exists("rename_attribute")) { 
             function rename_attribute(array $strings) {
                 return $strings[1] . "_" . strtolower($strings[2]);
