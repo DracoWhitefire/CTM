@@ -60,11 +60,11 @@ Class Model_Schedule extends Model_Dao
     }
     
     /**
-     * get_scheduledHours
+     * getScheduledHours
      * Returns and sets a H:MM formatted string of scheduled hours
      * @return string - formatted string
      */
-    public function get_scheduledhours() {
+    public function getScheduledHours() {
         if($this->_scheduledHours == NULL) {
             $breakInt = new DateInterval($this->_minutesToIntervalstring($this->_unpaidBreakInterval));
             $workingInterval = $this->_startTimeObject->diff($this->_endTimeObject);

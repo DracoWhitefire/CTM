@@ -70,7 +70,7 @@
                 $schedOutput .= "\" />";
             }
             $schedOutput .= "</td><td class=\"time\" >";
-            $schedOutput .= $schedule->get_scheduledhours();
+            $schedOutput .= $schedule->getScheduledHours();
             $schedOutput .= "</tr>";
         }
         $schedOutput .= "</tbody></table>";
