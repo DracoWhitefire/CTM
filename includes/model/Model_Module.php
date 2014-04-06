@@ -19,7 +19,7 @@ Class Model_Module extends Model_Dao
      * Gets all modules
      * @return array|object - array of Model_Module (or single instance of Model_Module)
      */
-    private static function _getAll() {
+    protected static function _getAll() {
         $query  = "SELECT * ";
         $query .= "FROM `modules` ";
         $query .= "WHERE `visible` = 1 ";
