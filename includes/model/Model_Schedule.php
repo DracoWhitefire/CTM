@@ -104,11 +104,11 @@ Class Model_Schedule extends Model_Dao
     }
     
     /**
-     * set_starttime
+     * setStarttime
      * Sets the start time of a schedule;
      * @param string $time - The time to be set
      */
-    public function set_starttime($time) {
+    public function setStarttime($time) {
         $this->_starTimeObject = new DateTime($time);
         $this->_startTime = $time;
     }

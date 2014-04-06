@@ -158,7 +158,7 @@ if(isset($_POST["submitForm"])) {
                     $schedule->userId = $user->id;
                     $schedule->weekdayId = $weekday;
                 }
-                isset($_POST["{$weekday}Begin_input"])  ? $schedule->set_starttime(call_user_func(DB_CLASS . "::query_prep", $_POST["{$weekday}Begin_input"])) : NULL;
+                isset($_POST["{$weekday}Begin_input"])  ? $schedule->setStarttime(call_user_func(DB_CLASS . "::query_prep", $_POST["{$weekday}Begin_input"])) : NULL;
                 isset($_POST["{$weekday}End_input"])    ? $schedule->set_endtime(call_user_func(DB_CLASS . "::query_prep", $_POST["{$weekday}End_input"])) : NULL;
                 is_null($schedule->id) ? NULL : $insert_success = $schedule->save();
             }
