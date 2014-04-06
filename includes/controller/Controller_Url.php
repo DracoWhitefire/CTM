@@ -34,7 +34,7 @@ class Controller_Url {
     /**
      * @return string $this->_string - the _string property
      */
-    public function get_string() {
+    public function getString() {
         return $this->_string;
     }
     
