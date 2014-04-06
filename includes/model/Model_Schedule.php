@@ -92,11 +92,11 @@ Class Model_Schedule extends Model_Dao
     }
     
     /**
-     * get_endtime
+     * getEndtime
      * Returns end time of schedule;
      * @return string - End time formatted as H:MM
      */
-    public function get_endtime() {
+    public function getEndtime() {
         if(!isset($this->_endTimeObject) || is_null($this->_endTimeObject)) {
             $this->_endTimeObject = new DateTime($this->_endTime);
         }
