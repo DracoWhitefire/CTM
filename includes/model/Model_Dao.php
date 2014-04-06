@@ -67,9 +67,9 @@ abstract class Model_Dao
             }
         }
         $convertedAttribute = preg_replace_callback("/^(\w+?)_(\w+?)$/", "rename_attribute", $column);
-        if($this->_has_attribute($convertedAttribute)) {
+        if($this->_hasAttribute($convertedAttribute)) {
             return $convertedAttribute;
-        } elseif($this->_has_attribute("_" . $convertedAttribute)) {
+        } elseif($this->_hasAttribute("_" . $convertedAttribute)) {
             return "_" . $convertedAttribute;
         }
     }
@@ -87,9 +87,9 @@ abstract class Model_Dao
             }
         }
         $convertedAttribute = preg_replace_callback("/^([a-z]+?)([A-Z][a-z]+?)$/", "rename_attribute", $column);
-        if($this->_has_attribute($var)) {
+        if($this->_hasAttribute($var)) {
             return $convertedAttribute;
-        } elseif($this->_has_attribute("_" . $convertedAttribute)) {
+        } elseif($this->_hasAttribute("_" . $convertedAttribute)) {
             return "_" . $convertedAttribute;
         }
     }
@@ -116,7 +116,7 @@ abstract class Model_Dao
      * @param type $attribute
      * @return bool
      */
-    private function _has_attribute($attribute) {
+    private function _hasAttribute($attribute) {
         $vars = get_object_vars($this);
         //print_r($vars);
         return array_key_exists($attribute, $vars);
