@@ -90,12 +90,12 @@ class Model_User extends Model_Dao
     }
     
     /**
-     * pw_check
+     * pwCheck
      * Checks whether password is correct;
      * @param string $pw_string - the raw password
      * @return boolean - is password correct?
      */
-    public function pw_check($pw_string) {
+    public function pwCheck($pw_string) {
         $hash = crypt($pw_string, $this->passwordhash);
         if($hash === $this->passwordhash) {
             return TRUE;

@@ -10,7 +10,7 @@ if(isset($_POST["login"])) {
         $users = Model_User::get("all");
         foreach($users as $user) {
             if($user->userName == $username) {
-                if($user->pw_check($password)) {
+                if($user->pwCheck($password)) {
                     $session->login($user);
                     header("location: index.php");
                 } else {
