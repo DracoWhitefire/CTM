@@ -9,7 +9,7 @@ Class Controller_Date
      * Gets selected date from GET request
      * @return array $getDateArray - array with selected date
      */
-    private static function _from_get() {
+    private static function _fromGet() {
         $getDateArray = array();
         if(!isset($_GET["y"])) {
             $getDateArray["y"] = date("Y");
@@ -97,7 +97,7 @@ Class Controller_Date
         } elseif(isset($_SESSION["selectedDate"])) {
             $dateArray = self::_from_session();
         } elseif(isset($_GET["d"]) || isset($_GET["m"]) || isset($_GET["y"])) {
-            $dateArray = self::_from_get();
+            $dateArray = self::_fromGet();
         } else {
             $dateArray["y"] = date("Y");
             $dateArray["m"] = date("n");
