@@ -75,12 +75,12 @@ class Model_User extends Model_Dao
     }
     
     /**
-     * pw_encrypt
+     * pwEncrypt
      * Encrypts password using the salt from _generate_salt();
      * @param string $pw_string - the raw password
      * @return string $hashPw - the hashed password
      */
-    public static function pw_encrypt($pw_string) {
+    public static function pwEncrypt($pw_string) {
         $hashFormat = "$2y$10$";
         $saltLength = 22;
         $hashSalt = self::_generateSalt($saltLength);

@@ -132,7 +132,7 @@ if(isset($_POST["submitForm"])) {
     if(empty($validator->errors)) {
         //Password Hashing
         if(!empty($_POST["password_input"])) {
-            $hashPw = Model_User::pw_encrypt($_POST["password_input"]);
+            $hashPw = Model_User::pwEncrypt($_POST["password_input"]);
         }
         if(($_POST["submitForm"] == "Submit User") || ($_POST["submitForm"] == "Add User")) {
             isset($_POST["userId_input"]) ? $userId = $_POST["userId_input"] : $userId = NULL;
