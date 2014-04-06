@@ -47,15 +47,15 @@ Class Model_Schedule extends Model_Dao
     }
     
     /**
-     * _minutes_to_intervalstring
+     * _minutesToIntervalstring
      * Converts an amount of minutes to a string for constructing new DateInterval
      * @param integer $minutes
      * @return string $breakIntString - String for constructing new DateInterval
      */
-    protected function _minutes_to_intervalstring($minutes) {
+    protected function _minutesToIntervalstring($minutes) {
         $breakIntString  = "PT";
-        $breakIntString .= intval($this->_unpaidBreakInterval / 60) . "H";
-        $breakIntString .= $this->_unpaidBreakInterval % 60 . "M";
+        $breakIntString .= intval($minutes / 60) . "H";
+        $breakIntString .= $minutes % 60 . "M";
         return (string) $breakIntString;
     }
     
@@ -66,7 +66,7 @@ Class Model_Schedule extends Model_Dao
      */
     public function get_scheduledhours() {
         if($this->_scheduledHours == NULL) {
-            $breakInt = new DateInterval($this->_minutes_to_intervalstring($this->_unpaidBreakInterval));
+            $breakInt = new DateInterval($this->_minutesToIntervalstring($this->_unpaidBreakInterval));
             $workingInterval = $this->_startTimeObject->diff($this->_endTimeObject);
             $intervalMinutes = $workingInterval->m + ($workingInterval->h * 60);
             if($intervalMinutes <= $this->_minimumBeforeUnpaid) {
