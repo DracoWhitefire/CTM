@@ -27,18 +27,18 @@ Class Model_Schedule extends Model_Dao
     }
     
     /**
-     * get_by_user_day
-     * Returns a Schedule object for $userId and $weekday;
+     * getByPresetByDay
+     * Returns a Schedule object for $presetId and $weekday;
      * @global db object $db
      * @param int $userId
      * @param string $weekday
      * @return object - instance of Schedule
      */
-    public static function get_by_preset_day($userId, $weekday) {
+    public static function getByPresetByDay($presetId, $weekday) {
         $db = call_user_func(DB_CLASS . "::getInstance");
         $query  = "SELECT * ";
         $query .= "FROM `schedules` ";
-        $query .= "WHERE `preset_id` = " . (int) $userId . " ";
+        $query .= "WHERE `preset_id` = " . (int) $presetId . " ";
         $query .= "AND `weekday_id` = " . (int) $weekday . " ";
         $query .= "ORDER BY `id` ASC ";
         $query .= "LIMIT 1";
