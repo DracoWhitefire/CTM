@@ -80,11 +80,11 @@ Class Model_Schedule extends Model_Dao
     }
     
     /**
-     * get_starttime
+     * getStarttime
      * Returns start time of schedule;
      * @return string - Start time formatted as H:MM
      */
-    public function get_starttime() {
+    public function getStarttime() {
         if(!isset($this->_startTimeObject) || is_null($this->_startTimeObject)) {
             $this->_startTimeObject = new DateTime($this->_startTime);
         }

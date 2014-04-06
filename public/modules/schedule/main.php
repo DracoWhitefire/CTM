@@ -52,7 +52,7 @@
             }
             $schedOutput .= "<tr>";
             $schedOutput .= "<td>" . htmlspecialchars($user->firstName) . " " . htmlspecialchars($user->lastName) . "</td><td class=\"time\" >";
-            $startTime = $schedule->get_starttime();
+            $startTime = $schedule->getStarttime();
             $endTime = $schedule->get_endtime();
             if($editing == TRUE) {
                 $schedOutput .= "<input type=\"text\" name=\"starttime_" . htmlspecialchars($user->id) . "\" value=\"";

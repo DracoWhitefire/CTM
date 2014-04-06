@@ -111,7 +111,7 @@ for($weekday = 2; $weekday <= 6; $weekday++) {
         if(isset($_POST["{$weekday}Begin_input"])) {
             $userForm .= "value=\"" . Controller_Time::format($_POST["{$weekday}Begin_input"], "html") . "\" ";
         }
-        $userForm .= "value=\"" . Controller_Time::format($userSched->get_starttime(), "html") . "\" ";
+        $userForm .= "value=\"" . Controller_Time::format($userSched->getStarttime(), "html") . "\" ";
     }
     $userForm .= "/></td><td><input type=\"text\" name=\"{$weekday}End_input\" ";
     if(isset($validator->errors["{$weekday}End_input"])) {
