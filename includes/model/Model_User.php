@@ -38,13 +38,13 @@ class Model_User extends Model_Dao
     }
     
     /**
-     * get_by_team
+     * getByTeam
      * Returns User object or array of User objects belonging to team $team;
      * @global type $db
      * @param integer $team - the team
      * @return object|array - single User object or array of User objects
      */
-    public static function get_by_team($team) {
+    public static function getByTeam($team) {
         $team = call_user_func(DB_CLASS . "::query_prep", $team);
         $user_query  = "SELECT * ";
         $user_query .= "FROM `users` ";

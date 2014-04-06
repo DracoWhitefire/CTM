@@ -30,7 +30,7 @@
     </div>
 </div>
 <?php
-    $users = Model_User::get_by_team($selectedTeam);
+    $users = Model_User::getByTeam($selectedTeam);
     if(count($users) == 1) {
         $usersArray[] = $users;
     } else {
