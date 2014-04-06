@@ -11,7 +11,6 @@ Class Model_Module extends Model_Dao
     public $menuName;
     public $rank;
     public $position;
-    private static $_count;
     protected static $_tableName = "modules";
         
     /**
@@ -51,23 +50,6 @@ Class Model_Module extends Model_Dao
         }
     }
     
-    /**
-     * _getCount
-     * Returns the amount of modules;
-     * @return int self::$_count - The amount of modules
-     */
-    private static function _getCount() {
-        if(!isset(self::$_count)) {
-            $db = call_user_func(DB_CLASS . "::getInstance");
-            $query  = "SELECT COUNT(*) ";
-            $query .= "AS `rowCount`";
-            $query .= "FROM `modules` ";
-            $set = $db->query($query);
-            self::$_count = $db->fetch_assoc($set)["rowCount"];
-            mysqli_free_result($set);
-        }
-        return self::$_count;
-    }
     
     /**
      * get

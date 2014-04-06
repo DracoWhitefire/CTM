@@ -6,6 +6,7 @@
 abstract class Model_Dao
 {
     protected static $_tableName;
+    protected static $_count;
     var $_columns;
     
     /**
@@ -29,6 +30,24 @@ abstract class Model_Dao
             mysqli_free_result($columnResult);
         }
         return $this->_columns;
+    }
+    
+    /**
+     * _getCount
+     * Returns the amount of rows;
+     * @return int self::$_count - The amount of rows
+     */
+    protected static function _getCount() {
+        if(!isset(self::$_count)) {
+            $db = call_user_func(DB_CLASS . "::getInstance");
+            $query  = "SELECT COUNT(*) ";
+            $query .= "AS `rowCount`";
+            $query .= "FROM `" . static::$_tableName . "` ";
+            $set = $db->query($query);
+            self::$_count = $db->fetch_assoc($set)["rowCount"];
+            mysqli_free_result($set);
+        }
+        return self::$_count;
     }
     
     /**
