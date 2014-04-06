@@ -147,7 +147,7 @@ final class Model_MySqlDb implements Model_DbInterface
      * @global bool $debug - Is debugging turned on?
      * @param result $result - Result set of query
      */
-    private function _mysqli_confirm($result) {
+    private function _queryConfirm($result) {
         global $debug;
         if(!$result) {
             if($debug == TRUE) {
@@ -168,7 +168,7 @@ final class Model_MySqlDb implements Model_DbInterface
     public function query($query) {
         $this->_setLastQuery($query);
         $result = mysqli_query($this->_connection, $query);
-        $this->_mysqli_confirm($result);
+        $this->_queryConfirm($result);
         return $result;
     }
 }
