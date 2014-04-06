@@ -62,17 +62,6 @@ class Model_Rank extends Model_Dao
     }
     
     /**
-     * _getAll
-     * Returns all instances of self;
-     * @return Model_Rank|array - returns instance of self or array of instances
-     */
-    private static function _getAll() {
-        $query  = "SELECT * ";
-        $query .= "FROM `ranks` ";
-        return self::get_by_query($query);
-    }
-    
-    /**
      * _getByValue
      * Returns single Model_Rank based on $value
      * @param int $value - the value for the rank

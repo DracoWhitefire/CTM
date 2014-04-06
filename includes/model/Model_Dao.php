@@ -125,6 +125,18 @@ abstract class Model_Dao
     }
     
     /**
+     * _getAll
+     * Returns all instances of self;
+     * @return object|array - returns instance of self or array of instances
+     */
+    protected static function _getAll() {
+        $query  = "SELECT * ";
+        $query .= "FROM " . static::$_tableName . " ";
+        $query .= "ORDER BY `id` ASC";
+        return self::get_by_query($query);
+    }
+    
+    /**
      * create
      * Creates new db entry from Object
      * @global dbObject $db
