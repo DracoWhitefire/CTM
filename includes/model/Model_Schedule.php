@@ -114,11 +114,11 @@ Class Model_Schedule extends Model_Dao
     }
     
     /**
-     * set_endtime
+     * setEndtime
      * Sets the end time of a schedule;
      * @param string $time - The time to be set
      */
-    public function set_endtime($time) {
+    public function setEndtime($time) {
         $this->_endTimeObject = new DateTime($time);
         $this->_endTime = $time;
     }
