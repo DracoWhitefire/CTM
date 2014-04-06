@@ -65,12 +65,12 @@ class Model_User extends Model_Dao
     }
     
     /**
-     * generate_salt
+     * _generateSalt
      * Generates salt for pw_encrypt;
      * @param integer $length - required salt length
      * @return string - the salt
      */
-    private static function _generate_salt($length) {
+    private static function _generateSalt($length) {
         return substr(str_replace("+", ".", base64_encode(md5(uniqid(mt_rand(), TRUE)))),0, $length);
     }
     
@@ -83,7 +83,7 @@ class Model_User extends Model_Dao
     public static function pw_encrypt($pw_string) {
         $hashFormat = "$2y$10$";
         $saltLength = 22;
-        $hashSalt = self::_generate_salt($saltLength);
+        $hashSalt = self::_generateSalt($saltLength);
         $hashFormatSalt = $hashFormat . $hashSalt;
         $hashPw = crypt(trim($pw_string), $hashFormatSalt);
         return $hashPw;
