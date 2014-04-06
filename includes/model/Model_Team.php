@@ -44,11 +44,11 @@ class Model_Team extends Model_Dao
         }
         
         /**
-         * get_selected
+         * getSelected
          * Returns the currently selected team;
          * @return int - the currently selected team
          */
-        public static function get_selected() {
+        public static function getSelected() {
             if(isset($_POST["teamSelect"])) {
                 return (int) $_POST["teamSelect"];
             } elseif(isset($_GET["teamSelect"])) {

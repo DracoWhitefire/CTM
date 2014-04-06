@@ -4,7 +4,7 @@
     } else {
         $editing = FALSE;
     }
-    $_SESSION["teamSelect"] = Model_Team::get_selected();
+    $_SESSION["teamSelect"] = Model_Team::getSelected();
     $_SESSION["selectedDate"] = Controller_Date::get_selected();
 ?>
 <div id="scheduleSelector_div">
@@ -18,7 +18,7 @@
         <?php
             if($session->getRank() >= 50) {
                 $url = new Controller_Url();
-                (int) $selectedTeam = Model_Team::get_selected();
+                (int) $selectedTeam = Model_Team::getSelected();
                 $output = "<form id=\"teamSelector_form\" method=\"POST\" action=\"" . $url . "\"><label for=\"teamSelect\">Team: </label>";
                 $output .= View_Team::selector($selectedTeam);
                 $output .= "<input type=\"submit\" name=\"Submit\" value=\"Submit\"/></form>";
