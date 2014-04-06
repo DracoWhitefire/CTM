@@ -97,12 +97,12 @@ final class Model_MySqlDb implements Model_DbInterface
     }
     
     /**
-     * query_prep
+     * queryPrep
      * Prepares a query for database operation;
      * @param string $value - raw query
      * @return string $value - safe query
      */
-    public static function query_prep($value) {
+    public static function queryPrep($value) {
         if(self::_getMysqliRealEscapeStringExists()) {
             if(self::_getMagicQuotesActive()) {
                 $value = mysqli::real_escape_string(stripslashes($value));

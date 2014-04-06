@@ -20,12 +20,12 @@ interface Model_DbInterface
     public static function disconnect();
 
     /**
-     * query_prep
+     * queryPrep
      * Prepares a query for database operation;
      * @param string $value - raw query
      * @return string $value - safe query
      */
-    public static function query_prep($value);
+    public static function queryPrep($value);
 
     /**
      * fetch_assoc

@@ -35,7 +35,7 @@ class Model_Team extends Model_Dao
             $query  = "SELECT * ";
             $query .= "FROM `teams` ";
             if((1 <= $id) && ($id <= self::_getCount())) {
-                $id = call_user_func(DB_CLASS . "::query_prep", $id);
+                $id = call_user_func(DB_CLASS . "::queryPrep", $id);
             } else {
                 $id = 2;
             }			

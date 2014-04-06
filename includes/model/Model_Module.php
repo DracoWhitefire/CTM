@@ -40,7 +40,7 @@ Class Model_Module extends Model_Dao
         }
         $query  = "SELECT * ";
         $query .= "FROM `modules` ";
-        $query .= "WHERE `id` = '" . call_user_func(DB_CLASS . "::query_prep", $id) . "' ";
+        $query .= "WHERE `id` = '" . call_user_func(DB_CLASS . "::queryPrep", $id) . "' ";
         $query .= "LIMIT 1";
         $object = self::getByQuery($query);
         if($object->minRank <= $session->getRank()) {

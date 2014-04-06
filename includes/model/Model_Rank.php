@@ -69,7 +69,7 @@ class Model_Rank extends Model_Dao
      */
     private static function _getByValue($value) {
         if((self::_getMin() <= $value) && ($value <= self::_getMax())) {
-            $value = call_user_func(DB_CLASS . "::query_prep", $value);
+            $value = call_user_func(DB_CLASS . "::queryPrep", $value);
         } else {
             $value = self::_getMin();
         }

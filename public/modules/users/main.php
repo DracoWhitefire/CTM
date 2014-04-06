@@ -91,7 +91,7 @@ if(isset($_POST["submitList"])) {
                     $query_array_{$string_id} = array();
                 }
                 $field = $string_array[0];
-                $postValue = trim(call_user_func(DB_CLASS . "::query_prep", $postValue));
+                $postValue = trim(call_user_func(DB_CLASS . "::queryPrep", $postValue));
                 $query_array_{$string_id}[$field] = $postValue;
                 $query_array[$string_id] = $query_array_{$string_id};
             }
@@ -106,8 +106,8 @@ if(isset($_POST["submitList"])) {
             $user_array["activeCheck"] = "off";
         }
         foreach($user_array as $field => $postValue) {
-            $field = call_user_func(DB_CLASS . "::query_prep", $field);
-            $postValue = call_user_func(DB_CLASS . "::query_prep", $postValue);
+            $field = call_user_func(DB_CLASS . "::queryPrep", $field);
+            $postValue = call_user_func(DB_CLASS . "::queryPrep", $postValue);
             if($field == "activeCheck") {
                 $field = "active";
                 if($postValue == "on") {
@@ -158,8 +158,8 @@ if(isset($_POST["submitForm"])) {
                     $schedule->userId = $user->id;
                     $schedule->weekdayId = $weekday;
                 }
-                isset($_POST["{$weekday}Begin_input"])  ? $schedule->setStarttime(call_user_func(DB_CLASS . "::query_prep", $_POST["{$weekday}Begin_input"])) : NULL;
-                isset($_POST["{$weekday}End_input"])    ? $schedule->setEndtime(call_user_func(DB_CLASS . "::query_prep", $_POST["{$weekday}End_input"])) : NULL;
+                isset($_POST["{$weekday}Begin_input"])  ? $schedule->setStarttime(call_user_func(DB_CLASS . "::queryPrep", $_POST["{$weekday}Begin_input"])) : NULL;
+                isset($_POST["{$weekday}End_input"])    ? $schedule->setEndtime(call_user_func(DB_CLASS . "::queryPrep", $_POST["{$weekday}End_input"])) : NULL;
                 is_null($schedule->id) ? NULL : $insert_success = $schedule->save();
             }
         }
