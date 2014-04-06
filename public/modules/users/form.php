@@ -100,7 +100,7 @@ $userForm .= "<div id=\"userFormSchedule_div\"><table id=\"userFormSchedule_tabl
 $userForm .= "<thead><tr><th>Weekday</th><th>Begin Shift</th><th>End Shift</th></tr></thead><tbody>";
 for($weekday = 2; $weekday <= 6; $weekday++) {
     if($editUser == TRUE) {
-        $userSched = $user->get_sch($weekday);
+        $userSched = $user->getSchedule($weekday);
         count($userSched) != 1 ? $userSched = new Model_Schedule : NULL;
     }
     $userForm .= "<tr><td>{$weekday}</td><td><input type=\"text\" name=\"{$weekday}Begin_input\" ";

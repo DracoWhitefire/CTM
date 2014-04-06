@@ -55,12 +55,12 @@ class Model_User extends Model_Dao
     }
     
     /**
-     * get_sch
+     * getSchedule
      * Returns current User's Model_Schedule for day $day;
      * @param string $day
      * @return object - Model_Schedule for day $day
      */
-    public function get_sch($day) {
+    public function getSchedule($day) {
         return Model_Schedule::getByPresetByDay($this->schedulePreset, $day);
     }
     

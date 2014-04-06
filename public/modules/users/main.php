@@ -152,7 +152,7 @@ if(isset($_POST["submitForm"])) {
             isset($hashPw)                              ? $user->passwordhash = $hashPw : NULL;
             $update_success = $user->save();
             for($weekday = 0; $weekday <= 6; $weekday++) {
-                $schedule = $user->get_sch($weekday);
+                $schedule = $user->getSchedule($weekday);
                 if(!is_object($schedule)) {
                     $schedule = new Model_Schedule;
                     $schedule->userId = $user->id;

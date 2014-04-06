@@ -44,7 +44,7 @@
         $date = Controller_Date::get_selected();
         (int) $selectedDay = date("w", strtotime($date["d"] . "-" . $date["m"] . "-" . $date["y"])) +  1;
         foreach($usersArray as $user) {
-            $schedule = $user->get_sch($selectedDay);
+            $schedule = $user->getSchedule($selectedDay);
             if(count($schedule) == 0) {
                 continue;
             } else {
