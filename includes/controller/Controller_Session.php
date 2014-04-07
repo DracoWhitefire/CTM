@@ -78,5 +78,6 @@ class Controller_Session
         unset($_SESSION["id"]);
         unset($this->userId);
         $this->_loggedIn = FALSE;
+        header("location:index.php?id=" . LOGIN_MODULE_ID);
     }
 }

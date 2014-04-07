@@ -1,10 +1,9 @@
 <?php
     require_once("../includes/functions.php");
     $session = new Controller_Session;
-    if((!$session->isLoggedIn()) && ($_GET["id"] != "7")) {
-        header("location:index.php?id=7");
+    if((!$session->isLoggedIn()) && ($_GET["id"] != LOGIN_MODULE_ID)) {
+        header("location:index.php?id=" . LOGIN_MODULE_ID);
     }
-    
     $currentId = Model_Module::getCurrentId();
     $currentModule = Model_Module::get($currentId);
 ?>

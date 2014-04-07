@@ -1,9 +1,8 @@
 <?php
     if(isset($_POST["logout_submit"])) {
-        unset($_SESSION["id"]);
-        header("location:index.php");
+        $session->logout();
     }
 ?>
-<form method="POST" id="logout_form" action="index.php?id=5">
+<form method="POST" id="logout_form" action="index.php?id=<?php echo LOGOUT_MODULE_ID; ?>">
     <input type="submit" id="logout_submit" name="logout_submit" value="Logout" />
 </form>
