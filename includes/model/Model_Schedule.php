@@ -34,7 +34,6 @@ Class Model_Schedule extends Model_Dao
      * @return object - instance of Schedule
      */
     public static function getByPresetByDay($presetId, $weekday) {
-        $db = call_user_func(DB_CLASS . "::getInstance");
         $query  = "SELECT * ";
         $query .= "FROM `schedules` ";
         $query .= "WHERE `preset_id` = " . (int) $presetId . " ";
