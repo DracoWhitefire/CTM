@@ -1,5 +1,5 @@
 <?php
-    if(isset($_POST["logoutSubmit"])) {
+    if(Controller_Request::post("logoutSubmit")) {
         $session->logout();
     }
 ?>
