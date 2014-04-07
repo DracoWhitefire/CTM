@@ -8,7 +8,7 @@ class Controller_Validator
     
     public function required(array $valReqArray) {
         foreach($valReqArray as $fieldName) {
-            if(!isset($_POST[$fieldName]) || ((empty($_POST[$fieldName])) && !(is_numeric($_POST[$fieldName])))) {
+            if(!Controller_Request::post($fieldName) || ((empty(Controller_Request::post($fieldName))) && !(is_numeric(Controller_Request::post($fieldName))))) {
                 $this->errors[$fieldName] = "error_req";
             }
         }
@@ -19,7 +19,7 @@ class Controller_Validator
             $stringArray = explode("-", $minmax);
             $min = $stringArray["0"];
             $max = $stringArray["1"];
-            if((strlen(trim($_POST[$fieldName])) < $min) || (strlen(trim($_POST[$fieldName])) > $max)) {
+            if((strlen(Controller_Request::post($fieldName)) < $min) || (strlen(Controller_Request::post($fieldName)) > $max)) {
                 if(!isset($this->errors[$fieldName])) {
                     $this->errors[$fieldName] = "error_len";
                 }
@@ -29,7 +29,7 @@ class Controller_Validator
     
     public function numeric(array $checkNumArray) {
         foreach($checkNumArray as $fieldName) {
-            if(!is_numeric($_POST[$fieldName])) {
+            if(!is_numeric(Controller_Request::post($fieldName))) {
                 if(!isset($this->errors[$fieldName])) {
                     $this->errors[$fieldName] = "error_num";
                 }
@@ -50,7 +50,7 @@ class Controller_Validator
         foreach($valUniqArray as $fieldName) {
             $fieldNameArray = preg_split("/([A-Z][a-z]+)|_/", $fieldName, -1, PREG_SPLIT_DELIM_CAPTURE|PREG_SPLIT_NO_EMPTY);
             foreach($userArray as $id => $name) {
-                if($name == $_POST[$fieldName]) {
+                if($name == Controller_Request::post($fieldName)) {
                     if(is_numeric($fieldNameArray[2])) {
                         if($fieldNameArray[2] != $id) {
                             if(!isset($this->errors[$fieldName])) {
@@ -59,8 +59,8 @@ class Controller_Validator
                             break 1;
                         }
                     } elseif($fieldNameArray[2] == "input") {
-                        if(isset($_POST["userId"])) {
-                            if($_POST["userId"] != $id) {
+                        if(Controller_Request::post("userId")) {
+                            if(Controller_Request::post("userId") != $id) {
                                 if(!isset($this->errors[$fieldName])) {
                                     $this->errors[$fieldName] = "error_unique";
                                 }
@@ -75,7 +75,7 @@ class Controller_Validator
     
     public function time(array $valTimeArray) {
         foreach($valTimeArray as $fieldName) {
-            if(preg_match("/^(0(?=\d)|1(?=\d)|2(?=[0-3]))?\d:[0-5]\d(:[0-5]\d)?$/", $_POST[$fieldName]) == 0) {
+            if(preg_match("/^(0(?=\d)|1(?=\d)|2(?=[0-3]))?\d:[0-5]\d(:[0-5]\d)?$/", Controller_Request::post($fieldName)) == 0) {
                 if(!isset($this->errors[$fieldName])) {
                     $this->errors[$fieldName] = "error_time";
                 }
@@ -86,8 +86,8 @@ class Controller_Validator
     public function timediff(array $valTimediffArray) {
         //requires the function Controller_Time::format()
         foreach($valTimediffArray as $startTimeFieldname => $endTimeFieldname) {
-            $startTime = (float) strtotime(Controller_Time::format($_POST[$startTimeFieldname], "db"));
-            $endTime = (float) strtotime(Controller_Time::format($_POST[$endTimeFieldname], "db"));
+            $startTime = (float) strtotime(Controller_Time::format(Controller_Request::post($startTimeFieldname), "db"));
+            $endTime = (float) strtotime(Controller_Time::format(Controller_Request::post($endTimeFieldname), "db"));
             if(($endTime - $startTime) < 0) {
                 if(!isset($this->errors[$startTimeFieldname]) && (!isset($this->errors[$endTimeFieldname]))) {
                     $this->errors[$startTimeFieldname] = "error_timediff";
@@ -99,7 +99,7 @@ class Controller_Validator
     
     public function password(array $valPwArray) {
         foreach($valPwArray as $pwField) {
-            $success = preg_match("/^(?=.*\d)(?=.*[a-zA-Z])(?=.*[^a-zA-Z\d\s]).{8,20}$/", trim($_POST[$pwField]));
+            $success = preg_match("/^(?=.*\d)(?=.*[a-zA-Z])(?=.*[^a-zA-Z\d\s]).{8,20}$/", Controller_Request::post($pwField));
             if(!$success) {
                 if(!isset($this->errors[$pwField])) {
                     $this->errors[$pwField] = "error_pw";
@@ -110,7 +110,7 @@ class Controller_Validator
     
     public function compare(array $valCompareArray) {
         foreach($valCompareArray as $firstField => $secondField) {
-            if($_POST[$firstField] !== $_POST[$secondField]) {
+            if(Controller_Request::post($firstField) !== Controller_Request::post($secondField)) {
                 if(!isset($this->errors[$firstField]) && !isset($this->errors[$secondField])) {
                     $this->errors[$firstField] = "error_compare";
                     $this->errors[$secondField] = "error_compare";
