@@ -112,7 +112,6 @@ abstract class Model_Dao
      */
     private function _hasAttribute($attribute) {
         $vars = get_object_vars($this);
-        //print_r($vars);
         return array_key_exists($attribute, $vars);
     }
     
