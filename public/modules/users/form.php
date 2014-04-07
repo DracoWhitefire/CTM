@@ -1,10 +1,10 @@
 <?php
 // New User Form
 if($editUser == TRUE) {
-    if(isset($_POST["singleEditList"])) {
-        $user = Model_User::get($_POST["singleEditList"]);
-    } elseif(isset($_POST["userId"])) {
-        $user = Model_User::get($_POST["userId"]);
+    if(Controller_Request::post("singleEditList")) {
+        $user = Model_User::get(Controller_Request::post("singleEditList"));
+    } elseif(Controller_Request::post("userId")) {
+        $user = Model_User::get(Controller_Request::post("userId"));
     }
 }
 if($addUser == TRUE) {
@@ -20,8 +20,8 @@ if(isset($validator->errors["userName_" . $user->id])) {
 }
 if($editUser == TRUE) {
     $userForm .= "value=\"";
-    if(isset($_POST["userName_" . $user->id])) {
-        $userForm .= htmlspecialchars($_POST["userName_" . $user->id]);
+    if(Controller_Request::post("userName_" . $user->id)) {
+        $userForm .= htmlspecialchars(Controller_Request::post("userName_" . $user->id));
     } else {
         $userForm .= htmlspecialchars($user->userName);
     }
@@ -34,8 +34,8 @@ if(isset($validator->errors["forumName_" . $user->id])) {
 }
 if($editUser == TRUE) {
     $userForm .= "value=\"";
-    if(isset($_POST["forumName_" . $user->id])) {
-        $userForm .= htmlspecialchars($_POST["forumName_" . $user->id]);
+    if(Controller_Request::post("forumName_" . $user->id)) {
+        $userForm .= htmlspecialchars(Controller_Request::post("forumName_" . $user->id));
     } else {
         $userForm .= htmlspecialchars($user->forumName);
     }
@@ -48,8 +48,8 @@ if(isset($validator->errors["firstName_" . $user->id])) {
 }
 if($editUser == TRUE) {
     $userForm .= "value=\"";
-    if(isset($_POST["firstName_" . $user->id])) {
-        $userForm .= htmlspecialchars($_POST["firstName_" . $user->id]);
+    if(Controller_Request::post("firstName_" . $user->id)) {
+        $userForm .= htmlspecialchars(Controller_Request::post("firstName_" . $user->id));
     } else {
         $userForm .= htmlspecialchars($user->firstName);
     }
@@ -62,8 +62,8 @@ if(isset($validator->errors["lastName"])) {
 }
 if($editUser == TRUE) {
     $userForm .= "value=\"";
-    if(isset($_POST["lastName_" . $user->id])) {
-        $userForm .= htmlspecialchars($_POST["lastName_" . $user->id]);
+    if(Controller_Request::post("lastName_" . $user->id)) {
+        $userForm .= htmlspecialchars(Controller_Request::post("lastName_" . $user->id));
     } else {
         $userForm .= htmlspecialchars($user->lastName);
     }
@@ -75,8 +75,8 @@ $userForm .= View_Rank::selector($user);
 $userForm .= "<br />";
 $userForm .= "<label for=\"active_" . $user->id . "\" class=\"check\">Active</label><input type=\"checkbox\" id=\"active_" . $user->id . "\" name=\"active_" . $user->id . "\" ";
 if($editUser == TRUE) {
-    if(isset($_POST["active_" . $user->id])) {
-        if($_POST["active_" . $user->id] == TRUE) {
+    if(Controller_Request::post("active_" . $user->id)) {
+        if(Controller_Request::post("active_" . $user->id) == TRUE) {
             $userForm .=  "checked=\"checked\" ";
         }
     }
@@ -108,8 +108,8 @@ for($weekday = 2; $weekday <= 6; $weekday++) {
         $userForm .= "class=\"error\" ";
     }
     if($editUser == TRUE) {
-        if(isset($_POST["{$weekday}BeginTime"])) {
-            $userForm .= "value=\"" . Controller_Time::format($_POST["{$weekday}BeginTime"], "html") . "\" ";
+        if(Controller_Request::post("{$weekday}BeginTime")) {
+            $userForm .= "value=\"" . Controller_Time::format(Controller_Request::post("{$weekday}BeginTime"), "html") . "\" ";
         }
         $userForm .= "value=\"" . Controller_Time::format($userSched->getStarttime(), "html") . "\" ";
     }
@@ -118,8 +118,8 @@ for($weekday = 2; $weekday <= 6; $weekday++) {
         $userForm .= "class=\"error\" ";
     }
     if($editUser == TRUE) {
-        if(isset($_POST["{$weekday}EndTime"])) {
-            $userForm .= "value=\"" . Controller_Time::format($_POST["{$weekday}EndTime"], "html") . "\" ";
+        if(Controller_Request::post("{$weekday}EndTime")) {
+            $userForm .= "value=\"" . Controller_Time::format(Controller_Request::post("{$weekday}EndTime"), "html") . "\" ";
         }
         $userForm .= "value=\"" . Controller_Time::format($userSched->getEndtime(), "html") . "\" ";
     }
