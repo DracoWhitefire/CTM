@@ -74,8 +74,8 @@ Class Model_Module extends Model_Dao
      * @return int - id of current subject
      */
     public static function getCurrentId() {
-        if(isset($_GET["id"])) {
-                (integer) $currentId = $_GET["id"];
+        if(Controller_Request::get("id")) {
+                (integer) $currentId = Controller_Request::get("id");
         } else {
                 (integer) $currentId = 1;
         }
