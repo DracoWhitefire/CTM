@@ -19,7 +19,7 @@
             if($session->getRank() >= 50) {
                 $url = new Controller_Url();
                 (int) $selectedTeam = Model_Team::getSelected();
-                $output = "<form id=\"teamSelector_form\" method=\"POST\" action=\"" . $url . "\"><label for=\"teamSelect\">Team: </label>";
+                $output = "<form id=\"teamSelectorForm\" method=\"POST\" action=\"" . $url . "\"><label for=\"teamSelect\">Team: </label>";
                 $output .= View_Team::selector($selectedTeam);
                 $output .= "<input type=\"submit\" name=\"Submit\" value=\"Submit\"/></form>";
                 echo $output;
@@ -38,9 +38,9 @@
     }
     $team = Model_Team::get($selectedTeam);
     $schedCount = 0;
-    $output = "<div id=\"scheduleSelected_div\">";
+    $output = "<div id=\"scheduleSelected\">";
     if(count($usersArray) > 0) {
-        $schedOutput = "<form id=\"scheduleSelected_form\" action=\"index.php" . htmlspecialchars("?id={$currentId}") . "\" method=\"POST\" ><table id = \"scheduleSelected_table\"><thead><tr><th>Name</th><th>Start Time</th><th>End Time</th><th>Working Hours</th></tr></thead><tbody>";
+        $schedOutput = "<form id=\"scheduleSelectedForm\" action=\"index.php" . htmlspecialchars("?id={$currentId}") . "\" method=\"POST\" ><table id = \"scheduleSelectedTable\"><thead><tr><th>Name</th><th>Start Time</th><th>End Time</th><th>Working Hours</th></tr></thead><tbody>";
         $date = Controller_Date::getSelected();
         (int) $selectedDay = date("w", strtotime($date["d"] . "-" . $date["m"] . "-" . $date["y"])) +  1;
         foreach($usersArray as $user) {

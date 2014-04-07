@@ -209,23 +209,23 @@ body {
     float: left;
 }
 
-#scheduleSelected_div {
+#scheduleSelected {
     float: right;
     border: solid 1px white;
     margin: 10px;
     padding: 9px;
 }
 
-#scheduleSelected_div th {
+#scheduleSelected th {
     width: 150px;
     height: 22px;
 }
 
-#scheduleSelected_div th.time {
+#scheduleSelected th.time {
     text-align: center;
 }
 
-#scheduleSelected_div th.time input[type=text] {
+#scheduleSelected th.time input[type=text] {
     width: 126px;
 }
 
