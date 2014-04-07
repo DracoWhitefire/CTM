@@ -71,7 +71,7 @@ body {
     width: 100%;
 }
 
-#siteTitle_div, #pageTitle_div, #calendar_div, #nav_div {
+#siteTitle_div, #pageTitle_div, #calendar_div, nav {
     background: padding-box appworkspace;
     border: 1px solid #141414;
     border-radius: 3px;
