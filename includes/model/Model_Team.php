@@ -46,12 +46,12 @@ class Model_Team extends Model_Dao
          * @return int - the currently selected team
          */
         public static function getSelected() {
-            if(isset($_POST["teamSelect"])) {
-                return (int) $_POST["teamSelect"];
-            } elseif(isset($_GET["teamSelect"])) {
-                return (int) $_GET["teamSelect"];
-            } elseif (isset ($_SESSION["teamSelect"])) {    
-                return (int) $_SESSION["teamSelect"];
+            if(Controller_Request::post("teamSelect")) {
+                return (int) Controller_Request::post("teamSelect");
+            } elseif(Controller_Request::get("teamSelect")) {
+                return (int) Controller_Request::get("teamSelect");
+            } elseif (Controller_Request::session("teamSelect")) {    
+                return (int) Controller_Request::session("teamSelect");
             } else {
                 return 1;
             }
