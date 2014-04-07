@@ -76,7 +76,7 @@ if($columnFilter_array["active"]) {
 $userList .= "<th></th></tr>";
 $userList .= "</thead>";
 $userList .= "<tbody>";
-foreach($users_array as $user) {
+foreach($usersArray as $user) {
     $id = $user->id;
     $fieldname = "edit_{$id}";
     $editRow = FALSE;
@@ -84,7 +84,7 @@ foreach($users_array as $user) {
         if($_POST["$fieldname"] == "on") {
             $editRow = TRUE;
         }
-    } elseif((!empty($validator->errors)) && ((isset($errorId_array[$id])) || isset($_POST["userName_{$id}"]))) {
+    } elseif((!empty($validator->errors)) && ((isset($errorIdArray[$id])) || isset($_POST["userName_{$id}"]))) {
         $editRow = TRUE;
     }
     $userList .= "<tr><td class=\"check\" >";

@@ -28,77 +28,77 @@ if(isset($_POST["editList"])) {
 //Form Validation
 if((isset($_POST["submitList"])) || (isset($_POST["submitForm"]))) {
     $checkReqArray = array();
-    $checkLen_array = array();
-    $checkNum_array = array();
-    $checkUniq_array = array();
-    $checkTime_array = array();
-    $checkTimeDiff_array = array();
-    $checkSame_array = array();
-    $checkPw_array = array();
+    $checkLenArray = array();
+    $checkNumArray = array();
+    $checkUniqArray = array();
+    $checkTimeArray = array();
+    $checkTimeDiffArray = array();
+    $checkSameArray = array();
+    $checkPwArray = array();
     foreach($_POST as $valField => $val) {
-        $valFieldString_array = preg_split("/([A-Z][a-z]+)|_/", $valField, -1, PREG_SPLIT_DELIM_CAPTURE|PREG_SPLIT_NO_EMPTY);
-        if(count($valFieldString_array) > 1){
-            if(strtolower($valFieldString_array[1]) == "name") {
-                if(strtolower($valFieldString_array[0]) != "forum") {
+        $valFieldStringArray = preg_split("/([A-Z][a-z]+)|_/", $valField, -1, PREG_SPLIT_DELIM_CAPTURE|PREG_SPLIT_NO_EMPTY);
+        if(count($valFieldStringArray) > 1){
+            if(strtolower($valFieldStringArray[1]) == "name") {
+                if(strtolower($valFieldStringArray[0]) != "forum") {
                     $checkReqArray[] = $valField;
-                    $checkLen_array[$valField] = "1-32";
+                    $checkLenArray[$valField] = "1-32";
                 }
-                if($valFieldString_array[0] == "user") {
-                    $checkUniq_array[] = $valField;
+                if($valFieldStringArray[0] == "user") {
+                    $checkUniqArray[] = $valField;
                 }
             }
-            if(($valFieldString_array[0] == "rank")) {
-                $checkNum_array[] = $valField;
+            if(($valFieldStringArray[0] == "rank")) {
+                $checkNumArray[] = $valField;
                 $checkReqArray[] = $valField;
             }
-            if((strtolower($valFieldString_array[1]) == "begin") || (strtolower($valFieldString_array[1]) == "end")) {
+            if((strtolower($valFieldStringArray[1]) == "begin") || (strtolower($valFieldStringArray[1]) == "end")) {
                 $checkReqArray[] = $valField;
-                $checkTime_array[] = $valField;
-                if(strtolower($valFieldString_array[1]) == "begin") {
-                    $checkTimeDiff_array[$valField] = $valFieldString_array[0] . "End" . $valFieldString_array[2];
+                $checkTimeArray[] = $valField;
+                if(strtolower($valFieldStringArray[1]) == "begin") {
+                    $checkTimeDiffArray[$valField] = $valFieldStringArray[0] . "End" . $valFieldStringArray[2];
                 }
             }
-            if(strtolower($valFieldString_array[0]) == "password") {
-                $checkSame_array[$valField] = "conf" . ucfirst($valField);
-                isset($valFieldString_array[2]) ? $checkSame_array[$valField] .= $valFieldString_array[2] : NULL;
+            if(strtolower($valFieldStringArray[0]) == "password") {
+                $checkSameArray[$valField] = "conf" . ucfirst($valField);
+                isset($valFieldStringArray[2]) ? $checkSameArray[$valField] .= $valFieldStringArray[2] : NULL;
                 if(!empty($_POST[$valField])) {
-                    $checkPw_array[] = $valField;
+                    $checkPwArray[] = $valField;
                 }
             }
         }
     }
     $validator = new Controller_Validator;
-    $validator->unique($checkUniq_array);
+    $validator->unique($checkUniqArray);
     $validator->required($checkReqArray);
-    $validator->length($checkLen_array);
-    $validator->numeric($checkNum_array);
-    $validator->time($checkTime_array);
-    $validator->timediff($checkTimeDiff_array);
-    $validator->password($checkPw_array);
-    $validator->compare($checkSame_array);
+    $validator->length($checkLenArray);
+    $validator->numeric($checkNumArray);
+    $validator->time($checkTimeArray);
+    $validator->timediff($checkTimeDiffArray);
+    $validator->password($checkPwArray);
+    $validator->compare($checkSameArray);
 }
 //Form Processing
 if(isset($_POST["submitList"])) {
     // This sorts all POST-vars by user id
     foreach($_POST as $varName => $postValue) {
-        $string_array = explode("_", $varName);
-        if(count($string_array) > 1){
-            if(!($string_array[0] == "filter")) {
-                $string_id = $string_array[1];
+        $stringArray = explode("_", $varName);
+        if(count($stringArray) > 1){
+            if(!($stringArray[0] == "filter")) {
+                $stringId = $stringArray[1];
             }
-            if(isset($string_id)) {
-                if(!isset($query_array_{$string_id})) {
-                    $query_array_{$string_id} = array();
+            if(isset($stringId)) {
+                if(!isset($queryArray_{$stringId})) {
+                    $queryArray_{$stringId} = array();
                 }
-                $field = $string_array[0];
+                $field = $stringArray[0];
                 $postValue = trim(call_user_func(DB_CLASS . "::queryPrep", $postValue));
-                $query_array_{$string_id}[$field] = $postValue;
-                $query_array[$string_id] = $query_array_{$string_id};
+                $queryArray_{$stringId}[$field] = $postValue;
+                $queryArray[$stringId] = $queryArray_{$stringId};
             }
         }
     }
     // This adds every field in an id (row) into a Model_User object and updates the database
-    foreach($query_array as $array_id => $user_array) {
+    foreach($queryArray as $array_id => $user_array) {
         $user = Model_User::get($array_id);
         $i = 1;
         $changefields = "";
@@ -175,15 +175,15 @@ if(isset($_POST["submitForm"])) {
 // If validation fails:
 if(isset($_POST["submitList"])) {
     if(isset($validator->errors) && !empty($validator->errors)) {
-        $errorId_array = array();
+        $errorIdArray = array();
         foreach($validator->errors as $errorField => $errorName) {
-            $errorString_array = explode("_", $errorField);
-            $errorId = $errorString_array[2];
-            $errorId_array[$errorId] = TRUE;
+            $errorStringArray = explode("_", $errorField);
+            $errorId = $errorStringArray[2];
+            $errorIdArray[$errorId] = TRUE;
         }
     }
 }
-$users_array = Model_User::get("all");
+$usersArray = Model_User::get("all");
 if(($addUser == TRUE) || ($editUser == TRUE)) {
     include("form.php");
     $output = $userForm;

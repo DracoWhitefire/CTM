@@ -67,9 +67,9 @@
 	$users_query .= "FROM `users` ";
 	$users_query .= "ORDER BY `id` ASC ";
 	$result = $mysqli->query($users_query);
-	$users_array = array();
+	$usersArray = array();
 	while($names_array = $result->fetchAssoc()) {
-		$users_array[$names_array["first_name"] . " " . $names_array["last_name"]] = $names_array["id"];
+		$usersArray[$names_array["first_name"] . " " . $names_array["last_name"]] = $names_array["id"];
 	}
 	
 //	print_r($users_array);
@@ -85,7 +85,7 @@
 	}
 //	print_r($sheetUsers_array);
 	foreach($sheetUsers_array as $row => $sheetAgent) {
-		if(!array_key_exists($sheetAgent, $users_array)) {
+		if(!array_key_exists($sheetAgent, $usersArray)) {
 			unset($sheetUsers_array[$row]);
 		}
 	}
