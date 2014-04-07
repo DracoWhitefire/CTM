@@ -23,17 +23,17 @@ class Model_User extends Model_Dao
      * @return object|array - single User object or array of User objects
      */
     public static function get($selection = "all") {
-        $user_query  = "SELECT * ";
-        $user_query .= "FROM `users` ";
+        $userQuery  = "SELECT * ";
+        $userQuery .= "FROM `users` ";
         if(is_numeric($selection)) {
-            $user_query .= "WHERE `id` = '{$selection}' ";
+            $userQuery .= "WHERE `id` = '{$selection}' ";
         } elseif($selection == "active") {
-            $user_query .= "WHERE `active` = '1' ";
+            $userQuery .= "WHERE `active` = '1' ";
         } elseif ($selection == "inactive") {
-            $user_query .= "WHERE `active` = '0' ";
+            $userQuery .= "WHERE `active` = '0' ";
         }
-        $user_query .= "ORDER BY `id` ASC";
-        return self::getByQuery($user_query);
+        $userQuery .= "ORDER BY `id` ASC";
+        return self::getByQuery($userQuery);
     }
     
     /**
@@ -44,12 +44,12 @@ class Model_User extends Model_Dao
      */
     public static function getByTeam($team) {
         $team = call_user_func(DB_CLASS . "::queryPrep", $team);
-        $user_query  = "SELECT * ";
-        $user_query .= "FROM `users` ";
-        $user_query .= "WHERE `team` = '{$team}' ";
-        $user_query .= "AND `active` = '1' ";
-        $user_query .= "ORDER BY `id` ASC";
-        return self::getByQuery($user_query);
+        $userQuery  = "SELECT * ";
+        $userQuery .= "FROM `users` ";
+        $userQuery .= "WHERE `team` = '{$team}' ";
+        $userQuery .= "AND `active` = '1' ";
+        $userQuery .= "ORDER BY `id` ASC";
+        return self::getByQuery($userQuery);
     }
     
     /**
