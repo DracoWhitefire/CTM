@@ -21,10 +21,10 @@ Class View_Date
      * @return string - HTML-ready calendar string
      * 
      * Required CSS:
-     * #calendar_div        { text-align: center; }        
-     * #calendar_div a      { display: block; }
-     * #calPrev_div         { float: left; }
-     * #calNext_div         { float: right; }
+     * #calendar        { text-align: center; }        
+     * #calendar a      { display: block; }
+     * #calPrev         { float: left; }
+     * #calNext         { float: right; }
      * .day                 { float: left; width: 2em; }
      * .weekrow             { clear: both; }
      */
@@ -50,15 +50,15 @@ Class View_Date
         $daysLastMonthFirstWeek = cal_days_in_month(CAL_GREGORIAN, $prevMonth, $prevYear)-$firstDay+1;
         $remainingLastMonth = cal_days_in_month(CAL_GREGORIAN, $prevMonth, $prevYear)-$daysLastMonthFirstWeek;
         $daysNextMonthLastWeek = cal_days_in_month(CAL_GREGORIAN, $nextMonth, $this->_date["selectedYear"]);
-        $output  = "<div id=\"calendar_div\">";
-        $output .= "<div id=\"monthSelect_div\">";
+        $output  = "<div id=\"calendar\">";
+        $output .= "<div id=\"monthSelect\">";
         $prevMonthNav = Controller_Date::toGet($prevYear, $prevMonth);
-        $navLinks = "<div id=\"calPrev_div\"><a href=\"" . htmlspecialchars($prevMonthNav) . "\">Prev</a></div>";
+        $navLinks = "<div id=\"calPrev\"><a href=\"" . htmlspecialchars($prevMonthNav) . "\">Prev</a></div>";
         $nextMonthNav = Controller_Date::toGet($nextYear, $nextMonth);
-        $navLinks .= "<div id=\"calNext_div\"><a href=\"" . htmlspecialchars($nextMonthNav) . "\">Next</a></div>";
-        $navLinks .= "<div id=\"calCur_div\">" . htmlspecialchars(date("j F Y",strtotime($this->_date["selectedDay"] . "-" . $this->_date["selectedMonth"] . "-" . $this->_date["selectedYear"]))) . "</div>";
+        $navLinks .= "<div id=\"calNext\"><a href=\"" . htmlspecialchars($nextMonthNav) . "\">Next</a></div>";
+        $navLinks .= "<div id=\"calCur\">" . htmlspecialchars(date("j F Y",strtotime($this->_date["selectedDay"] . "-" . $this->_date["selectedMonth"] . "-" . $this->_date["selectedYear"]))) . "</div>";
         $output .= $navLinks . "</div>"; 
-        $output .= "<div id=\"daySelect_div\">";
+        $output .= "<div id=\"daySelect\">";
         $dayNo = $daysLastMonthFirstWeek;
         for($weekNo = 1; $weekNo <= $numberOfWeeks; $weekNo++) {
             $output .= "<div class=\"weekrow\" >";

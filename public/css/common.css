@@ -71,7 +71,7 @@ body {
     width: 100%;
 }
 
-#siteTitle, #pageTitle, #calendar_div, nav {
+#siteTitle, #pageTitle, #calendar, nav {
     background: padding-box appworkspace;
     border: 1px solid #141414;
     border-radius: 3px;
@@ -86,7 +86,7 @@ body {
 }
 
 /* Date Selector CSS */
-#calendar_div {
+#calendar {
     text-align: center;
     float: right;
     border: 1px solid #141414;
@@ -94,23 +94,23 @@ body {
     padding: 9px;
 }
 
-#calendar_div a {
+#calendar a {
     color: #B0B0B0;
     display: block;
     text-decoration: none;
     text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.6);
 }
 
-#calendar_div a:hover {
+#calendar a:hover {
     background: #5F5F5F;
 }
 
-#calendar_div a:active {
+#calendar a:active {
     color: #DFDFDF;
     text-shadow: 0 0 2px #D0D0D0;
 }
 
-#calendar_div input[type=submit] {
+#calendar input[type=submit] {
     color: #B0B0B0;
     background: #505050;
     border: 1px solid black;
@@ -118,16 +118,16 @@ body {
     height: 1.6em;
 }
 
-#calendar_div input[type=submit]:hover {
+#calendar input[type=submit]:hover {
     background: #5F5F5F;
 }
 
-#calendar_div input[type=submit]:active {
+#calendar input[type=submit]:active {
     color: #DFDFDF;
     text-shadow: 0 0 2px #D0D0D0;
 }
 
-#monthSelect_div {
+#monthSelect {
     background: #505050;
     padding: 4px 2px 0 2px;
     height: 2em;
@@ -135,24 +135,24 @@ body {
     box-shadow: 0 2px 1px 1px #303030 inset;
 }
 
-#monthSelect_div #calCur_div {
+#monthSelect #calCur {
     text-align: center;
     height: 2em;
 }
 
-#monthSelect_div #calPrev_div {
+#monthSelect #calPrev {
     float: left;
     text-align: center;
     width: 40px;
 }
 
-#monthSelect_div #calNext_div {
+#monthSelect #calNext {
     text-align: center;
     width: 40px;
     float: right;
 }
 
-#monthSelect_div a {
+#monthSelect a {
     display: block;
     border: 1px solid black;
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.7), 0 1px 0 rgba(255, 255, 255, 0.4) inset;
@@ -160,15 +160,15 @@ body {
     width: 38px;
 }
 
-#monthSelect_div input[type=submit] {
+#monthSelect input[type=submit] {
     width: 40px;
 }
 
-#calPrev_div input[type=submit], #calPrev_div a {
+#calPrev input[type=submit], #calPrev a {
     margin: 0 0 0 2px;
 }
 
-#daySelect_div {
+#daySelect {
     background: #505050;
     padding: 0 2px 4px 2px;
     border-radius: 0 0 3px 3px ;
@@ -176,27 +176,27 @@ body {
     text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.6);
 }
 
-#daySelect_div .day {
+#daySelect .day {
     float: left; width: 2em;
     border: 1px solid black;
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.7), 0 1px 0 rgba(255, 255, 255, 0.4) inset;
 }
 
-#daySelect_div .weekrow {
+#daySelect .weekrow {
     clear: both;
     padding: 0 0 0 2px;
 }
 
-#daySelect_div .selectedDay a {
+#daySelect .selectedDay a {
     color: #DFDFDF;
     text-shadow: 0 0 2px #D0D0D0;
 }
 
-#daySelect_div .prevMonth a, #daySelect_div .nextMonth a, #daySelect_div .prevMonth, #daySelect_div .nextMonth {
+#daySelect .prevMonth a, #daySelect .nextMonth a, #daySelect .prevMonth, #daySelect .nextMonth {
     font-weight: normal;
 }
 
-#daySelect_div .day.weekDay a, #daySelect_div .day.weekDay {
+#daySelect .day.weekDay a, #daySelect .day.weekDay {
     font-weight: bold;
 }
 

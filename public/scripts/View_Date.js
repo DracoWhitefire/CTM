@@ -72,11 +72,11 @@ function addHiddenDateInputs(node, date) {
 
 /**
  * getSelectedDay
- * Date based on calCur_div;
+ * Date based on calCur;
  * @returns {Date}
  */
 function getSelectedDay() {
-    var selectedDateDiv = document.getElementById("calCur_div");
+    var selectedDateDiv = document.getElementById("calCur");
     var selectedDateArray = selectedDateDiv.textContent.split(" ");
     var selectedDay = selectedDateArray[0];
     var selectedMonth = selectedDateArray[1];
@@ -107,7 +107,7 @@ function changeSelectedDay(dayLinks) {
                 }
             }
             findClass(this.parentNode, "selectedDay", "add");
-            selectedDateDiv = document.getElementById("calCur_div");
+            selectedDateDiv = document.getElementById("calCur");
             date = getSelectedDay();
             date.setDate(this.textContent);
             selectedDateDiv.textContent = date.getDate() + " " + months[date.getMonth()] + " " + date.getFullYear();
@@ -232,11 +232,11 @@ function addChooser(parentNode) {
 
 
 window.onload = function () {
-    var dateSelectorDiv = document.getElementById("calendar_div");
-    var daySelectorDiv = document.getElementById("daySelect_div");
+    var dateSelectorDiv = document.getElementById("calendar");
+    var daySelectorDiv = document.getElementById("daySelect");
     var dayLinks = daySelectorDiv.getElementsByTagName("a");
-    var calPrevDiv = document.getElementById("calPrev_div");
-    var calNextDiv = document.getElementById("calNext_div");
+    var calPrevDiv = document.getElementById("calPrev");
+    var calNextDiv = document.getElementById("calNext");
     var selectionForm = convertToForm(dateSelectorDiv);
 
     changeAnchorTargets(dayLinks);
