@@ -200,7 +200,7 @@ body {
     font-weight: bold;
 }
 
-#loginButtons_div input[type=submit]{
+#loginButtons input[type=submit]{
     width: 30%;
     margin: 1em 10%;
 }
@@ -336,7 +336,7 @@ body {
     margin: auto;
 }
 
-#loginButtons_div input[type=submit]{
+#loginButtons input[type=submit]{
     width: 30%;
     margin: 1em 10%;
 }
