@@ -8,9 +8,9 @@ function listFilter($columnName_array) {
     foreach($columnName_array as $columnName) {
         $columnName;
         $columnFilter_array[$columnName] = FALSE;
-        if(isset($_POST["userListFilter"])) {
-            if(isset($_POST["filter" . $columnName . "Vis"])) {
-                if($_POST["filter" . $columnName . "Vis"] == "on") {
+        if(Controller_Request::post("userListFilter")) {
+            if(Controller_Request::post("filter" . $columnName . "Vis")) {
+                if(Controller_Request::post("filter" . $columnName . "Vis") == "on") {
                     setcookie($columnName, TRUE, $expiration);
                     $columnFilter_array[$columnName] = TRUE;
                 } else {
@@ -80,11 +80,11 @@ foreach($usersArray as $user) {
     $id = $user->id;
     $fieldname = "edit_{$id}";
     $editRow = FALSE;
-    if((isset($_POST["$fieldname"]))) {
-        if($_POST["$fieldname"] == "on") {
+    if((Controller_Request::post("$fieldname"))) {
+        if(Controller_Request::post("$fieldname") == "on") {
             $editRow = TRUE;
         }
-    } elseif((!empty($validator->errors)) && ((isset($errorIdArray[$id])) || isset($_POST["userName_{$id}"]))) {
+    } elseif((!empty($validator->errors)) && ((isset($errorIdArray[$id])) || Controller_Request::post("userName_{$id}"))) {
         $editRow = TRUE;
     }
     $userList .= "<tr><td class=\"check\" >";
@@ -103,8 +103,8 @@ foreach($usersArray as $user) {
         if($editRow == TRUE) {
             $userList .= "<input type=\"text\" name=\"" . htmlspecialchars("userName_{$id}") . "\" value=\"";
         }
-        if(isset($_POST["userName_{$id}"])) {
-            $userList .= htmlspecialchars($_POST["userName_{$id}"]);
+        if(Controller_Request::post("userName_{$id}")) {
+            $userList .= htmlspecialchars(Controller_Request::post("userName_{$id}"));
         } else {
             $userList .= htmlspecialchars($user->userName);
         }		
@@ -124,8 +124,8 @@ foreach($usersArray as $user) {
         if($editRow == TRUE) {
             $userList .= "<input type=\"text\" name=\"" . htmlspecialchars("firstName_{$id}") . "\" value=\"";
         }
-        if(isset($_POST["firstName_{$id}"])) {
-            $userList .= htmlspecialchars($_POST["firstName_{$id}"]);
+        if(Controller_Request::post("firstName_{$id}")) {
+            $userList .= htmlspecialchars(Controller_Request::post("firstName_{$id}"));
         } else {
             $userList .= htmlspecialchars($user->firstName);
         }		
@@ -145,8 +145,8 @@ foreach($usersArray as $user) {
         if($editRow == TRUE) {
             $userList .= "<input type=\"text\" name=\"" . htmlspecialchars("lastName_{$id}") . "\" value=\"";
         }
-        if(isset($_POST["lastName_{$id}"])) {
-            $userList .= htmlspecialchars($_POST["lastName_{$id}"]);
+        if(Controller_Request::post("lastName_{$id}")) {
+            $userList .= htmlspecialchars(Controller_Request::post("lastName_{$id}"));
         } else {
             $userList .= htmlspecialchars($user->lastName);
         }
@@ -166,8 +166,8 @@ foreach($usersArray as $user) {
         if($editRow == TRUE) {
             $userList .= "<input type=\"text\" name=\"" . htmlspecialchars("forumName_{$id}") . "\" value=\"";
         }
-        if(isset($_POST["forumName_{$id}"])) {
-            $userList .= htmlspecialchars($_POST["forumName_{$id}"]);
+        if(Controller_Request::post("forumName_{$id}")) {
+            $userList .= htmlspecialchars(Controller_Request::post("forumName_{$id}"));
         } else {
             $userList .= htmlspecialchars($user->forumName);
         }

@@ -1,8 +1,8 @@
 <?php
-if(isset($_POST["cancelEditList"])) {
+if(Controller_Request::post("cancelEditList")) {
     $_POST = "";
 }
-if(isset($_POST["editList"])) {
+if(Controller_Request::post("editList")) {
     if(count($_POST) > 1) {
         $editList = TRUE;
         $addUser = FALSE;
@@ -12,11 +12,11 @@ if(isset($_POST["editList"])) {
         $addUser = FALSE;
         $editUser = FALSE;
     }
-} elseif(isset($_POST["addList"])) {
+} elseif(Controller_Request::post("addList")) {
     $addUser = TRUE;
     $editUser = FALSE;
     $editList = FALSE;
-} elseif(isset($_POST["singleEditList"])) {
+} elseif(Controller_Request::post("singleEditList")) {
     $editUser = TRUE;
     $addUser = FALSE;
     $editList = FALSE;
@@ -26,7 +26,7 @@ if(isset($_POST["editList"])) {
     $editList = FALSE;
 }
 //Form Validation
-if((isset($_POST["submitList"])) || (isset($_POST["submitForm"]))) {
+if((Controller_Request::post("submitList")) || (Controller_Request::post("submitForm"))) {
     $checkReqArray = array();
     $checkLenArray = array();
     $checkNumArray = array();
@@ -61,7 +61,7 @@ if((isset($_POST["submitList"])) || (isset($_POST["submitForm"]))) {
             if(strtolower($valFieldStringArray[0]) == "password") {
                 $checkSameArray[$valField] = "conf" . ucfirst($valField);
                 isset($valFieldStringArray[2]) ? $checkSameArray[$valField] .= $valFieldStringArray[2] : NULL;
-                if(!empty($_POST[$valField])) {
+                if(!empty(Controller_Request::post($valField))) {
                     $checkPwArray[] = $valField;
                 }
             }
@@ -78,7 +78,7 @@ if((isset($_POST["submitList"])) || (isset($_POST["submitForm"]))) {
     $validator->compare($checkSameArray);
 }
 //Form Processing
-if(isset($_POST["submitList"])) {
+if(Controller_Request::post("submitList")) {
     // This sorts all POST-vars by user id
     foreach($_POST as $varName => $postValue) {
         $stringArray = explode("_", $varName);
@@ -128,27 +128,27 @@ if(isset($_POST["submitList"])) {
         }
     }
 }
-if(isset($_POST["submitForm"])) {
+if(Controller_Request::post("submitForm")) {
     if(empty($validator->errors)) {
         //Password Hashing
-        if(!empty($_POST["password"])) {
-            $hashPw = Model_User::pwEncrypt($_POST["password"]);
+        if(!empty(Controller_Request::post("password"))) {
+            $hashPw = Model_User::pwEncrypt(Controller_Request::post("password"));
         }
-        if(($_POST["submitForm"] == "Submit User") || ($_POST["submitForm"] == "Add User")) {
-            isset($_POST["userId"]) ? $userId = $_POST["userId"] : $userId = NULL;
+        if((Controller_Request::post("submitForm") == "Submit User") || (Controller_Request::post("submitForm") == "Add User")) {
+            Controller_Request::post("userId") ? $userId = Controller_Request::post("userId") : $userId = NULL;
             !is_null($userId) ? $user = Model_User::get($userId) : $user = new Model_User;
-            if(isset($_POST["active_" . $userId])) {
+            if(Controller_Request::post("active_" . $userId)) {
                 $active = 1;
             } else {
                 $active = 0;
             }
             isset($active)                              ? $user->active = $active : NULL;
             isset($employeeNr)                          ? $user->employeeNr = $employeeNr : NULL;
-            isset($_POST["userName_" . $userId])  ? $user->userName = $_POST["userName_" . $userId] : NULL;
-            isset($_POST["forumName_" . $userId]) ? $user->forumName = $_POST["forumName_" . $userId] : NULL;
-            isset($_POST["firstName_" . $userId]) ? $user->firstName = $_POST["firstName_" . $userId] : NULL;
-            isset($_POST["lastName_" . $userId])  ? $user->lastName = $_POST["lastName_" . $userId] : NULL;
-            isset($_POST["rankSelect_" . $userId])      ? $user->rank = $_POST["rankSelect_" . $userId] : NULL;
+            Controller_Request::post("userName_" . $userId)  ? $user->userName = Controller_Request::post("userName_" . $userId) : NULL;
+            Controller_Request::post("forumName_" . $userId) ? $user->forumName = Controller_Request::post("forumName_" . $userId) : NULL;
+            Controller_Request::post("firstName_" . $userId) ? $user->firstName = Controller_Request::post("firstName_" . $userId) : NULL;
+            Controller_Request::post("lastName_" . $userId)  ? $user->lastName = Controller_Request::post("lastName_" . $userId) : NULL;
+            Controller_Request::post("rankSelect_" . $userId)      ? $user->rank = Controller_Request::post("rankSelect_" . $userId) : NULL;
             isset($hashPw)                              ? $user->passwordhash = $hashPw : NULL;
             $update_success = $user->save();
             for($weekday = 0; $weekday <= 6; $weekday++) {
@@ -158,22 +158,22 @@ if(isset($_POST["submitForm"])) {
                     $schedule->userId = $user->id;
                     $schedule->weekdayId = $weekday;
                 }
-                isset($_POST["{$weekday}BeginTime"])  ? $schedule->setStarttime(call_user_func(DB_CLASS . "::queryPrep", $_POST["{$weekday}BeginTime"])) : NULL;
-                isset($_POST["{$weekday}EndTime"])    ? $schedule->setEndtime(call_user_func(DB_CLASS . "::queryPrep", $_POST["{$weekday}EndTime"])) : NULL;
+                Controller_Request::post("{$weekday}BeginTime")  ? $schedule->setStarttime(call_user_func(DB_CLASS . "::queryPrep", Controller_Request::post("{$weekday}BeginTime"))) : NULL;
+                Controller_Request::post("{$weekday}EndTime")    ? $schedule->setEndtime(call_user_func(DB_CLASS . "::queryPrep", Controller_Request::post("{$weekday}EndTime"))) : NULL;
                 is_null($schedule->id) ? NULL : $insert_success = $schedule->save();
             }
         }
     } else {
-        if($_POST["submitForm"] == "Add User") {
+        if(Controller_Request::post("submitForm") == "Add User") {
             $editUser = TRUE;
             $addUser = TRUE;
-        } elseif($_POST["submitForm"] == "Submit User") {
+        } elseif(Controller_Request::post("submitForm") == "Submit User") {
             $editUser = TRUE;
         }
     }
 }
 // If validation fails:
-if(isset($_POST["submitList"])) {
+if(Controller_Request::post("submitList")) {
     if(isset($validator->errors) && !empty($validator->errors)) {
         $errorIdArray = array();
         foreach($validator->errors as $errorField => $errorName) {
