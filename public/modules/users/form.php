@@ -3,80 +3,80 @@
 if($editUser == TRUE) {
     if(isset($_POST["singleEditList"])) {
         $user = Model_User::get($_POST["singleEditList"]);
-    } elseif(isset($_POST["userId_input"])) {
-        $user = Model_User::get($_POST["userId_input"]);
+    } elseif(isset($_POST["userId"])) {
+        $user = Model_User::get($_POST["userId"]);
     }
 }
 if($addUser == TRUE) {
     $user = new Model_User;
 }
-$userForm = "<div id=\"userForm_div\"><form id=\"userForm_form\" method=\"POST\" action=\"index.php" . htmlspecialchars("?id={$currentId}") . "\">";
+$userForm = "<div id=\"userForm\"><form id=\"userForm\" method=\"POST\" action=\"index.php" . htmlspecialchars("?id={$currentId}") . "\">";
 if($editUser == TRUE) {
-    $userForm .= "<input type=\"hidden\" name=\"userId_input\" value=\"" . htmlspecialchars($user->id) . "\" />";
+    $userForm .= "<input type=\"hidden\" name=\"userId\" value=\"" . htmlspecialchars($user->id) . "\" />";
 }
-$userForm .= "<div id=\"userFormPersonal_div\"><label for=\"userName_input_" . $user->id . "\">Username</label><input type=\"text\" id=\"userName_input_" . $user->id . "\" name=\"userName_input_" . $user->id . "\" ";
-if(isset($validator->errors["userName_input_" . $user->id])) {
+$userForm .= "<div id=\"userFormPersonal\"><label for=\"userName_" . $user->id . "\">Username</label><input type=\"text\" id=\"userName_" . $user->id . "\" name=\"userName_" . $user->id . "\" ";
+if(isset($validator->errors["userName_" . $user->id])) {
     $userForm .= "class=\"error\" ";
 }
 if($editUser == TRUE) {
     $userForm .= "value=\"";
-    if(isset($_POST["userName_input_" . $user->id])) {
-        $userForm .= htmlspecialchars($_POST["userName_input_" . $user->id]);
+    if(isset($_POST["userName_" . $user->id])) {
+        $userForm .= htmlspecialchars($_POST["userName_" . $user->id]);
     } else {
         $userForm .= htmlspecialchars($user->userName);
     }
     $userForm .= "\" ";
 }
 $userForm .= "/><br />";
-$userForm .= "<label for=\"forumName_input_" . $user->id . "\">Forum Name</label><input type=\"text\" id=\"forumName_input_" . $user->id . "\" name=\"forumName_input_" . $user->id . "\" autocomplete=\"off\" ";
-if(isset($validator->errors["forumName_input_" . $user->id])) {
+$userForm .= "<label for=\"forumName_" . $user->id . "\">Forum Name</label><input type=\"text\" id=\"forumName_" . $user->id . "\" name=\"forumName_" . $user->id . "\" autocomplete=\"off\" ";
+if(isset($validator->errors["forumName_" . $user->id])) {
     $userForm .= "class=\"error\" ";
 }
 if($editUser == TRUE) {
     $userForm .= "value=\"";
-    if(isset($_POST["forumName_input_" . $user->id])) {
-        $userForm .= htmlspecialchars($_POST["forumName_input_" . $user->id]);
+    if(isset($_POST["forumName_" . $user->id])) {
+        $userForm .= htmlspecialchars($_POST["forumName_" . $user->id]);
     } else {
         $userForm .= htmlspecialchars($user->forumName);
     }
     $userForm .= "\" ";
 }
 $userForm .= "/><br />";
-$userForm .= "<label for=\"firstName_input_" . $user->id . "\">First Name</label><input type=\"text\" id=\"firstName_input_" . $user->id . "\" name=\"firstName_input_" . $user->id . "\" autocomplete=\"off\" ";
-if(isset($validator->errors["firstName_input_" . $user->id])) {
+$userForm .= "<label for=\"firstName_" . $user->id . "\">First Name</label><input type=\"text\" id=\"firstName_" . $user->id . "\" name=\"firstName_" . $user->id . "\" autocomplete=\"off\" ";
+if(isset($validator->errors["firstName_" . $user->id])) {
     $userForm .= "class=\"error\" ";
 }
 if($editUser == TRUE) {
     $userForm .= "value=\"";
-    if(isset($_POST["firstName_input_" . $user->id])) {
-        $userForm .= htmlspecialchars($_POST["firstName_input_" . $user->id]);
+    if(isset($_POST["firstName_" . $user->id])) {
+        $userForm .= htmlspecialchars($_POST["firstName_" . $user->id]);
     } else {
         $userForm .= htmlspecialchars($user->firstName);
     }
     $userForm .= "\" ";
 }
 $userForm .= "/><br />";
-$userForm .= "<label for=\"lastName_input_" . $user->id . "\">Last Name</label><input type=\"text\" id=\"lastName_input_" . $user->id . "\" name=\"lastName_input_" . $user->id . "\" autocomplete=\"off\" ";
-if(isset($validator->errors["lastName_input"])) {
+$userForm .= "<label for=\"lastName_" . $user->id . "\">Last Name</label><input type=\"text\" id=\"lastName_" . $user->id . "\" name=\"lastName_" . $user->id . "\" autocomplete=\"off\" ";
+if(isset($validator->errors["lastName"])) {
     $userForm .= "class=\"error\" ";
 }
 if($editUser == TRUE) {
     $userForm .= "value=\"";
-    if(isset($_POST["lastName_input_" . $user->id])) {
-        $userForm .= htmlspecialchars($_POST["lastName_input_" . $user->id]);
+    if(isset($_POST["lastName_" . $user->id])) {
+        $userForm .= htmlspecialchars($_POST["lastName_" . $user->id]);
     } else {
         $userForm .= htmlspecialchars($user->lastName);
     }
     $userForm .= "\" ";
 }
 $userForm .= "/><br />";
-$userForm .= "<label for=\"rank_select_" . $user->id . "\">Rank</label>";
+$userForm .= "<label for=\"rankselect_" . $user->id . "\">Rank</label>";
 $userForm .= View_Rank::selector($user);
 $userForm .= "<br />";
-$userForm .= "<label for=\"active_input_" . $user->id . "\" class=\"check\">Active</label><input type=\"checkbox\" id=\"active_input_" . $user->id . "\" name=\"active_input_" . $user->id . "\" ";
+$userForm .= "<label for=\"active_" . $user->id . "\" class=\"check\">Active</label><input type=\"checkbox\" id=\"active_" . $user->id . "\" name=\"active_" . $user->id . "\" ";
 if($editUser == TRUE) {
-    if(isset($_POST["active_input_" . $user->id])) {
-        if($_POST["active_input_" . $user->id] == TRUE) {
+    if(isset($_POST["active_" . $user->id])) {
+        if($_POST["active_" . $user->id] == TRUE) {
             $userForm .=  "checked=\"checked\" ";
         }
     }
@@ -85,41 +85,41 @@ if($editUser == TRUE) {
     }
 }
 $userForm .= "/><br />";
-$userForm .= "<label for=\"password_input_" . $user->id . "\">Password</label><input type=\"password\" id=\"password_input_" . $user->id . "\" name=\"password_input_" . $user->id . "\" ";
-if(isset($validator->errors["password_input_" . $user->id])) {
+$userForm .= "<label for=\"password_" . $user->id . "\">Password</label><input type=\"password\" id=\"password_" . $user->id . "\" name=\"password_" . $user->id . "\" ";
+if(isset($validator->errors["password_" . $user->id])) {
     $userForm .= "class=\"error\" ";
 }
 $userForm .= "/><br />";
-$userForm .= "<label for=\"confPassword_input_" . $user->id . "\">Confirm Password</label><input type=\"password\" id=\"confPassword_input_" . $user->id . "\" name=\"confPassword_input_" . $user->id . "\"  ";
-if(isset($validator->errors["confPassword_input_" . $user->id])) {
+$userForm .= "<label for=\"confPassword_" . $user->id . "\">Confirm Password</label><input type=\"password\" id=\"confPassword_" . $user->id . "\" name=\"confPassword_" . $user->id . "\"  ";
+if(isset($validator->errors["confPassword_" . $user->id])) {
     $userForm .= "class=\"error\" ";
 }
 $userForm .= "/><br />";
-$userForm .= "<label for=\"changePw_input_" . $user->id . "\" class=\"check\">Change password on next login</label><input type=\"checkbox\" id=\"changePw_input_" . $user->id . "\" name=\"changePw_input_" . $user->id . "\" /></div><hr />";
-$userForm .= "<div id=\"userFormSchedule_div\"><table id=\"userFormSchedule_table\">";
+$userForm .= "<label for=\"changePw_" . $user->id . "\" class=\"check\">Change password on next login</label><input type=\"checkbox\" id=\"changePw_" . $user->id . "\" name=\"changePw_" . $user->id . "\" /></div><hr />";
+$userForm .= "<div id=\"userFormSchedule\"><table id=\"userFormSchedule\">";
 $userForm .= "<thead><tr><th>Weekday</th><th>Begin Shift</th><th>End Shift</th></tr></thead><tbody>";
 for($weekday = 2; $weekday <= 6; $weekday++) {
     if($editUser == TRUE) {
         $userSched = $user->getSchedule($weekday);
         count($userSched) != 1 ? $userSched = new Model_Schedule : NULL;
     }
-    $userForm .= "<tr><td>{$weekday}</td><td><input type=\"text\" name=\"{$weekday}Begin_input\" ";
-    if(isset($validator->errors["{$weekday}Begin_input"])) {
+    $userForm .= "<tr><td>{$weekday}</td><td><input type=\"text\" name=\"{$weekday}BeginTime\" ";
+    if(isset($validator->errors["{$weekday}BeginTime"])) {
         $userForm .= "class=\"error\" ";
     }
     if($editUser == TRUE) {
-        if(isset($_POST["{$weekday}Begin_input"])) {
-            $userForm .= "value=\"" . Controller_Time::format($_POST["{$weekday}Begin_input"], "html") . "\" ";
+        if(isset($_POST["{$weekday}BeginTime"])) {
+            $userForm .= "value=\"" . Controller_Time::format($_POST["{$weekday}BeginTime"], "html") . "\" ";
         }
         $userForm .= "value=\"" . Controller_Time::format($userSched->getStarttime(), "html") . "\" ";
     }
-    $userForm .= "/></td><td><input type=\"text\" name=\"{$weekday}End_input\" ";
-    if(isset($validator->errors["{$weekday}End_input"])) {
+    $userForm .= "/></td><td><input type=\"text\" name=\"{$weekday}EndTime\" ";
+    if(isset($validator->errors["{$weekday}EndTime"])) {
         $userForm .= "class=\"error\" ";
     }
     if($editUser == TRUE) {
-        if(isset($_POST["{$weekday}End_input"])) {
-            $userForm .= "value=\"" . Controller_Time::format($_POST["{$weekday}End_input"], "html") . "\" ";
+        if(isset($_POST["{$weekday}EndTime"])) {
+            $userForm .= "value=\"" . Controller_Time::format($_POST["{$weekday}EndTime"], "html") . "\" ";
         }
         $userForm .= "value=\"" . Controller_Time::format($userSched->getEndtime(), "html") . "\" ";
     }

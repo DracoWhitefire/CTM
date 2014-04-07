@@ -59,8 +59,8 @@ class Controller_Validator
                             break 1;
                         }
                     } elseif($fieldName_array[2] == "input") {
-                        if(isset($_POST["userId_input"])) {
-                            if($_POST["userId_input"] != $id) {
+                        if(isset($_POST["userId"])) {
+                            if($_POST["userId"] != $id) {
                                 if(!isset($this->errors[$fieldName])) {
                                     $this->errors[$fieldName] = "error_unique";
                                 }

@@ -55,11 +55,11 @@ if((isset($_POST["submitList"])) || (isset($_POST["submitForm"]))) {
                 $checkReq_array[] = $valField;
                 $checkTime_array[] = $valField;
                 if(strtolower($valFieldString_array[1]) == "begin") {
-                    $checkTimeDiff_array[$valField] = $valFieldString_array[0] . "End_" . $valFieldString_array[2];
+                    $checkTimeDiff_array[$valField] = $valFieldString_array[0] . "End" . $valFieldString_array[2];
                 }
             }
             if(strtolower($valFieldString_array[0]) == "password") {
-                $checkSame_array[$valField] = "conf" . ucfirst($valFieldString_array[0]) . "_" . $valFieldString_array[1] . "_";
+                $checkSame_array[$valField] = "conf" . ucfirst($valField);
                 isset($valFieldString_array[2]) ? $checkSame_array[$valField] .= $valFieldString_array[2] : NULL;
                 if(!empty($_POST[$valField])) {
                     $checkPw_array[] = $valField;
@@ -131,23 +131,23 @@ if(isset($_POST["submitList"])) {
 if(isset($_POST["submitForm"])) {
     if(empty($validator->errors)) {
         //Password Hashing
-        if(!empty($_POST["password_input"])) {
-            $hashPw = Model_User::pwEncrypt($_POST["password_input"]);
+        if(!empty($_POST["password"])) {
+            $hashPw = Model_User::pwEncrypt($_POST["password"]);
         }
         if(($_POST["submitForm"] == "Submit User") || ($_POST["submitForm"] == "Add User")) {
-            isset($_POST["userId_input"]) ? $userId = $_POST["userId_input"] : $userId = NULL;
+            isset($_POST["userId"]) ? $userId = $_POST["userId"] : $userId = NULL;
             !is_null($userId) ? $user = Model_User::get($userId) : $user = new Model_User;
-            if(isset($_POST["active_input_" . $userId])) {
+            if(isset($_POST["active_" . $userId])) {
                 $active = 1;
             } else {
                 $active = 0;
             }
             isset($active)                              ? $user->active = $active : NULL;
             isset($employeeNr)                          ? $user->employeeNr = $employeeNr : NULL;
-            isset($_POST["userName_input_" . $userId])  ? $user->userName = $_POST["userName_input_" . $userId] : NULL;
-            isset($_POST["forumName_input_" . $userId]) ? $user->forumName = $_POST["forumName_input_" . $userId] : NULL;
-            isset($_POST["firstName_input_" . $userId]) ? $user->firstName = $_POST["firstName_input_" . $userId] : NULL;
-            isset($_POST["lastName_input_" . $userId])  ? $user->lastName = $_POST["lastName_input_" . $userId] : NULL;
+            isset($_POST["userName_" . $userId])  ? $user->userName = $_POST["userName_" . $userId] : NULL;
+            isset($_POST["forumName_" . $userId]) ? $user->forumName = $_POST["forumName_" . $userId] : NULL;
+            isset($_POST["firstName_" . $userId]) ? $user->firstName = $_POST["firstName_" . $userId] : NULL;
+            isset($_POST["lastName_" . $userId])  ? $user->lastName = $_POST["lastName_" . $userId] : NULL;
             isset($_POST["rankSelect_" . $userId])      ? $user->rank = $_POST["rankSelect_" . $userId] : NULL;
             isset($hashPw)                              ? $user->passwordhash = $hashPw : NULL;
             $update_success = $user->save();
@@ -158,8 +158,8 @@ if(isset($_POST["submitForm"])) {
                     $schedule->userId = $user->id;
                     $schedule->weekdayId = $weekday;
                 }
-                isset($_POST["{$weekday}Begin_input"])  ? $schedule->setStarttime(call_user_func(DB_CLASS . "::queryPrep", $_POST["{$weekday}Begin_input"])) : NULL;
-                isset($_POST["{$weekday}End_input"])    ? $schedule->setEndtime(call_user_func(DB_CLASS . "::queryPrep", $_POST["{$weekday}End_input"])) : NULL;
+                isset($_POST["{$weekday}BeginTime"])  ? $schedule->setStarttime(call_user_func(DB_CLASS . "::queryPrep", $_POST["{$weekday}BeginTime"])) : NULL;
+                isset($_POST["{$weekday}EndTime"])    ? $schedule->setEndtime(call_user_func(DB_CLASS . "::queryPrep", $_POST["{$weekday}EndTime"])) : NULL;
                 is_null($schedule->id) ? NULL : $insert_success = $schedule->save();
             }
         }

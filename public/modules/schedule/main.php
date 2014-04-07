@@ -7,14 +7,14 @@
     $_SESSION["teamSelect"] = Model_Team::getSelected();
     $_SESSION["selectedDate"] = Controller_Date::getSelected();
 ?>
-<div id="scheduleSelector_div">
-    <div id="dateSelector_div">
+<div id="scheduleSelector">
+    <div id="dateSelector">
         <?php
             $date = new View_Date;
             echo $date->selector("GET");
         ?>
     </div>
-    <div id="teamSelector_div">
+    <div id="teamSelector">
         <?php
             if($session->getRank() >= 50) {
                 $url = new Controller_Url();
