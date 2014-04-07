@@ -65,24 +65,24 @@ Class Controller_Date
      * @return string $url - URL for GET request
      */
     public static function toGet($year = "", $month = "", $day = "") {
-        $urlQueries_array = array();
-        $urlQueries_array["y"] =    !empty($year) 
+        $urlQueriesArray = array();
+        $urlQueriesArray["y"] =    !empty($year) 
                                     ? urlencode($year) 
-                                    :  (isset($urlQueries_array["y"]) 
-                                       ? $urlQueries_array["y"]
+                                    :  (isset($urlQueriesArray["y"]) 
+                                       ? $urlQueriesArray["y"]
                                        : date("Y"));
-        $urlQueries_array["m"] =    !empty($month) 
+        $urlQueriesArray["m"] =    !empty($month) 
                                     ? urlencode($month) 
-                                    :  (isset($urlQueries_array["m"]) 
-                                       ? $urlQueries_array["m"]
+                                    :  (isset($urlQueriesArray["m"]) 
+                                       ? $urlQueriesArray["m"]
                                        : date("n"));
-        $urlQueries_array["d"] =    !empty($day) 
+        $urlQueriesArray["d"] =    !empty($day) 
                                     ? urlencode($day) 
-                                    :  (isset($urlQueries_array["d"]) 
-                                       ? $urlQueries_array["d"]
+                                    :  (isset($urlQueriesArray["d"]) 
+                                       ? $urlQueriesArray["d"]
                                        : date("j"));
         $url = new Controller_Url();
-        $url->add($urlQueries_array);
+        $url->add($urlQueriesArray);
         return (string) $url;
     }
     
