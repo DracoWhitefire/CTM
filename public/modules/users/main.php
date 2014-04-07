@@ -27,7 +27,7 @@ if(isset($_POST["editList"])) {
 }
 //Form Validation
 if((isset($_POST["submitList"])) || (isset($_POST["submitForm"]))) {
-    $checkReq_array = array();
+    $checkReqArray = array();
     $checkLen_array = array();
     $checkNum_array = array();
     $checkUniq_array = array();
@@ -40,7 +40,7 @@ if((isset($_POST["submitList"])) || (isset($_POST["submitForm"]))) {
         if(count($valFieldString_array) > 1){
             if(strtolower($valFieldString_array[1]) == "name") {
                 if(strtolower($valFieldString_array[0]) != "forum") {
-                    $checkReq_array[] = $valField;
+                    $checkReqArray[] = $valField;
                     $checkLen_array[$valField] = "1-32";
                 }
                 if($valFieldString_array[0] == "user") {
@@ -49,10 +49,10 @@ if((isset($_POST["submitList"])) || (isset($_POST["submitForm"]))) {
             }
             if(($valFieldString_array[0] == "rank")) {
                 $checkNum_array[] = $valField;
-                $checkReq_array[] = $valField;
+                $checkReqArray[] = $valField;
             }
             if((strtolower($valFieldString_array[1]) == "begin") || (strtolower($valFieldString_array[1]) == "end")) {
-                $checkReq_array[] = $valField;
+                $checkReqArray[] = $valField;
                 $checkTime_array[] = $valField;
                 if(strtolower($valFieldString_array[1]) == "begin") {
                     $checkTimeDiff_array[$valField] = $valFieldString_array[0] . "End" . $valFieldString_array[2];
@@ -69,7 +69,7 @@ if((isset($_POST["submitList"])) || (isset($_POST["submitForm"]))) {
     }
     $validator = new Controller_Validator;
     $validator->unique($checkUniq_array);
-    $validator->required($checkReq_array);
+    $validator->required($checkReqArray);
     $validator->length($checkLen_array);
     $validator->numeric($checkNum_array);
     $validator->time($checkTime_array);

@@ -3,9 +3,9 @@ if(isset($_POST["login"])) {
     //login attempt
     $username = call_user_func(DB_CLASS . "::queryPrep", $_POST["username"]);
     $password = call_user_func(DB_CLASS . "::queryPrep", $_POST["password"]);
-    $checkReq_array = array("username", "password");
+    $checkReqArray = array("username", "password");
     $validator = new Controller_Validator;
-    $validator->required($checkReq_array);
+    $validator->required($checkReqArray);
     if(empty($validator->errors)) {
         $users = Model_User::get("all");
         foreach($users as $user) {
