@@ -76,6 +76,7 @@ if($columnFilter_array["active"]) {
 $userList .= "<th></th></tr>";
 $userList .= "</thead>";
 $userList .= "<tbody>";
+$rowCount = "odd";
 foreach($usersArray as $user) {
     $id = $user->id;
     $fieldname = "edit_{$id}";
@@ -87,7 +88,7 @@ foreach($usersArray as $user) {
     } elseif((!empty($validator->errors)) && ((isset($errorIdArray[$id])) || Controller_Request::post("userName_{$id}"))) {
         $editRow = TRUE;
     }
-    $userList .= "<tr><td class=\"check\" >";
+    $userList .= "<tr class=\"{$rowCount}\"><td class=\"check\" >";
     if($editList == FALSE) {
         $userList .= "<input type=\"checkbox\" name=\"" . htmlspecialchars("edit_{$id}") . "\" />";
     }
@@ -202,6 +203,7 @@ if($columnFilter_array["active"]) {
         $userList .= "<button type=\"submit\" name=\"singleEditList\" formmethod=\"post\" value=\"" . htmlspecialchars($id) . "\"  >Edit</button>";
     }
     $userList .= "</td></tr>";
+    $rowCount = ($rowCount == "odd") ? "even" : "odd";
 }
 
 $userList .= "</tbody>";
