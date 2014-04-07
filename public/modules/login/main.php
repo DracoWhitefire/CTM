@@ -1,8 +1,8 @@
 <?php
-if(isset($_POST["login"])) {
+if(Controller_Request::post("login")) {
     //login attempt
-    $username = call_user_func(DB_CLASS . "::queryPrep", $_POST["username"]);
-    $password = call_user_func(DB_CLASS . "::queryPrep", $_POST["password"]);
+    $username = call_user_func(DB_CLASS . "::queryPrep", Controller_Request::post("username"));
+    $password = call_user_func(DB_CLASS . "::queryPrep", Controller_Request::post("password"));
     $checkReqArray = array("username", "password");
     $validator = new Controller_Validator;
     $validator->required($checkReqArray);
@@ -29,7 +29,7 @@ if(isset($_POST["login"])) {
     $message = "Please enter your user name and password.";
     $username = "";
     $password = "";
-    if(isset($_POST["cancel"])) {
+    if(Controller_Request::post("cancel")) {
         header("location: index.php");
         exit;
     }
