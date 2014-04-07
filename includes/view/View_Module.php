@@ -10,7 +10,7 @@ Class View_Module
         global $session;
         $output = "";
         if($session->isLoggedIn()) {
-            $output .= "<ul>";
+            $output .= "<nav><ul>";
             $modulesArray = Model_Module::get();
             foreach($modulesArray as $module) {
                 //Only generate menu items for visible modules allowed by rank
@@ -22,7 +22,7 @@ Class View_Module
                     $output .= "><a href=\"" . htmlspecialchars("index.php?id=" . urlencode($module->id)) . "\" >" . htmlspecialchars($module->menuName) . "</a></li>";
                 }
             }
-            $output .= "</ul>";
+            $output .= "</ul></nav>";
         }
         return $output;
     }
