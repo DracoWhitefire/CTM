@@ -8,7 +8,7 @@
 body {
 }
 
-#site_div {
+#site {
     max-width: 1280px;
     margin: auto;
     background-color: rgba(13, 15, 19, 0.1);
@@ -18,31 +18,31 @@ body {
     padding: 0.6em 0.6em 5px;
 }
 
-#nav_div {
+#nav {
     float: left;
     width: 160px;
     margin: 1.08em 0;
 }
-#nav_div ul {
+#nav ul {
     background: #505050;
     border-radius: 3px;
     box-shadow: 0 2px 1px 1px #303030 inset;
     padding: 3px;
 }
 
-#nav_div li {
+#nav li {
     list-style: none;
     border: 1px solid black;
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.7), 0 1px 0 rgba(255, 255, 255, 0.4) inset;
 }
 
-#nav_div li.selected a {
+#nav li.selected a {
     font-weight: bold;
     color: #DFDFDF;
     text-shadow: 0 0 2px #D0D0D0;
 }
 
-#nav_div a {
+#nav a {
     color: #B0B0B0;
     display: block;
     text-decoration: none;
@@ -51,27 +51,27 @@ body {
     transition: all 350ms ease-in-out 0s;
 }
 
-#nav_div a:hover {
+#nav a:hover {
     background: #5F5F5F;
 }
 
-#main_div {
+#main {
     margin-left: 190px;
     padding: 0.8em 0 0 0.8em;
 }
 
-#content_div {
+#content {
     min-height: 230px;
     overflow: auto;
 }
 
-#copyright_div {
+#copyright {
     text-align: center;
     clear: both;
     width: 100%;
 }
 
-#siteTitle_div, #pageTitle_div, #calendar_div, nav {
+#siteTitle, #pageTitle, #calendar_div, nav {
     background: padding-box appworkspace;
     border: 1px solid #141414;
     border-radius: 3px;

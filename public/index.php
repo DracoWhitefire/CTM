@@ -15,19 +15,19 @@
         <link rel="stylesheet" type="text/css" href="css/common.css" />
     </head>
     <body>
-        <div id="site_div">
-            <div id="siteTitle_div">
+        <div id="site">
+            <div id="siteTitle">
                 <h1><?php echo SITE_TITLE; ?></h1>
             </div>
-            <div id="body_div">
-                <div id="nav_div">
+            <div id="body">
+                <div id="nav">
                     <?php echo View_Module::menu(); ?>
                 </div>
-                <div id="main_div">
-                    <div id="pageTitle_div">
+                <div id="main">
+                    <div id="pageTitle">
                         <h2><?php echo $currentModule->menuName; ?></h2>
                     </div>
-                    <div id="content_div">
+                    <div id="content">
                         <?php
                                 $includefile = strtolower("modules/{$currentModule->menuName}/main.php");
                                 include($includefile);
@@ -55,7 +55,7 @@
                     </div>-->
                 </div>
             </div>
-            <div id="copyright_div">
+            <div id="copyright">
                 Copyright <?php echo date("Y"); ?>
             </div>
         </div>
