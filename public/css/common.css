@@ -229,28 +229,28 @@ body {
     width: 126px;
 }
 
-#userlist_div {
+#userlist {
     float: left;
     border: solid 1px white;
     margin: 10px;
     padding: 9px;
 }
 
-#userlist_div td.check {
+#userlist td.check {
     width: 20px;
     height: 22px;
 }
 
-#userlist_div td.name, td.rank {
+#userlist td.name, td.rank {
     width: 160px;
     height: 22px;
 }
 
-#userlist_div td.name input[type=text] {
+#userlist td.name input[type=text] {
     width: 156px;
 }
 
-#userlist_div td.error input[type=text] {
+#userlist td.error input[type=text] {
     border-left: 2px solid #a60000;
     border-top: 2px solid #a60000;
     border-right: 2px solid red;

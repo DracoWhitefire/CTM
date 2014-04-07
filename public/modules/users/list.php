@@ -8,9 +8,9 @@ function listFilter($columnName_array) {
     foreach($columnName_array as $columnName) {
         $columnName;
         $columnFilter_array[$columnName] = FALSE;
-        if(isset($_POST["userListFilter_submit"])) {
-            if(isset($_POST["filter_" . $columnName . "Vis_check"])) {
-                if($_POST["filter_" . $columnName . "Vis_check"] == "on") {
+        if(isset($_POST["userListFilter"])) {
+            if(isset($_POST["filter" . $columnName . "Vis"])) {
+                if($_POST["filter" . $columnName . "Vis"] == "on") {
                     setcookie($columnName, TRUE, $expiration);
                     $columnFilter_array[$columnName] = TRUE;
                 } else {
@@ -32,8 +32,8 @@ function listFilter($columnName_array) {
     return $columnFilter_array;
 }
 $columnFilter_array = listFilter($columnName_array);
-$userList = "<div id=\"userListFilter_div\" ><form id=\"userlistFilter_form\"  action=\"index.php?id=" . urlencode($currentId) . "\" method=\"POST\" >";
-$userList .= "<div id=\"listColumnFilter_div\" >";
+$userList = "<div id=\"userListFilter\" ><form id=\"userListFilter\"  action=\"index.php?id=" . urlencode($currentId) . "\" method=\"POST\" >";
+$userList .= "<div id=\"listColumnFilter\" >";
 foreach($columnName_array as $columnName) {
     $columnNameSplit_array = preg_split("/([A-Z][a-z]+)/", $columnName, 0, PREG_SPLIT_DELIM_CAPTURE|PREG_SPLIT_NO_EMPTY);
     if(count($columnNameSplit_array) > 1) {
@@ -41,18 +41,18 @@ foreach($columnName_array as $columnName) {
     } else {
         $columnNameOutput = ucfirst($columnName);
     }
-    $userList .= "<label for \"filter_{$columnName}Vis_check\" >" . $columnNameOutput . "</label><input type=\"checkbox\" id=\"filter_" . $columnName . "Vis_check\" name=\"filter_" . $columnName . "Vis_check\" ";
+$userList .= "<label for \"filter{$columnNameOutput}Vis\" >" . $columnNameOutput . "</label><input type=\"checkbox\" id=\"filter{$columnNameOutput}Vis\" name=\"filter" . $columnName . "Vis\" ";
     if($columnFilter_array[$columnName]) {
         $userList .= "checked=\"checked\" ";
     }
     $userList .= ">";
 }
 $userList .= "</div>";
-$userList .= "<input type=\"submit\" id=\"userListFilter_submit\" name=\"userListFilter_submit\" value=\"Filter\" >";
+$userList .= "<input type=\"submit\" id=\"userListFilter\" name=\"userListFilter\" value=\"Filter\" >";
 $userList .= "</div>";
 
-$userList .= "<div id=\"userlist_div\"><form id=\"userlist_form\"  action=\"index.php?id=" . urlencode($currentId) . "\" method=\"POST\" >";
-$userList .= "<table id=\"userlist_table\">";
+$userList .= "<div id=\"userlist\"><form id=\"userlist\"  action=\"index.php?id=" . urlencode($currentId) . "\" method=\"POST\" >";
+$userList .= "<table id=\"usertable\">";
 $userList .= "<thead>";
 $userList .= "<tr><th></th>";
 if($columnFilter_array["userName"]) {
