@@ -6,19 +6,19 @@ class Controller_Validator
 {
     public $errors;
     
-    public function required(array $val_req_array) {
-        foreach($val_req_array as $fieldName) {
+    public function required(array $valReqArray) {
+        foreach($valReqArray as $fieldName) {
             if(!isset($_POST[$fieldName]) || ((empty($_POST[$fieldName])) && !(is_numeric($_POST[$fieldName])))) {
                 $this->errors[$fieldName] = "error_req";
             }
         }
     }
     
-    public function length(array $val_len_array) {
-        foreach($val_len_array as $fieldName => $minmax) {
-            $string_array = explode("-", $minmax);
-            $min = $string_array["0"];
-            $max = $string_array["1"];
+    public function length(array $valLenArray) {
+        foreach($valLenArray as $fieldName => $minmax) {
+            $stringArray = explode("-", $minmax);
+            $min = $stringArray["0"];
+            $max = $stringArray["1"];
             if((strlen(trim($_POST[$fieldName])) < $min) || (strlen(trim($_POST[$fieldName])) > $max)) {
                 if(!isset($this->errors[$fieldName])) {
                     $this->errors[$fieldName] = "error_len";
@@ -27,8 +27,8 @@ class Controller_Validator
         }
     }
     
-    public function numeric(array $checkNum_array) {
-        foreach($checkNum_array as $fieldName) {
+    public function numeric(array $checkNumArray) {
+        foreach($checkNumArray as $fieldName) {
             if(!is_numeric($_POST[$fieldName])) {
                 if(!isset($this->errors[$fieldName])) {
                     $this->errors[$fieldName] = "error_num";
@@ -37,28 +37,28 @@ class Controller_Validator
         }
     }
     
-    public function unique(array $val_uniq_array) {
+    public function unique(array $valUniqArray) {
         $db = call_user_func(DB_CLASS . "::getInstance");
-        $user_query  = "SELECT `user_name`, `id` ";
-        $user_query .= "FROM `users` ";
-        $user_set = $db->query($user_query);
-        while($user_row = $db->fetchAssoc($user_set)) {
-            $id = (int) $user_row["id"];
-            $user_array[$id] = $user_row["user_name"];
+        $userQuery  = "SELECT `user_name`, `id` ";
+        $userQuery .= "FROM `users` ";
+        $userSet = $db->query($userQuery);
+        while($userRow = $db->fetchAssoc($userSet)) {
+            $id = (int) $userRow["id"];
+            $userArray[$id] = $userRow["user_name"];
         }
-        mysqli_free_result($user_set);
-        foreach($val_uniq_array as $fieldName) {
-            $fieldName_array = preg_split("/([A-Z][a-z]+)|_/", $fieldName, -1, PREG_SPLIT_DELIM_CAPTURE|PREG_SPLIT_NO_EMPTY);
-            foreach($user_array as $id => $name) {
+        mysqli_free_result($userSet);
+        foreach($valUniqArray as $fieldName) {
+            $fieldNameArray = preg_split("/([A-Z][a-z]+)|_/", $fieldName, -1, PREG_SPLIT_DELIM_CAPTURE|PREG_SPLIT_NO_EMPTY);
+            foreach($userArray as $id => $name) {
                 if($name == $_POST[$fieldName]) {
-                    if(is_numeric($fieldName_array[2])) {
-                        if($fieldName_array[2] != $id) {
+                    if(is_numeric($fieldNameArray[2])) {
+                        if($fieldNameArray[2] != $id) {
                             if(!isset($this->errors[$fieldName])) {
                                 $this->errors[$fieldName] = "error_unique";
                             }
                             break 1;
                         }
-                    } elseif($fieldName_array[2] == "input") {
+                    } elseif($fieldNameArray[2] == "input") {
                         if(isset($_POST["userId"])) {
                             if($_POST["userId"] != $id) {
                                 if(!isset($this->errors[$fieldName])) {
@@ -73,8 +73,8 @@ class Controller_Validator
         }
     }
     
-    public function time(array $val_time_array) {
-        foreach($val_time_array as $fieldName) {
+    public function time(array $valTimeArray) {
+        foreach($valTimeArray as $fieldName) {
             if(preg_match("/^(0(?=\d)|1(?=\d)|2(?=[0-3]))?\d:[0-5]\d(:[0-5]\d)?$/", $_POST[$fieldName]) == 0) {
                 if(!isset($this->errors[$fieldName])) {
                     $this->errors[$fieldName] = "error_time";
@@ -83,33 +83,33 @@ class Controller_Validator
         }
     }
     
-    public function timediff(array $val_timediff_array) {
+    public function timediff(array $valTimediffArray) {
         //requires the function Controller_Time::format()
-        foreach($val_timediff_array as $startTime_fieldname => $endTime_fieldname) {
-            $startTime = (float) strtotime(Controller_Time::format($_POST[$startTime_fieldname], "db"));
-            $endTime = (float) strtotime(Controller_Time::format($_POST[$endTime_fieldname], "db"));
+        foreach($valTimediffArray as $startTimeFieldname => $endTimeFieldname) {
+            $startTime = (float) strtotime(Controller_Time::format($_POST[$startTimeFieldname], "db"));
+            $endTime = (float) strtotime(Controller_Time::format($_POST[$endTimeFieldname], "db"));
             if(($endTime - $startTime) < 0) {
-                if(!isset($this->errors[$startTime_fieldname]) && (!isset($this->errors[$endTime_fieldname]))) {
-                    $this->errors[$startTime_fieldname] = "error_timediff";
-                    $this->errors[$endTime_fieldname] = "error_timediff";
+                if(!isset($this->errors[$startTimeFieldname]) && (!isset($this->errors[$endTimeFieldname]))) {
+                    $this->errors[$startTimeFieldname] = "error_timediff";
+                    $this->errors[$endTimeFieldname] = "error_timediff";
                 }
             }
         }
     }
     
-    public function password(array $val_pw_array) {
-        foreach($val_pw_array as $pw_field) {
-            $success = preg_match("/^(?=.*\d)(?=.*[a-zA-Z])(?=.*[^a-zA-Z\d\s]).{8,20}$/", trim($_POST[$pw_field]));
+    public function password(array $valPwArray) {
+        foreach($valPwArray as $pwField) {
+            $success = preg_match("/^(?=.*\d)(?=.*[a-zA-Z])(?=.*[^a-zA-Z\d\s]).{8,20}$/", trim($_POST[$pwField]));
             if(!$success) {
-                if(!isset($this->errors[$pw_field])) {
-                    $this->errors[$pw_field] = "error_pw";
+                if(!isset($this->errors[$pwField])) {
+                    $this->errors[$pwField] = "error_pw";
                 }
             }
         }
     }
     
-    public function compare(array $val_compare_array) {
-        foreach($val_compare_array as $firstField => $secondField) {
+    public function compare(array $valCompareArray) {
+        foreach($valCompareArray as $firstField => $secondField) {
             if($_POST[$firstField] !== $_POST[$secondField]) {
                 if(!isset($this->errors[$firstField]) && !isset($this->errors[$secondField])) {
                     $this->errors[$firstField] = "error_compare";
