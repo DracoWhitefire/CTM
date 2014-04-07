@@ -315,7 +315,7 @@ body {
     clear: both;
 }
 
-#login_div label {
+#login label {
     width: 50%;
     float: left;
     text-align: right;
@@ -324,14 +324,14 @@ body {
     -webkit-box-sizing: border-box;
 }
 
-#login_div input[type=text], #login_div input[type=password] {
+#login input[type=text], #login input[type=password] {
     float: left;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
 }
 
-#login_div #loginbuttons_div {
+#login #loginbuttons_div {
     width: 30%;
     margin: auto;
 }

@@ -36,7 +36,7 @@ if(isset($_POST["login"])) {
 }
 ?>
 
-<div id="login_div">
+<div id="login">
     <?php echo $message; ?>
     <form id="loginForm" method="POST" action="index.php?id=<?php echo $currentId; ?>">
         <label for="username">Username</label> <input type="text" name="username" id="username" maxlength="30" value="<?php echo htmlentities($username); ?>" /><br />
