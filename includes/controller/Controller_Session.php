@@ -20,12 +20,12 @@ class Controller_Session
      * Checks whether user is logged in and sets session properties;
      */
     private function _checkLogin() {
-        if(isset($_SESSION["id"])) {
-            $this->userId = $_SESSION["id"];
+        if(Controller_Request::session("id")) {
+            $this->userId = Controller_Request::session("id");
             $this->_loggedIn = TRUE;
-            $this->firstName = $_SESSION["firstname"];
-            $this->setRank($_SESSION["rank"]);
-            $this->team = $_SESSION["team"];
+            $this->firstName = Controller_Request::session("firstname");
+            $this->setRank(Controller_Request::session("rank"));
+            $this->team = Controller_Request::session("team");
         } else {
             unset($this->userId);
             $this->_loggedIn = FALSE;
