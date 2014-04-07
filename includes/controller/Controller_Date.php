@@ -11,23 +11,23 @@ Class Controller_Date
      */
     private static function _fromGet() {
         $getDateArray = array();
-        if(!isset($_GET["y"])) {
+        if(Controller_Request::get("y")) {
             $getDateArray["y"] = date("Y");
         } else {
-            $getDateArray["y"] = urldecode($_GET["y"]);
+            $getDateArray["y"] = urldecode(Controller_Request::get("y"));
         }
-        if(!isset($_GET["m"])) {
+        if(Controller_Request::get("m")) {
             $getDateArray["m"] = date("m");
         } else {
-            if((1 <= $_GET["m"]) && ($_GET["m"] <= 12)) {
-                $getDateArray["m"] = urldecode($_GET["m"]);
+            if((1 <= Controller_Request::get("m")) && (Controller_Request::get("m") <= 12)) {
+                $getDateArray["m"] = urldecode(Controller_Request::get("m"));
             } else {
                 $getDateArray["m"] = date("m");
             }
         }
-        if(isset($_GET["d"])) {
-            if((1<=$_GET["d"])&&($_GET["d"]<=cal_days_in_month(CAL_GREGORIAN, $getDateArray["m"], $getDateArray["y"]))) {
-                $getDateArray["d"] = urldecode($_GET["d"]);
+        if(Controller_Request::get("d")) {
+            if((1<=Controller_Request::get("d"))&&(Controller_Request::get("d")<=cal_days_in_month(CAL_GREGORIAN, $getDateArray["m"], $getDateArray["y"]))) {
+                $getDateArray["d"] = urldecode(Controller_Request::get("d"));
             } else {
                 $getDateArray["d"] = date("d");
             }
@@ -42,9 +42,9 @@ Class Controller_Date
      * @return array $postDateArray - array with selected date
      */
     private static function _fromPost() {
-        $postDateArray["d"] = $_POST["d"];
-        $postDateArray["m"] = $_POST["m"];
-        $postDateArray["y"] = $_POST["y"];
+        $postDateArray["d"] = Controller_Request::post("d");
+        $postDateArray["m"] = Controller_Request::post("m");
+        $postDateArray["y"] = Controller_Request::post("y");
         return (array) $postDateArray;
     }
     
@@ -53,7 +53,7 @@ Class Controller_Date
      * @return array $sessionDateArray - array with selected date
      */
     private static function _fromSession() {
-        $sessionDateArray = $_SESSION["selectedDate"];
+        $sessionDateArray = Controller_Request::session("selectedDate");
         return (array) $sessionDateArray;
     }
     
@@ -92,11 +92,11 @@ Class Controller_Date
      */
     public static function getSelected() {
         $dateArray = array();
-        if(isset($_POST["d"]) || isset($_POST["m"]) || isset($_POST["y"])) {
+        if(Controller_Request::post("d") || Controller_Request::post("m") || Controller_Request::post("y")) {
             $dateArray = self::_fromPost();
-        } elseif(isset($_SESSION["selectedDate"])) {
+        } elseif(Controller_Request::session("selectedDate")) {
             $dateArray = self::_fromSession();
-        } elseif(isset($_GET["d"]) || isset($_GET["m"]) || isset($_GET["y"])) {
+        } elseif(Controller_Request::get("d") || Controller_Request::get("m") || Controller_Request::get("y")) {
             $dateArray = self::_fromGet();
         } else {
             $dateArray["y"] = date("Y");
